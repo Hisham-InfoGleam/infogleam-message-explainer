@@ -1,0 +1,939 @@
+{
+  "segment": "OBR",
+  "title": { "en": "Observation Request", "ar": "طلب الملاحظة (طلب الفحص)" },
+  "summary": {
+    "en": "Describes one ordered test or study, such as a lab panel or an X-ray, and acts as the header for its results.",
+    "ar": "يصف فحصًا أو دراسة واحدة مطلوبة، مثل مجموعة فحوص مخبرية أو صورة أشعة، ويعمل كترويسة لنتائجها."
+  },
+  "details": {
+    "en": "OBR appears in order messages, such as ORM^O01 and OML^O21, and in result messages, such as ORU^R01. It repeats: each ordered test or battery has its own OBR. In orders it usually follows the ORC segment. In results, the OBX segments after an OBR carry the results of that test.",
+    "ar": "يظهر المقطع OBR في رسائل الطلبات مثل ORM^O01 وOML^O21، وفي رسائل النتائج مثل ORU^R01. وهو مقطع متكرر: لكل فحص أو مجموعة فحوص (Battery) مطلوبة مقطع OBR خاص بها. في رسائل الطلبات يأتي عادةً بعد المقطع ORC. وفي رسائل النتائج تحمل مقاطع OBX التي تأتي بعد OBR نتائج ذلك الفحص."
+  },
+  "keyFields": ["OBR-2", "OBR-3", "OBR-4", "OBR-7", "OBR-16", "OBR-25"],
+  "fields": {
+    "OBR-1": {
+      "nameAr": "الرقم التسلسلي - OBR",
+      "usage": "common",
+      "summary": {
+        "en": "Sequence number of this OBR in the message: 1 for the first, 2 for the second, and so on.",
+        "ar": "الرقم التسلسلي لهذا المقطع OBR داخل الرسالة: 1 للأول، و2 للثاني، وهكذا."
+      },
+      "details": {
+        "en": "Each OBR gets the next number, starting at 1. It only shows the order of the OBR segments. It is not an order number.",
+        "ar": "يأخذ كل مقطع OBR الرقم التالي بدءًا من 1. وهو يبيّن ترتيب مقاطع OBR فقط، وليس رقم طلب."
+      },
+      "tip": {
+        "en": "If your interface adds or removes OBR segments, renumber OBR-1 so it stays 1, 2, 3.",
+        "ar": "إذا كانت الواجهة البينية (Interface) تضيف مقاطع OBR أو تحذفها، فأعد ترقيم OBR-1 ليبقى 1، 2، 3."
+      },
+      "example": "1"
+    },
+    "OBR-2": {
+      "nameAr": "رقم الطلب لدى الجهة الطالبة",
+      "usage": "common",
+      "summary": {
+        "en": "The order number given by the system that placed the order, such as the doctor's ordering system.",
+        "ar": "رقم الطلب الذي يعطيه النظام الذي أنشأ الطلب، مثل نظام الطلبات الذي يستخدمه الطبيب."
+      },
+      "details": {
+        "en": "First component: the order number. Second component: a short code for the ordering application. The number must be unique among that application's orders. It equals ORC-2; if both are sent, they must match.",
+        "ar": "المكوّن الأول: رقم الطلب. المكوّن الثاني: رمز قصير للنظام الذي أنشأ الطلب. يجب أن يكون الرقم فريدًا بين طلبات ذلك النظام. وهو مساوٍ لـ ORC-2؛ وإذا أُرسل الحقلان فيجب أن يتطابقا."
+      },
+      "tip": {
+        "en": "Receivers often use OBR-2 to match results to the original order. Keep it unchanged in every result message for that order.",
+        "ar": "كثيرًا ما تعتمد الأنظمة المستقبِلة على OBR-2 لربط النتائج بالطلب الأصلي. أبقِه دون تغيير في كل رسالة نتائج لذلك الطلب."
+      },
+      "example": "ORD0001^DEMO_APP"
+    },
+    "OBR-3": {
+      "nameAr": "رقم الطلب لدى الجهة المنفِّذة",
+      "usage": "common",
+      "summary": {
+        "en": "The order number given by the system that performs the test, such as the laboratory system.",
+        "ar": "رقم الطلب الذي يعطيه النظام الذي ينفِّذ الفحص، مثل نظام المختبر."
+      },
+      "details": {
+        "en": "First component: the number. Second component: a code for the performing application. The number stays the same for the order and its results. It equals ORC-3. Result messages may leave out ORC, so OBR must carry it.",
+        "ar": "المكوّن الأول: الرقم. المكوّن الثاني: رمز النظام المنفِّذ. يبقى الرقم نفسه للطلب ولنتائجه. وهو مساوٍ لـ ORC-3. قد تخلو رسائل النتائج من المقطع ORC، لذلك يجب أن يحمل OBR هذا الرقم."
+      },
+      "tip": {
+        "en": "In laboratory interfaces this is often the accession number. Store it, because later corrections and cancellations usually refer to it.",
+        "ar": "في واجهات المختبر يكون هذا الرقم غالبًا رقم الاستلام (Accession Number). احفظه، لأن التصحيحات والإلغاءات اللاحقة تشير إليه عادةً."
+      },
+      "example": "LAB0001^DEMO_LAB"
+    },
+    "OBR-4": {
+      "nameAr": "معرّف الخدمة الموحَّد",
+      "usage": "common",
+      "summary": {
+        "en": "The code and name of the ordered test, panel or study.",
+        "ar": "رمز الفحص أو مجموعة الفحوص (Panel) أو الدراسة المطلوبة، واسمه."
+      },
+      "details": {
+        "en": "A coded value: code^name^coding system. The code can be local or from a standard system, often LOINC for lab tests. This field is required in every OBR.",
+        "ar": "قيمة مرمَّزة بالشكل: الرمز^الاسم^نظام الترميز. قد يكون الرمز محليًا أو من نظام قياسي، وغالبًا LOINC لفحوص المختبر. هذا الحقل مطلوب في كل مقطع OBR."
+      },
+      "tip": {
+        "en": "Ordering and lab systems often use different local test codes. Agree on a code mapping table early in the project.",
+        "ar": "كثيرًا ما يستخدم نظام الطلبات ونظام المختبر رموز فحوص محلية مختلفة. يُنصح بالاتفاق مبكرًا في المشروع على جدول مطابقة للرموز (Mapping)."
+      },
+      "example": "BMP^Basic metabolic panel^L"
+    },
+    "OBR-5": {
+      "nameAr": "الأولوية",
+      "usage": "legacy",
+      "summary": {
+        "en": "Old field for the order priority, such as urgent or routine.",
+        "ar": "حقل قديم لأولوية الطلب، مثل عاجل أو روتيني."
+      },
+      "details": {
+        "en": "The standard says this field is not used. Priority goes in component 6 of OBR-27 or ORC-7, and from v2.5 in the TQ1 segment.",
+        "ar": "ينص المعيار على أن هذا الحقل غير مستخدم. توضع الأولوية في المكوّن السادس من OBR-27 أو ORC-7، وابتداءً من v2.5 في المقطع TQ1."
+      },
+      "versionNote": {
+        "en": "Already kept only for backward compatibility in v2.3; withdrawn in v2.7.",
+        "ar": "كان يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ v2.3، وسُحب في v2.7."
+      }
+    },
+    "OBR-6": {
+      "nameAr": "التاريخ والوقت المطلوبان",
+      "usage": "legacy",
+      "summary": {
+        "en": "Old field for the requested date and time of the service.",
+        "ar": "حقل قديم للتاريخ والوقت المطلوبين لتنفيذ الخدمة."
+      },
+      "details": {
+        "en": "The standard says this field is not used. The requested start time goes in component 4 of OBR-27 or ORC-7, and from v2.5 in the TQ1 segment.",
+        "ar": "ينص المعيار على أن هذا الحقل غير مستخدم. يوضع وقت البدء المطلوب في المكوّن الرابع من OBR-27 أو ORC-7، وابتداءً من v2.5 في المقطع TQ1."
+      },
+      "versionNote": {
+        "en": "Already kept only for backward compatibility in v2.3; withdrawn in v2.7.",
+        "ar": "كان يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ v2.3، وسُحب في v2.7."
+      }
+    },
+    "OBR-7": {
+      "nameAr": "تاريخ ووقت الملاحظة",
+      "usage": "common",
+      "summary": {
+        "en": "The clinically important time of the observation, such as the specimen collection time.",
+        "ar": "الوقت المهم سريريًا للملاحظة، مثل وقت جمع العيّنة."
+      },
+      "details": {
+        "en": "For tests on a specimen, it is when the specimen was collected. For direct exams, such as an X-ray, it is when the exam was done. Format YYYYMMDDHHMMSS. Required in result messages.",
+        "ar": "في الفحوص التي تُجرى على عيّنة، هو وقت جمع العيّنة. وفي الفحوص التي تُجرى على المريض مباشرة، مثل صورة الأشعة، هو وقت إجراء الفحص. الصيغة YYYYMMDDHHMMSS. وهو مطلوب في رسائل النتائج."
+      },
+      "tip": {
+        "en": "Do not fill it with the order time or the message time. Many result screens show it as the collection time.",
+        "ar": "لا تضع فيه وقت الطلب أو وقت الرسالة. فكثير من شاشات النتائج تعرضه على أنه وقت جمع العيّنة."
+      },
+      "example": "20260315083000"
+    },
+    "OBR-8": {
+      "nameAr": "تاريخ ووقت انتهاء الملاحظة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "End time of a collection or study that lasts a period of time, such as a 24-hour urine.",
+        "ar": "وقت انتهاء جمع عيّنة أو دراسة تستمر فترة من الزمن، مثل جمع البول على مدى 24 ساعة."
+      },
+      "details": {
+        "en": "Used when the observation covers a time period: OBR-7 holds the start and OBR-8 the end. It stays empty for observations made at one point in time.",
+        "ar": "يُستخدم عندما تغطي الملاحظة فترة زمنية: يحمل OBR-7 وقت البداية ويحمل OBR-8 وقت النهاية. ويبقى فارغًا للملاحظات التي تتم في لحظة واحدة."
+      },
+      "example": "20260316083000"
+    },
+    "OBR-9": {
+      "nameAr": "حجم العيّنة المجموعة",
+      "usage": "legacy",
+      "summary": {
+        "en": "The volume of the collected specimen, with its unit.",
+        "ar": "حجم العيّنة التي جُمعت، مع وحدة القياس."
+      },
+      "details": {
+        "en": "Two components: amount^unit. Milliliters is the default unit. Filled in results, or in orders when the specimen was already collected, such as a timed urine collection.",
+        "ar": "مكوّنان: الكمية^الوحدة. والوحدة الافتراضية هي الملّيلتر. يُملأ في النتائج، أو في الطلبات إذا كانت العيّنة قد جُمعت مسبقًا، مثل جمع البول خلال مدة محددة."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility in v2.9; SPM-12 in the specimen (SPM) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط في v2.9، ويحلّ محله الحقل SPM-12 في مقطع العيّنة (SPM)."
+      },
+      "example": "2400^mL"
+    },
+    "OBR-10": {
+      "nameAr": "معرّف جامع العيّنة",
+      "usage": "legacy",
+      "summary": {
+        "en": "The person, department or facility that collected the specimen.",
+        "ar": "الشخص أو القسم أو المنشأة الصحية التي جمعت العيّنة."
+      },
+      "details": {
+        "en": "It can hold an ID, a name, or both: ID^family name^given name. It is used when the test needs a specimen, and it can repeat.",
+        "ar": "قد يحمل معرّفًا أو اسمًا أو كليهما: المعرّف^اسم العائلة^الاسم الأول. يُستخدم عندما يحتاج الفحص إلى عيّنة، ويمكن أن يتكرر."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7. The PRT (participation) segment carries this person instead.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.7، ويحمل المقطع PRT (المشاركة) هذا الشخص بدلًا منه."
+      },
+      "example": "N2001^NURSE^DEMO"
+    },
+    "OBR-11": {
+      "nameAr": "رمز الإجراء الخاص بالعيّنة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Tells the performing service what to do about the specimen for this order, for example collect it.",
+        "ar": "يخبر الجهة المنفِّذة بما يجب فعله بخصوص عيّنة هذا الطلب، مثل جمعها."
+      },
+      "details": {
+        "en": "It adds detail to the order control code in ORC-1. For a new order, L means the lab collects the specimen and O means another service already collected it.",
+        "ar": "يضيف تفصيلًا إلى رمز التحكم بالطلب في ORC-1. في الطلب الجديد تعني L أن المختبر سيجمع العيّنة، وتعني O أن جهة أخرى جمعتها مسبقًا."
+      },
+      "example": "L",
+      "table": "0065",
+      "values": [
+        { "code": "A", "en": "Add ordered tests to the existing specimen", "ar": "إضافة الفحوص المطلوبة إلى العيّنة الموجودة" },
+        { "code": "G", "en": "Generated order; reflex order", "ar": "طلب مُولَّد؛ طلب انعكاسي (Reflex)" },
+        { "code": "L", "en": "Lab to obtain specimen from patient", "ar": "المختبر يأخذ العيّنة من المريض" },
+        { "code": "O", "en": "Specimen obtained by service other than Lab", "ar": "العيّنة أخذتها جهة غير المختبر" },
+        { "code": "P", "en": "Pending specimen; Order sent prior to delivery", "ar": "عيّنة منتظرة؛ أُرسل الطلب قبل وصولها" },
+        { "code": "R", "en": "Revised order", "ar": "طلب معدَّل" },
+        { "code": "S", "en": "Schedule the tests specified below", "ar": "جدولة الفحوص المحددة" }
+      ]
+    },
+    "OBR-12": {
+      "nameAr": "رمز الخطر",
+      "usage": "rare",
+      "summary": {
+        "en": "Known or suspected hazards from the patient or specimen, such as an infectious disease.",
+        "ar": "المخاطر المعروفة أو المشتبه بها من المريض أو العيّنة، مثل مرض معدٍ."
+      },
+      "details": {
+        "en": "The code goes in the first component and free text in the second. If you send text only, start the value with ^.",
+        "ar": "يوضع الرمز في المكوّن الأول والنص الحر في المكوّن الثاني. إذا أرسلت نصًا فقط، فابدأ القيمة بالرمز ^."
+      },
+      "example": "^Infection risk"
+    },
+    "OBR-13": {
+      "nameAr": "المعلومات السريرية ذات الصلة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Extra clinical facts that help the performing service interpret the test.",
+        "ar": "معلومات سريرية إضافية تساعد الجهة المنفِّذة على تفسير الفحص."
+      },
+      "details": {
+        "en": "Examples: a suspected diagnosis, the point in the menstrual cycle for a cervical smear, or other facts that affect how the result is read. Structured facts can go in OBX segments right after the OBR.",
+        "ar": "أمثلة: تشخيص مشتبه به، أو اليوم من الدورة الشهرية عند أخذ مسحة عنق الرحم، أو معلومات أخرى تؤثر في قراءة النتيجة. ويمكن وضع المعلومات المنظَّمة في مقاطع OBX تأتي مباشرة بعد OBR."
+      },
+      "versionNote": {
+        "en": "Free text (ST) up to v2.7. From v2.7.1 it is a coded field (CWE) that can repeat.",
+        "ar": "نص حر (ST) حتى v2.7. وابتداءً من v2.7.1 أصبح حقلًا مرمَّزًا (CWE) يمكن أن يتكرر."
+      },
+      "example": "Patient fasting 12 hours"
+    },
+    "OBR-14": {
+      "nameAr": "تاريخ ووقت استلام العيّنة",
+      "usage": "common",
+      "summary": {
+        "en": "When the specimen arrived and was logged in at the lab or service.",
+        "ar": "وقت وصول العيّنة وتسجيلها في المختبر أو الجهة المنفِّذة."
+      },
+      "details": {
+        "en": "Filled when the order comes with a specimen, or in result messages for tests on a specimen. Format YYYYMMDDHHMMSS.",
+        "ar": "يُملأ عندما يصل الطلب ومعه عيّنة، أو في رسائل النتائج للفحوص التي تُجرى على عيّنة. الصيغة YYYYMMDDHHMMSS."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.5 and withdrawn in v2.7. SPM-18 in the SPM segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.5، وسُحب في v2.7. ويحلّ محله الحقل SPM-18 في المقطع SPM."
+      },
+      "tip": {
+        "en": "Still common in v2.3 and v2.4 lab messages, and many v2.5.1 systems still fill it.",
+        "ar": "ما زال شائعًا في رسائل المختبر بالإصدارين v2.3 وv2.4، وكثير من أنظمة v2.5.1 ما زالت تملؤه."
+      },
+      "example": "20260315091500"
+    },
+    "OBR-15": {
+      "nameAr": "مصدر العيّنة",
+      "usage": "common",
+      "summary": {
+        "en": "The specimen type and where it came from, such as serum or a body site.",
+        "ar": "نوع العيّنة ومن أين أُخذت، مثل المصل أو موضع في الجسم."
+      },
+      "details": {
+        "en": "Components: specimen code^additives^collection method^body site^site modifier^collection modifier^specimen role. The first component often uses HL7 table 0070, for example SER for serum.",
+        "ar": "المكوّنات: رمز العيّنة^المواد المضافة^طريقة الجمع^موضع الجسم^مُعدِّل الموضع^مُعدِّل طريقة الجمع^دور العيّنة. يستخدم المكوّن الأول غالبًا جدول HL7 رقم 0070، مثل SER للمصل."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.5 and withdrawn in v2.7. The SPM (specimen) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.5، وسُحب في v2.7. ويحلّ محله مقطع العيّنة SPM."
+      },
+      "tip": {
+        "en": "Very common in v2.3 and v2.4 lab interfaces. Ask the receiver whether it reads OBR-15 or the SPM segment.",
+        "ar": "شائع جدًا في واجهات المختبر بالإصدارين v2.3 وv2.4. اسأل الجهة المستقبِلة: هل تقرأ OBR-15 أم المقطع SPM؟"
+      },
+      "example": "SER&Serum&HL70070"
+    },
+    "OBR-16": {
+      "nameAr": "الطبيب الطالب",
+      "usage": "common",
+      "summary": {
+        "en": "The doctor or other provider who ordered the test.",
+        "ar": "الطبيب أو مقدِّم الرعاية الذي طلب الفحص."
+      },
+      "details": {
+        "en": "Format: ID^family name^given name, with more optional components after them. It can repeat. It is the same as ORC-12.",
+        "ar": "الصيغة: المعرّف^اسم العائلة^الاسم الأول، وبعدها مكوّنات اختيارية أخرى. ويمكن أن يتكرر. وهو مطابق لـ ORC-12."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility in v2.7 to v2.8.2 and withdrawn in v2.9. The PRT (participation) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من v2.7 حتى v2.8.2، وسُحب في v2.9. ويحلّ محله المقطع PRT (المشاركة)."
+      },
+      "tip": {
+        "en": "Result routing often uses this field to decide which doctor gets the result. Make sure doctor IDs match in both systems.",
+        "ar": "كثيرًا ما يعتمد توجيه النتائج على هذا الحقل لتحديد الطبيب الذي يستلم النتيجة. تأكد من تطابق معرّفات الأطباء في النظامين."
+      },
+      "example": "D1001^DOCTOR^DEMO"
+    },
+    "OBR-17": {
+      "nameAr": "رقم هاتف التواصل بشأن الطلب",
+      "usage": "rare",
+      "summary": {
+        "en": "Phone number to call about the order status or its results.",
+        "ar": "رقم الهاتف الذي يُتصل به بشأن حالة الطلب أو نتائجه."
+      },
+      "details": {
+        "en": "Uses the HL7 phone number format, with an extension or pager number if needed. Up to two numbers. It is the same as ORC-14.",
+        "ar": "يستخدم صيغة رقم الهاتف في HL7، مع رقم التحويلة أو جهاز النداء (Pager) عند الحاجة. ويصل إلى رقمين. وهو مطابق لـ ORC-14."
+      },
+      "example": "555-0100"
+    },
+    "OBR-18": {
+      "nameAr": "حقل الجهة الطالبة 1",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Free text from the ordering system that the performing system returns with the results.",
+        "ar": "نص حر من نظام الطلبات يعيده النظام المنفِّذ مع النتائج."
+      },
+      "details": {
+        "en": "The ordering system decides what it holds. The performing system should send the same text back in the result message.",
+        "ar": "يقرر نظام الطلبات ما يضعه فيه. ويجب أن يعيد النظام المنفِّذ النص نفسه في رسالة النتائج."
+      },
+      "tip": {
+        "en": "Some systems put an internal reference here, such as a ward or request code, to route the results back.",
+        "ar": "بعض الأنظمة تضع هنا مرجعًا داخليًا، مثل رمز القسم أو رمز الطلب، لتوجيه النتائج عند عودتها."
+      },
+      "example": "DEMO-REF-01"
+    },
+    "OBR-19": {
+      "nameAr": "حقل الجهة الطالبة 2",
+      "usage": "rare",
+      "summary": {
+        "en": "A second free-text field for the ordering system, used like OBR-18.",
+        "ar": "حقل نص حر ثانٍ لنظام الطلبات، يُستخدم مثل OBR-18."
+      },
+      "details": {
+        "en": "It works like OBR-18: text from the ordering system that comes back with the results.",
+        "ar": "يعمل مثل OBR-18: نص من نظام الطلبات يعود مع النتائج."
+      }
+    },
+    "OBR-20": {
+      "nameAr": "حقل الجهة المنفِّذة 1",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Free text for any use by the performing system, such as the laboratory.",
+        "ar": "نص حر لأي استخدام يحدده النظام المنفِّذ، مثل نظام المختبر."
+      },
+      "details": {
+        "en": "The performing system defines what it means. It is filled as needed when the OBR is sent back in a result message.",
+        "ar": "يحدد النظام المنفِّذ معناه. ويُملأ عند الحاجة عندما يُرسَل OBR ضمن رسالة نتائج."
+      },
+      "tip": {
+        "en": "Its meaning differs from system to system. Ask the sending side for a written description before you map it.",
+        "ar": "يختلف معناه من نظام إلى آخر. اطلب من الجهة المُرسِلة وصفًا مكتوبًا له قبل أن تربطه بحقل لديك."
+      }
+    },
+    "OBR-21": {
+      "nameAr": "حقل الجهة المنفِّذة 2",
+      "usage": "rare",
+      "summary": {
+        "en": "A second free-text field for the performing system, used like OBR-20.",
+        "ar": "حقل نص حر ثانٍ للنظام المنفِّذ، يُستخدم مثل OBR-20."
+      }
+    },
+    "OBR-22": {
+      "nameAr": "تاريخ ووقت إصدار النتائج أو تغيّر الحالة",
+      "usage": "common",
+      "summary": {
+        "en": "When the results were reported, or when the order status last changed.",
+        "ar": "وقت إصدار النتائج، أو آخر وقت تغيّرت فيه حالة الطلب."
+      },
+      "details": {
+        "en": "Filled by the performing system in result messages. Format YYYYMMDDHHMMSS. A receiver can use it to find results newer than the last ones it received.",
+        "ar": "يملؤه النظام المنفِّذ في رسائل النتائج. الصيغة YYYYMMDDHHMMSS. ويمكن للنظام المستقبِل استخدامه لمعرفة النتائج الأحدث من آخر نتائج استلمها."
+      },
+      "tip": {
+        "en": "Do not confuse it with OBR-7. OBR-22 is the report or status time, not the collection time.",
+        "ar": "لا تخلط بينه وبين OBR-7. فالحقل OBR-22 هو وقت التقرير أو تغيّر الحالة، وليس وقت جمع العيّنة."
+      },
+      "example": "20260315101500"
+    },
+    "OBR-23": {
+      "nameAr": "الرسوم على الجهة الطالبة",
+      "usage": "rare",
+      "summary": {
+        "en": "The charge to the ordering party for the tests, with a charge code.",
+        "ar": "الرسوم المترتبة على الجهة الطالبة مقابل الفحوص، مع رمز الرسوم."
+      },
+      "details": {
+        "en": "Two components: the money amount and a charge code. The performing system fills them in results when it knows the values.",
+        "ar": "مكوّنان: المبلغ ورمز الرسوم. ويملؤهما النظام المنفِّذ في النتائج عندما يعرف القيم."
+      }
+    },
+    "OBR-24": {
+      "nameAr": "معرّف قسم الخدمة التشخيصية",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The section of the diagnostic service that did the test, such as chemistry or radiology.",
+        "ar": "قسم الخدمة التشخيصية الذي أجرى الفحص، مثل الكيمياء أو الأشعة."
+      },
+      "details": {
+        "en": "Uses HL7 table 0074. If an outside service did the test, this field can identify that service.",
+        "ar": "يستخدم جدول HL7 رقم 0074. وإذا أجرت جهة خارجية الفحص، فيمكن لهذا الحقل أن يحدد تلك الجهة."
+      },
+      "tip": {
+        "en": "Some receivers use this code to sort results into lab, radiology or other tabs. Agree on the codes before go-live.",
+        "ar": "بعض الأنظمة المستقبِلة تستخدم هذا الرمز لفرز النتائج في تبويبات المختبر أو الأشعة أو غيرها. يُنصح بالاتفاق على الرموز قبل بدء التشغيل الفعلي."
+      },
+      "example": "CH",
+      "table": "0074",
+      "values": [
+        { "code": "LAB", "en": "Laboratory", "ar": "المختبر" },
+        { "code": "CH", "en": "Chemistry", "ar": "الكيمياء" },
+        { "code": "HM", "en": "Hematology", "ar": "أمراض الدم (الهيماتولوجي)" },
+        { "code": "MB", "en": "Microbiology", "ar": "الأحياء الدقيقة (الميكروبيولوجي)" },
+        { "code": "BLB", "en": "Blood Bank", "ar": "بنك الدم" },
+        { "code": "SR", "en": "Serology", "ar": "الأمصال (السيرولوجي)" },
+        { "code": "SP", "en": "Surgical Pathology", "ar": "علم الأمراض الجراحي" },
+        { "code": "CP", "en": "Cytopathology", "ar": "علم الأمراض الخلوي" },
+        { "code": "RAD", "en": "Radiology", "ar": "الأشعة" },
+        { "code": "CT", "en": "CAT Scan", "ar": "التصوير المقطعي المحوسب (CT)" },
+        { "code": "NMR", "en": "Nuclear Magnetic Resonance", "ar": "الرنين المغناطيسي النووي" },
+        { "code": "RUS", "en": "Radiology Ultrasound", "ar": "التصوير بالموجات فوق الصوتية في الأشعة" }
+      ]
+    },
+    "OBR-25": {
+      "nameAr": "حالة النتيجة",
+      "usage": "common",
+      "summary": {
+        "en": "Status of the results for this order, such as preliminary, final or corrected.",
+        "ar": "حالة نتائج هذا الطلب، مثل أولية أو نهائية أو مصحَّحة."
+      },
+      "details": {
+        "en": "Required in result messages, not in new orders. It covers the whole OBR; each OBX has its own status in OBX-11. X means there are no results because the order was canceled.",
+        "ar": "مطلوب في رسائل النتائج، وليس في الطلبات الجديدة. وهو يخص المقطع OBR كله؛ أما كل مقطع OBX فله حالته الخاصة في OBX-11. وتعني X أنه لا توجد نتائج لأن الطلب أُلغي."
+      },
+      "tip": {
+        "en": "Receivers often treat F as final and C as a correction that replaces earlier results. Test both cases with the receiving system.",
+        "ar": "كثيرًا ما تعامل الأنظمة المستقبِلة F على أنها نهائية وC على أنها تصحيح يحل محل النتائج السابقة. اختبر الحالتين مع النظام المستقبِل."
+      },
+      "example": "F",
+      "table": "0123",
+      "values": [
+        { "code": "O", "en": "Order received; specimen not yet received", "ar": "استُلم الطلب؛ لم تُستلم العيّنة بعد" },
+        { "code": "I", "en": "No results available; specimen received, procedure incomplete", "ar": "لا نتائج؛ استُلمت العيّنة والإجراء غير مكتمل" },
+        { "code": "S", "en": "No results available; procedure scheduled, but not done", "ar": "لا نتائج؛ الإجراء مجدول ولم يُنفَّذ بعد" },
+        { "code": "A", "en": "Some, but not all, results available", "ar": "بعض النتائج متاحة وليس كلها" },
+        { "code": "P", "en": "Preliminary", "ar": "أولية" },
+        { "code": "C", "en": "Corrected, final", "ar": "مصحَّحة، نهائية" },
+        { "code": "R", "en": "Results stored; not yet verified", "ar": "النتائج محفوظة؛ لم يُتحقَّق منها بعد" },
+        { "code": "F", "en": "Final results", "ar": "نتائج نهائية" },
+        { "code": "X", "en": "No results available; Order canceled", "ar": "لا نتائج؛ أُلغي الطلب" },
+        { "code": "Y", "en": "No order on record for this test", "ar": "لا يوجد طلب مسجَّل لهذا الفحص" },
+        { "code": "Z", "en": "No record of this patient", "ar": "لا يوجد سجل لهذا المريض" }
+      ]
+    },
+    "OBR-26": {
+      "nameAr": "النتيجة الأم",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Points to the result in a parent order that this child order is about, such as an organism.",
+        "ar": "يشير إلى النتيجة في الطلب الأم التي يتعلق بها هذا الطلب الفرعي، مثل كائن دقيق معيّن."
+      },
+      "details": {
+        "en": "Used with OBR-29, mostly in microbiology. Components: the parent OBX-3 code, the parent OBX-4 sub-ID, and a text such as the organism name. Example: a susceptibility test linked to the organism tested.",
+        "ar": "يُستخدم مع OBR-29، وغالبًا في الأحياء الدقيقة. المكوّنات: رمز OBX-3 في النتيجة الأم، والمعرّف الفرعي OBX-4 فيها، ونص مثل اسم الكائن الدقيق. مثال: فحص الحساسية للمضادات الحيوية (Susceptibility) مرتبطًا بالكائن الذي فُحص."
+      },
+      "tip": {
+        "en": "Microbiology results often break if this link is lost. Keep OBR-26 and OBR-29 unchanged when you transform messages.",
+        "ar": "كثيرًا ما تختل نتائج الأحياء الدقيقة إذا ضاع هذا الربط. أبقِ OBR-26 وOBR-29 دون تغيير عند تحويل الرسائل."
+      },
+      "example": "ORG&Organism&L^1^Organism A"
+    },
+    "OBR-27": {
+      "nameAr": "الكمية والتوقيت",
+      "usage": "sometimes",
+      "summary": {
+        "en": "How many times and when the service should be done, including the priority.",
+        "ar": "عدد مرات تنفيذ الخدمة ومواعيدها، ومنها الأولوية."
+      },
+      "details": {
+        "en": "A repeating composite field. Component 4 is the start date/time and component 6 the priority, such as S (stat) or R (routine). It is the same as ORC-7.",
+        "ar": "حقل مركَّب متكرر. المكوّن الرابع هو تاريخ ووقت البدء، والمكوّن السادس هو الأولوية، مثل S (فوري) أو R (روتيني). وهو مطابق لـ ORC-7."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.5 and withdrawn in v2.7. The TQ1 and TQ2 segments replace it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.5، وسُحب في v2.7. ويحلّ محله المقطعان TQ1 وTQ2."
+      },
+      "tip": {
+        "en": "Still widely used in v2.3 and v2.4 orders, often only for the priority in component 6.",
+        "ar": "ما زال مستخدمًا على نطاق واسع في طلبات v2.3 وv2.4، وغالبًا للأولوية فقط في المكوّن السادس."
+      },
+      "example": "^^^20260315083000^^R"
+    },
+    "OBR-28": {
+      "nameAr": "نُسخ النتيجة إلى",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Other people who should receive a copy of the results.",
+        "ar": "أشخاص آخرون يجب أن تصلهم نسخة من النتائج."
+      },
+      "details": {
+        "en": "Each repetition is one person: ID^family name^given name. By local agreement, either the ID or the name may be missing.",
+        "ar": "كل تكرار يمثل شخصًا واحدًا: المعرّف^اسم العائلة^الاسم الأول. وبحسب الاتفاق المحلي، قد يغيب المعرّف أو الاسم."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility in v2.7 to v2.8.2 and withdrawn in v2.9. The PRT (participation) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من v2.7 حتى v2.8.2، وسُحب في v2.9. ويحلّ محله المقطع PRT (المشاركة)."
+      },
+      "example": "D1002^DOCTOR^DEMO"
+    },
+    "OBR-29": {
+      "nameAr": "معرّف النتيجة الأم",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Links a child order or result to its parent, such as a susceptibility test to its culture.",
+        "ar": "يربط الطلب أو النتيجة الفرعية بالطلب أو النتيجة الأم، مثل ربط فحص الحساسية للمضادات الحيوية بالمزرعة الخاصة به."
+      },
+      "details": {
+        "en": "Two components: the parent's placer order number and filler order number, with & between their parts. It is needed when the order is a child, such as a reflex test.",
+        "ar": "مكوّنان: رقم الطلب الأم لدى الجهة الطالبة، ورقمه لدى الجهة المنفِّذة، مع الرمز & بين أجزاء كل رقم. وهو مطلوب عندما يكون الطلب فرعيًا، مثل الطلب الانعكاسي (Reflex)."
+      },
+      "versionNote": {
+        "en": "Named \"Parent\" up to v2.7. From v2.7.1 it points to the parent result; OBR-54 holds the parent order.",
+        "ar": "كان اسمه \"Parent\" حتى v2.7. وابتداءً من v2.7.1 أصبح يشير إلى النتيجة الأم، ويحمل OBR-54 الطلب الأم."
+      },
+      "tip": {
+        "en": "In microbiology, the susceptibility OBR usually points to the culture order here. Keep both numbers exactly as received.",
+        "ar": "في الأحياء الدقيقة يشير مقطع OBR الخاص بفحص الحساسية عادةً هنا إلى طلب المزرعة. أبقِ الرقمين كما استُلما تمامًا."
+      },
+      "example": "ORD0001&DEMO_APP^LAB0001&DEMO_LAB"
+    },
+    "OBR-30": {
+      "nameAr": "وسيلة نقل المريض",
+      "usage": "rare",
+      "summary": {
+        "en": "How the patient will be moved to the service, such as by wheelchair or walking.",
+        "ar": "كيف سيُنقل المريض إلى الجهة المنفِّذة، مثل الكرسي المتحرك أو المشي."
+      },
+      "details": {
+        "en": "Uses HL7 table 0124. PORT means the device goes to the patient, for example a portable X-ray.",
+        "ar": "يستخدم جدول HL7 رقم 0124. وتعني PORT أن الجهاز ينتقل إلى المريض، مثل جهاز الأشعة المتنقل."
+      },
+      "example": "WHLC",
+      "table": "0124",
+      "values": [
+        { "code": "CART", "en": "Cart - patient travels on cart or gurney", "ar": "عربة - ينتقل المريض على عربة أو نقّالة" },
+        { "code": "PORT", "en": "The examining device goes to patient's location", "ar": "جهاز الفحص ينتقل إلى مكان المريض" },
+        { "code": "WALK", "en": "Patient walks to diagnostic service", "ar": "المريض يمشي إلى قسم الخدمة التشخيصية" },
+        { "code": "WHLC", "en": "Wheelchair", "ar": "كرسي متحرك" }
+      ]
+    },
+    "OBR-31": {
+      "nameAr": "سبب الفحص",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The reason the test or study was ordered, as a code, text or both.",
+        "ar": "سبب طلب الفحص أو الدراسة، في صورة رمز أو نص أو كليهما."
+      },
+      "details": {
+        "en": "Holds a code, text, or both, and can repeat. Some studies need it for proper payment.",
+        "ar": "يحمل رمزًا أو نصًا أو كليهما، ويمكن أن يتكرر. وبعض الدراسات تحتاجه لضمان الدفع الصحيح."
+      },
+      "tip": {
+        "en": "Imaging services often require it, usually as a diagnosis code or short clinical reason. For text only, start the value with ^.",
+        "ar": "كثيرًا ما تشترطه أقسام التصوير، وعادةً في صورة رمز تشخيص أو سبب سريري قصير. إذا أرسلت نصًا فقط، فابدأ القيمة بالرمز ^."
+      },
+      "example": "^Chest pain"
+    },
+    "OBR-32": {
+      "nameAr": "المفسِّر الرئيسي للنتيجة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The doctor or clinician who interpreted the result and is responsible for the report.",
+        "ar": "الطبيب أو الممارس الصحي الذي فسَّر النتيجة، وهو المسؤول عن محتوى التقرير."
+      },
+      "details": {
+        "en": "The first component holds the person as ID&family name&given name, with & between the parts. Other components can add a start time, end time and location.",
+        "ar": "يحمل المكوّن الأول الشخص بالشكل: المعرّف&اسم العائلة&الاسم الأول، مع الرمز & بين الأجزاء. ويمكن للمكوّنات الأخرى إضافة وقت البدء ووقت الانتهاء والموقع."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.6 and withdrawn in v2.9. The ROL segment (v2.6), then PRT (v2.7 and later), replace it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.6، وسُحب في v2.9. ويحلّ محله المقطع ROL في v2.6، ثم المقطع PRT من v2.7 فما بعد."
+      },
+      "tip": {
+        "en": "Radiology and pathology reports often put the signing radiologist or pathologist here.",
+        "ar": "كثيرًا ما تضع تقارير الأشعة وعلم الأمراض هنا طبيب الأشعة أو طبيب علم الأمراض الذي وقَّع التقرير."
+      },
+      "example": "D1001&DOCTOR&DEMO"
+    },
+    "OBR-33": {
+      "nameAr": "المفسِّر المساعد للنتيجة",
+      "usage": "legacy",
+      "summary": {
+        "en": "A clinician who helped interpret the study.",
+        "ar": "ممارس صحي ساعد في تفسير الدراسة."
+      },
+      "details": {
+        "en": "Same format as OBR-32. It can repeat.",
+        "ar": "الصيغة نفسها المستخدمة في OBR-32. ويمكن أن يتكرر."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.6 and withdrawn in v2.9. The ROL segment (v2.6), then PRT (v2.7 and later), replace it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.6، وسُحب في v2.9. ويحلّ محله المقطع ROL في v2.6، ثم المقطع PRT من v2.7 فما بعد."
+      }
+    },
+    "OBR-34": {
+      "nameAr": "الفنّي",
+      "usage": "legacy",
+      "summary": {
+        "en": "The technician who performed the test or study.",
+        "ar": "الفنّي الذي أجرى الفحص أو الدراسة."
+      },
+      "details": {
+        "en": "Same format as OBR-32. It can repeat.",
+        "ar": "الصيغة نفسها المستخدمة في OBR-32. ويمكن أن يتكرر."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.6 and withdrawn in v2.9. The ROL segment (v2.6), then PRT (v2.7 and later), replace it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.6، وسُحب في v2.9. ويحلّ محله المقطع ROL في v2.6، ثم المقطع PRT من v2.7 فما بعد."
+      }
+    },
+    "OBR-35": {
+      "nameAr": "ناسخ التقرير",
+      "usage": "legacy",
+      "summary": {
+        "en": "The person who typed the report.",
+        "ar": "الشخص الذي طبع التقرير (الناسخ الطبي)."
+      },
+      "details": {
+        "en": "Same format as OBR-32. It can repeat.",
+        "ar": "الصيغة نفسها المستخدمة في OBR-32. ويمكن أن يتكرر."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.6 and withdrawn in v2.9. The ROL segment (v2.6), then PRT (v2.7 and later), replace it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.6، وسُحب في v2.9. ويحلّ محله المقطع ROL في v2.6، ثم المقطع PRT من v2.7 فما بعد."
+      }
+    },
+    "OBR-36": {
+      "nameAr": "التاريخ والوقت المجدولان",
+      "usage": "rare",
+      "summary": {
+        "en": "When the performing service scheduled the test or study.",
+        "ar": "الموعد الذي حددته الجهة المنفِّذة لإجراء الفحص أو الدراسة."
+      },
+      "details": {
+        "en": "Filled by the performing system, for example after the order asked it to schedule the test (OBR-11 = S). It tells the ordering system the planned time.",
+        "ar": "يملؤه النظام المنفِّذ، مثلًا عندما يتضمن الطلب طلب جدولة الفحص (OBR-11 = S). وهو يُعلم نظام الطلبات بالموعد المخطط."
+      },
+      "example": "20260316090000"
+    },
+    "OBR-37": {
+      "nameAr": "عدد حاويات العيّنة",
+      "usage": "rare",
+      "summary": {
+        "en": "How many containers hold the sample, used to check that all of them arrived.",
+        "ar": "عدد الحاويات التي تحمل العيّنة، ويُستخدم للتأكد من وصولها كلها."
+      },
+      "details": {
+        "en": "It can differ from the total number of samples that come with the order.",
+        "ar": "قد يختلف عن العدد الكلي للعيّنات المرسلة مع الطلب."
+      },
+      "example": "2"
+    },
+    "OBR-38": {
+      "nameAr": "طريقة نقل العيّنة المجموعة",
+      "usage": "rare",
+      "summary": {
+        "en": "How the sample travels to the service, such as by a courier or by post.",
+        "ar": "كيف تصل العيّنة إلى الجهة المنفِّذة، مثل مندوب توصيل أو البريد."
+      },
+      "details": {
+        "en": "It helps the lab plan its work and interpret results. If coded, sites define their own codes.",
+        "ar": "يساعد المختبر على تخطيط عمله وتفسير النتائج. وإذا كان مرمَّزًا، فكل جهة تحدد رموزها الخاصة."
+      }
+    },
+    "OBR-39": {
+      "nameAr": "ملاحظة جامع العيّنة",
+      "usage": "rare",
+      "summary": {
+        "en": "Comments about the sample from the person who collected it.",
+        "ar": "ملاحظات عن العيّنة من الشخص الذي جمعها."
+      },
+      "details": {
+        "en": "If coded, sites define their own codes. For text only, leave the first component empty and start the value with ^.",
+        "ar": "إذا كان مرمَّزًا، فكل جهة تحدد رموزها الخاصة. وللنص فقط، اترك المكوّن الأول فارغًا وابدأ القيمة بالرمز ^."
+      },
+      "example": "^Difficult collection"
+    },
+    "OBR-40": {
+      "nameAr": "المسؤول عن ترتيب النقل",
+      "usage": "rare",
+      "summary": {
+        "en": "Who must arrange the patient's transport to the service, such as the requester or the patient.",
+        "ar": "مَن عليه ترتيب نقل المريض إلى الجهة المنفِّذة، مثل الجهة الطالبة أو المريض نفسه."
+      },
+      "details": {
+        "en": "If coded, sites define their own codes.",
+        "ar": "إذا كان مرمَّزًا، فكل جهة تحدد رموزها الخاصة."
+      }
+    },
+    "OBR-41": {
+      "nameAr": "ترتيب النقل",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows whether transport for the patient has been arranged.",
+        "ar": "يبيّن ما إذا كان نقل المريض قد رُتِّب."
+      },
+      "example": "A",
+      "table": "0224",
+      "values": [
+        { "code": "A", "en": "Arranged", "ar": "مرتَّب" },
+        { "code": "N", "en": "Not Arranged", "ar": "غير مرتَّب" },
+        { "code": "U", "en": "Unknown", "ar": "غير معروف" }
+      ]
+    },
+    "OBR-42": {
+      "nameAr": "الحاجة إلى مرافق",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows whether the patient needs someone to go with them to the service.",
+        "ar": "يبيّن ما إذا كان المريض يحتاج إلى مرافق يذهب معه إلى الجهة المنفِّذة."
+      },
+      "details": {
+        "en": "The kind of escort needed is described in OBR-43.",
+        "ar": "يوصف نوع المرافقة المطلوبة في OBR-43."
+      },
+      "example": "N",
+      "table": "0225",
+      "values": [
+        { "code": "R", "en": "Required", "ar": "مطلوب" },
+        { "code": "N", "en": "Not Required", "ar": "غير مطلوب" },
+        { "code": "U", "en": "Unknown", "ar": "غير معروف" }
+      ]
+    },
+    "OBR-43": {
+      "nameAr": "ملاحظة حول نقل المريض المخطَّط",
+      "usage": "rare",
+      "summary": {
+        "en": "Code or free text about special needs for moving the patient to the service.",
+        "ar": "رمز أو نص حر عن الاحتياجات الخاصة لنقل المريض إلى الجهة المنفِّذة."
+      },
+      "details": {
+        "en": "It can repeat. If coded, sites define their own codes.",
+        "ar": "يمكن أن يتكرر. وإذا كان مرمَّزًا، فكل جهة تحدد رموزها الخاصة."
+      }
+    },
+    "OBR-44": {
+      "nameAr": "رمز الإجراء",
+      "usage": "rare",
+      "since": "2.3.1",
+      "summary": {
+        "en": "A code for the procedure linked to the charge for this test.",
+        "ar": "رمز الإجراء المرتبط برسوم هذا الفحص."
+      },
+      "details": {
+        "en": "Table 0088 is user-defined, so each site chooses the code system.",
+        "ar": "الجدول 0088 يحدده المستخدم، لذلك تختار كل جهة نظام الترميز."
+      },
+      "table": "0088"
+    },
+    "OBR-45": {
+      "nameAr": "مُعدِّل رمز الإجراء",
+      "usage": "rare",
+      "since": "2.3.1",
+      "summary": {
+        "en": "Modifiers that add detail to the procedure code in OBR-44.",
+        "ar": "مُعدِّلات تضيف تفصيلًا إلى رمز الإجراء في OBR-44."
+      },
+      "details": {
+        "en": "Used only when the OBR-44 code needs a modifier, for example for billing. It can repeat, in priority order. Sites define the codes (table 0340).",
+        "ar": "يُستخدم فقط عندما يحتاج رمز OBR-44 إلى مُعدِّل، مثلًا للفوترة. ويمكن أن يتكرر بحسب ترتيب الأولوية. وتحدد كل جهة الرموز (الجدول 0340)."
+      },
+      "table": "0340"
+    },
+    "OBR-46": {
+      "nameAr": "معلومات إضافية عن الخدمة من الجهة الطالبة",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "Extra order details from the ordering system that no other OBR field holds.",
+        "ar": "تفاصيل إضافية عن الطلب من نظام الطلبات لا يحملها أي حقل آخر في OBR."
+      },
+      "details": {
+        "en": "Examples: left or right side, or with or without contrast, when the test code does not say it. It can repeat. Sites define the codes (table 0411).",
+        "ar": "أمثلة: الجهة اليسرى أو اليمنى، أو مع صبغة التباين أو بدونها، عندما لا يحدد رمز الفحص ذلك. ويمكن أن يتكرر. وتحدد كل جهة الرموز (الجدول 0411)."
+      },
+      "example": "LEFT^Left side^L",
+      "table": "0411"
+    },
+    "OBR-47": {
+      "nameAr": "معلومات إضافية عن الخدمة من الجهة المنفِّذة",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "Extra details from the performing system about what was actually done.",
+        "ar": "تفاصيل إضافية من النظام المنفِّذ عمّا نُفِّذ فعلًا."
+      },
+      "details": {
+        "en": "Usually the same as OBR-46. If the order was changed, it shows what was really performed. Sites define the codes (table 0411).",
+        "ar": "يكون عادةً مثل OBR-46. وإذا تغيّر الطلب، فإنه يبيّن ما نُفِّذ فعلًا. وتحدد كل جهة الرموز (الجدول 0411)."
+      },
+      "table": "0411"
+    },
+    "OBR-48": {
+      "nameAr": "سبب تكرار الإجراء لضرورة طبية",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "Why repeating the same procedure for the patient on the same day was medically needed.",
+        "ar": "سبب الحاجة الطبية إلى تكرار الإجراء نفسه للمريض في اليوم نفسه."
+      },
+      "details": {
+        "en": "Mainly helps billing decide who to charge. It can be a code or free text. Sites define the codes (table 0476).",
+        "ar": "يساعد أساسًا أنظمة الفوترة على تحديد الجهة التي تُحمَّل التكلفة. وقد يكون رمزًا أو نصًا حرًا. وتحدد كل جهة الرموز (الجدول 0476)."
+      },
+      "table": "0476"
+    },
+    "OBR-49": {
+      "nameAr": "طريقة التعامل مع النتيجة",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "Special instructions for handling the result, such as notifying the doctor when it is ready.",
+        "ar": "تعليمات خاصة للتعامل مع النتيجة، مثل إبلاغ الطبيب عندما تجهز."
+      },
+      "details": {
+        "en": "Empty means routine handling. Sites define their own codes (table 0507). Suggested codes include F (film with patient) and N (notify provider when ready).",
+        "ar": "إذا كان فارغًا فالتعامل روتيني. وتحدد كل جهة رموزها الخاصة (الجدول 0507). ومن الرموز المقترحة F (الفيلم مع المريض) وN (إبلاغ مقدِّم الرعاية عند الجاهزية)."
+      },
+      "versionNote": {
+        "en": "A simple code (IS) up to v2.6; a coded field with components (CWE) from v2.7.",
+        "ar": "رمز بسيط (IS) حتى v2.6، ثم حقل مرمَّز ذو مكوّنات (CWE) ابتداءً من v2.7."
+      },
+      "example": "N",
+      "table": "0507"
+    },
+    "OBR-50": {
+      "nameAr": "معرّف الخدمة الموحَّد للطلب الأم",
+      "usage": "legacy",
+      "since": "2.5.1",
+      "summary": {
+        "en": "The test code of the parent order that caused this test, such as the test that triggered a reflex.",
+        "ar": "رمز الفحص في الطلب الأم الذي أدى إلى هذا الفحص، مثل الفحص الذي أطلق طلبًا انعكاسيًا (Reflex)."
+      },
+      "details": {
+        "en": "Like OBR-4, but for the parent order named in OBR-29 or ORC-8. It is the same as ORC-31.",
+        "ar": "مثل OBR-4، لكنه للطلب الأم المذكور في OBR-29 أو ORC-8. وهو مطابق لـ ORC-31."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility in v2.7 to v2.8.2 and withdrawn in v2.9.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من v2.7 حتى v2.8.2، وسُحب في v2.9."
+      }
+    },
+    "OBR-51": {
+      "nameAr": "معرّف مجموعة الملاحظات",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "An ID that the result producer gives to the group of results under this OBR.",
+        "ar": "معرّف تعطيه الجهة المنتِجة للنتائج لمجموعة النتائج التابعة لهذا المقطع OBR."
+      },
+      "details": {
+        "en": "It stays the same when the result status changes, so it is not a one-time snapshot ID.",
+        "ar": "يبقى ثابتًا عند تغيّر حالة النتيجة، فهو ليس معرّفًا للقطة زمنية واحدة."
+      },
+      "example": "GRP0001^DEMO_LAB"
+    },
+    "OBR-52": {
+      "nameAr": "معرّف مجموعة الملاحظات الأم",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "Links this child OBR to its parent OBR through the parent's observation group ID.",
+        "ar": "يربط هذا المقطع OBR الفرعي بمقطع OBR الأم عبر معرّف مجموعة الملاحظات الخاص بالأم."
+      }
+    },
+    "OBR-53": {
+      "nameAr": "رقم بديل للطلب لدى الجهة الطالبة",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "A shorter order number from the ordering system, in addition to OBR-2, that is still unique.",
+        "ar": "رقم أقصر للطلب من نظام الطلبات، إضافة إلى OBR-2، ويبقى فريدًا."
+      },
+      "details": {
+        "en": "It can repeat. Each value is an ID with the authority that assigned it.",
+        "ar": "يمكن أن يتكرر. وكل قيمة معرّف مع الجهة التي أصدرته."
+      },
+      "example": "A001^^^DEMO_APP"
+    },
+    "OBR-54": {
+      "nameAr": "الطلب الأم",
+      "usage": "rare",
+      "since": "2.7.1",
+      "summary": {
+        "en": "Links a child order to its parent order, such as a reflex test to the original order.",
+        "ar": "يربط الطلب الفرعي بالطلب الأم، مثل ربط الطلب الانعكاسي (Reflex) بالطلب الأصلي."
+      },
+      "details": {
+        "en": "Two components: the parent's placer order number and filler order number, with & between their parts. When ORC is also sent, ORC-8 must hold the same value.",
+        "ar": "مكوّنان: رقم الطلب الأم لدى الجهة الطالبة، ورقمه لدى الجهة المنفِّذة، مع الرمز & بين أجزاء كل رقم. وإذا أُرسل المقطع ORC أيضًا، فيجب أن يحمل ORC-8 القيمة نفسها."
+      },
+      "example": "ORD0001&DEMO_APP^LAB0001&DEMO_LAB"
+    },
+    "OBR-55": {
+      "nameAr": "رمز الإجراء",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "Tells the receiver to add, update or delete this order request, or that nothing changed.",
+        "ar": "يخبر النظام المستقبِل بإضافة طلب الفحص هذا أو تحديثه أو حذفه، أو بأنه لم يتغير شيء."
+      },
+      "details": {
+        "en": "Codes come from HL7 table 0206. It may be used only when OBR-2 or OBR-3 holds a unique order number.",
+        "ar": "تأتي الرموز من جدول رموز HL7 رقم 0206. ولا يجوز استخدامه إلا عندما يحمل OBR-2 أو OBR-3 رقم طلب فريدًا."
+      },
+      "example": "U",
+      "table": "0206",
+      "values": [
+        {
+          "code": "A",
+          "en": "Add/Insert",
+          "ar": "إضافة أو إدراج"
+        },
+        {
+          "code": "D",
+          "en": "Delete",
+          "ar": "حذف"
+        },
+        {
+          "code": "U",
+          "en": "Update",
+          "ar": "تحديث"
+        },
+        {
+          "code": "X",
+          "en": "No Change",
+          "ar": "لا تغيير"
+        }
+      ]
+    }
+  }
+}

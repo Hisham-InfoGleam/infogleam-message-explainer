@@ -1,0 +1,30 @@
+{
+  "name": "@infogleam/message-explainer-core",
+  "version": "0.9.0",
+  "private": true,
+  "description": "Parse, rebuild and mask HL7 v2 messages, and look up field explanations. No UI and no network code.",
+  "license": "MPL-2.0",
+  "author": "Hisham Alrashdan (InfoGleam)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "build:datatypes": "node scripts/build-datatypes.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.1.0"
+  }
+}

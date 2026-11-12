@@ -1,0 +1,1155 @@
+{
+  "segment": "NK1",
+  "title": {
+    "en": "Next of Kin / Associated Parties",
+    "ar": "أقرب الأقارب والأطراف المرتبطة"
+  },
+  "summary": {
+    "en": "Lists people and organizations linked to the patient, such as relatives, emergency contacts, guardians and employers.",
+    "ar": "يسرد الأشخاص والمنظمات المرتبطة بالمريض، مثل الأقارب وجهات الاتصال في الطوارئ والأوصياء وأصحاب العمل."
+  },
+  "details": {
+    "en": "ADT messages such as ADT^A01, ADT^A04 and ADT^A08 carry NK1 after PID (and PD1 if present) and before PV1; ORU^R01 may carry it too. The segment repeats: one NK1 for each related person or organization, numbered by NK1-1. When one person has two roles, HL7 suggests one NK1 per role.",
+    "ar": "تحمل رسائل ADT مثل ADT^A01 وADT^A04 وADT^A08 المقطع NK1 بعد PID (وبعد PD1 إن وُجد) وقبل PV1، وقد تحمله أيضًا رسالة ORU^R01. يتكرر المقطع: مقطع NK1 لكل شخص أو منظمة مرتبطة، ويُرقَّم في NK1-1. عندما يكون للشخص الواحد دوران، يقترح HL7 مقطع NK1 لكل دور."
+  },
+  "keyFields": [
+    "NK1-2",
+    "NK1-3",
+    "NK1-5",
+    "NK1-7"
+  ],
+  "fields": {
+    "NK1-1": {
+      "nameAr": "رقم تسلسل مقطع NK1",
+      "usage": "common",
+      "summary": {
+        "en": "A sequence number for each NK1 segment in the message: 1, 2, 3 and so on.",
+        "ar": "رقم تسلسلي لكل مقطع NK1 في الرسالة: 1 ثم 2 ثم 3، وهكذا."
+      },
+      "details": {
+        "en": "Required. When a message carries several NK1 segments, they are numbered from 1 upward, so each related person or organization gets its own number.",
+        "ar": "حقل إلزامي. عندما تحمل الرسالة عدة مقاطع NK1، تُرقَّم بدءًا من 1، فيحصل كل شخص أو منظمة مرتبطة على رقم خاص."
+      },
+      "tip": {
+        "en": "Some receivers keep only the first NK1. Check how many contacts the receiver can store before you send several.",
+        "ar": "بعض الأنظمة المستقبِلة تحفظ أول مقطع NK1 فقط. تحقق من عدد جهات الاتصال التي يستطيع النظام المستقبِل حفظها قبل أن ترسل عدة مقاطع."
+      },
+      "example": "1"
+    },
+    "NK1-2": {
+      "nameAr": "الاسم",
+      "usage": "common",
+      "summary": {
+        "en": "The name of the related person, such as a relative or an emergency contact.",
+        "ar": "اسم الشخص المرتبط بالمريض، مثل أحد الأقارب أو جهة الاتصال في الطوارئ."
+      },
+      "details": {
+        "en": "Repeatable. Uses the same name components as PID-5: 1 family name, 2 given name, 3 middle names. For an organization, use NK1-13.",
+        "ar": "حقل يتكرر. يستخدم مكوّنات الاسم نفسها في PID-5: 1 اسم العائلة، و2 الاسم الأول، و3 الأسماء الوسطى. للمنظمات استخدم NK1-13."
+      },
+      "versionNote": {
+        "en": "Up to v2.6, the legal name comes first, or the first repetition stays empty. From v2.7, the name type code tells which name is which.",
+        "ar": "حتى الإصدار v2.6 يأتي الاسم الرسمي أولًا، أو يبقى التكرار الأول فارغًا. ومن الإصدار v2.7 يحدد رمز نوع الاسم معنى كل اسم."
+      },
+      "tip": {
+        "en": "Some systems put the whole name in the family name component. Check how names are split before you map them.",
+        "ar": "بعض الأنظمة تضع الاسم كاملًا في مكوّن اسم العائلة. تحقق من طريقة تقسيم الأسماء قبل ربطها."
+      },
+      "example": "TEST^CONTACT^ONE"
+    },
+    "NK1-3": {
+      "nameAr": "صلة القرابة",
+      "usage": "common",
+      "summary": {
+        "en": "How this person is related to the patient, such as spouse, parent or child.",
+        "ar": "صلة هذا الشخص بالمريض، مثل الزوج أو أحد الوالدين أو الابن."
+      },
+      "details": {
+        "en": "The personal relationship, while NK1-7 holds the role, such as emergency contact. Table 0063 is user-defined: HL7 suggests the codes below, and a site may use its own.",
+        "ar": "يحمل صلة القرابة الشخصية، بينما يحمل NK1-7 الدور، مثل جهة الاتصال في الطوارئ. الجدول 0063 يحدده المستخدم: يقترح HL7 الرموز أدناه، ويمكن لكل جهة استخدام رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Data type CE (coded element) in v2.5.1 and earlier; CWE from v2.6.",
+        "ar": "كان نوع البيانات CE (عنصر مرمّز) في الإصدار v2.5.1 وما قبله، وأصبح CWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Many systems send local codes or only text here. Build a mapping table to the HL7 codes and handle unknown values.",
+        "ar": "كثير من الأنظمة ترسل رموزًا محلية أو نصًا فقط هنا. أنشئ جدول تحويل (Mapping) إلى رموز HL7، وتعامل مع القيم غير المعروفة."
+      },
+      "example": "SPO^Spouse^HL70063",
+      "table": "0063",
+      "values": [
+        {
+          "code": "SPO",
+          "en": "Spouse",
+          "ar": "الزوج أو الزوجة",
+          "since": "2.4"
+        },
+        {
+          "code": "PAR",
+          "en": "Parent",
+          "ar": "أحد الوالدين",
+          "since": "2.4"
+        },
+        {
+          "code": "MTH",
+          "en": "Mother",
+          "ar": "الأم",
+          "since": "2.4"
+        },
+        {
+          "code": "FTH",
+          "en": "Father",
+          "ar": "الأب",
+          "since": "2.4"
+        },
+        {
+          "code": "CHD",
+          "en": "Child",
+          "ar": "الابن أو الابنة",
+          "since": "2.4"
+        },
+        {
+          "code": "SIB",
+          "en": "Sibling",
+          "ar": "الأخ أو الأخت",
+          "since": "2.4"
+        },
+        {
+          "code": "GRD",
+          "en": "Guardian",
+          "ar": "الوصي",
+          "since": "2.4"
+        },
+        {
+          "code": "CGV",
+          "en": "Care giver",
+          "ar": "مقدّم الرعاية",
+          "since": "2.4"
+        },
+        {
+          "code": "FND",
+          "en": "Friend",
+          "ar": "صديق",
+          "since": "2.4"
+        },
+        {
+          "code": "EMR",
+          "en": "Employer",
+          "ar": "صاحب العمل",
+          "since": "2.4"
+        },
+        {
+          "code": "EMC",
+          "en": "Emergency contact",
+          "ar": "جهة اتصال للطوارئ",
+          "since": "2.4"
+        },
+        {
+          "code": "OTH",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.4"
+        }
+      ]
+    },
+    "NK1-4": {
+      "nameAr": "العنوان",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The address of the related person or organization.",
+        "ar": "عنوان الشخص أو المنظمة المرتبطة بالمريض."
+      },
+      "details": {
+        "en": "Repeatable. Uses the same address components as PID-11: 1 street, 3 city, 5 postal code, 6 country, 7 address type.",
+        "ar": "حقل يتكرر. يستخدم مكوّنات العنوان نفسها في PID-11: 1 الشارع، و3 المدينة، و5 الرمز البريدي، و6 الدولة، و7 نوع العنوان."
+      },
+      "versionNote": {
+        "en": "Up to v2.6, the mailing address comes first, or the first repetition stays empty. HL7 removed this order rule in v2.7.",
+        "ar": "حتى الإصدار v2.6 يأتي العنوان البريدي أولًا، أو يبقى التكرار الأول فارغًا. وألغى HL7 قاعدة الترتيب هذه في الإصدار v2.7."
+      },
+      "example": "1 EXAMPLE ST^^DEMO CITY^^00000^^H"
+    },
+    "NK1-5": {
+      "nameAr": "رقم الهاتف",
+      "usage": "common",
+      "summary": {
+        "en": "The phone numbers of the related person.",
+        "ar": "أرقام هاتف الشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Repeatable; the main number comes first (or the first repetition stays empty). Uses the same components as PID-13: 1 number as text, 2 use code, 3 equipment type.",
+        "ar": "حقل يتكرر، ويأتي الرقم الرئيسي أولًا (أو يبقى التكرار الأول فارغًا). يستخدم مكوّنات PID-13 نفسها: 1 الرقم كنص، و2 رمز الاستخدام، و3 نوع الجهاز."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9; NK1-40 replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9، ويحل محله NK1-40."
+      },
+      "tip": {
+        "en": "Still the usual contact phone field in v2.3 to v2.6 messages, and often the most important part of NK1 for emergency contacts.",
+        "ar": "ما زال الحقل المعتاد لهاتف جهة الاتصال في رسائل الإصدارات من v2.3 إلى v2.6، وغالبًا هو أهم جزء في NK1 لجهات الاتصال في الطوارئ."
+      },
+      "example": "555-0100^PRN^PH"
+    },
+    "NK1-6": {
+      "nameAr": "رقم هاتف العمل",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The work phone numbers of the related person.",
+        "ar": "أرقام هاتف العمل الخاصة بالشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Repeatable; the main work number comes first (or the first repetition stays empty). Uses the same components as PID-13, usually with use code WPN (work number).",
+        "ar": "حقل يتكرر، ويأتي رقم العمل الرئيسي أولًا (أو يبقى التكرار الأول فارغًا). يستخدم مكوّنات PID-13 نفسها، وغالبًا مع رمز الاستخدام WPN (رقم العمل)."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9; NK1-40 replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9، ويحل محله NK1-40."
+      },
+      "example": "555-0100^WPN^PH"
+    },
+    "NK1-7": {
+      "nameAr": "دور جهة الاتصال",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The role this person or organization plays for the patient, such as emergency contact or employer.",
+        "ar": "الدور الذي يؤديه هذا الشخص أو هذه المنظمة تجاه المريض، مثل جهة اتصال للطوارئ أو صاحب العمل."
+      },
+      "details": {
+        "en": "Table 0131 is user-defined: HL7 suggests the codes below. When one person has two roles, such as next of kin and emergency contact, HL7 suggests a separate NK1 for each role.",
+        "ar": "الجدول 0131 يحدده المستخدم: يقترح HL7 الرموز أدناه. عندما يكون للشخص الواحد دوران، مثل أقرب الأقارب وجهة اتصال للطوارئ، يقترح HL7 مقطع NK1 منفصلًا لكل دور."
+      },
+      "versionNote": {
+        "en": "v2.3 suggested other codes, such as EP (emergency contact person), and v2.3.1 and v2.4 none. Data type CE up to v2.5.1.",
+        "ar": "اقترح الإصدار v2.3 رموزًا أخرى، مثل EP (شخص الاتصال في الطوارئ)، ولم يقترح الإصداران v2.3.1 وv2.4 أي رموز. نوع البيانات CE حتى الإصدار v2.5.1."
+      },
+      "tip": {
+        "en": "Some systems send EC or other local codes instead of C. Agree on the codes, because receivers often use this field to find the emergency contact.",
+        "ar": "بعض الأنظمة ترسل EC أو رموزًا محلية أخرى بدل C. اتفق على الرموز، لأن الأنظمة المستقبِلة غالبًا تستخدم هذا الحقل لتحديد جهة الاتصال في الطوارئ."
+      },
+      "example": "C^Emergency Contact^HL70131",
+      "table": "0131",
+      "values": [
+        {
+          "code": "E",
+          "en": "Employer",
+          "ar": "صاحب العمل",
+          "since": "2.5"
+        },
+        {
+          "code": "C",
+          "en": "Emergency Contact",
+          "ar": "جهة اتصال للطوارئ",
+          "since": "2.5"
+        },
+        {
+          "code": "F",
+          "en": "Federal Agency",
+          "ar": "جهة حكومية اتحادية",
+          "since": "2.5"
+        },
+        {
+          "code": "I",
+          "en": "Insurance Company",
+          "ar": "شركة تأمين",
+          "since": "2.5"
+        },
+        {
+          "code": "N",
+          "en": "Next-of-Kin",
+          "ar": "أقرب الأقارب",
+          "since": "2.5"
+        },
+        {
+          "code": "S",
+          "en": "State Agency",
+          "ar": "جهة حكومية على مستوى الولاية",
+          "since": "2.5"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.5"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.5"
+        }
+      ]
+    },
+    "NK1-8": {
+      "nameAr": "تاريخ البدء",
+      "usage": "rare",
+      "summary": {
+        "en": "The date this contact role starts.",
+        "ar": "تاريخ بدء دور جهة الاتصال هذه."
+      },
+      "details": {
+        "en": "Format YYYYMMDD. Together with NK1-9 it gives the period when the role in NK1-7 applies.",
+        "ar": "الصيغة YYYYMMDD. يحدد مع NK1-9 الفترة التي ينطبق فيها الدور المذكور في NK1-7."
+      },
+      "example": "20260101"
+    },
+    "NK1-9": {
+      "nameAr": "تاريخ الانتهاء",
+      "usage": "rare",
+      "summary": {
+        "en": "The date this contact role ends.",
+        "ar": "تاريخ انتهاء دور جهة الاتصال هذه."
+      },
+      "details": {
+        "en": "Format YYYYMMDD. It closes the period that starts in NK1-8.",
+        "ar": "الصيغة YYYYMMDD. يُغلق الفترة التي تبدأ في NK1-8."
+      },
+      "tip": {
+        "en": "An empty end date normally means the role is still active.",
+        "ar": "تاريخ الانتهاء الفارغ يعني عادةً أن الدور ما زال ساريًا."
+      },
+      "example": "20261231"
+    },
+    "NK1-10": {
+      "nameAr": "المسمى الوظيفي للطرف المرتبط",
+      "usage": "rare",
+      "summary": {
+        "en": "The job title of the related person at their workplace.",
+        "ar": "المسمى الوظيفي للشخص المرتبط بالمريض في مكان عمله."
+      },
+      "details": {
+        "en": "Free text. When NK1-7 says this NK1 is the patient's employer, the field holds the patient's own job title instead.",
+        "ar": "نص حر. عندما يبيّن NK1-7 أن مقطع NK1 هذا يمثل صاحب عمل المريض، يحمل الحقل المسمى الوظيفي للمريض نفسه."
+      },
+      "example": "ENGINEER"
+    },
+    "NK1-11": {
+      "nameAr": "رمز الوظيفة وفئتها للطرف المرتبط",
+      "usage": "rare",
+      "summary": {
+        "en": "The coded job and employee class of the related person.",
+        "ar": "رمز الوظيفة وفئة التوظيف للشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Components: 1 job code (table 0327), 2 job class, such as full or part time (table 0328), 3 job description text. Both tables are user-defined with no suggested values. For an employer NK1, it describes the patient's job.",
+        "ar": "المكوّنات: 1 رمز الوظيفة (الجدول 0327)، و2 فئة الوظيفة، مثل دوام كامل أو جزئي (الجدول 0328)، و3 وصف الوظيفة كنص. الجدولان يحددهما المستخدم ولا توجد لهما قيم مقترحة. في مقطع NK1 الخاص بصاحب العمل يصف وظيفة المريض."
+      }
+    },
+    "NK1-12": {
+      "nameAr": "الرقم الوظيفي للطرف المرتبط",
+      "usage": "rare",
+      "summary": {
+        "en": "The employee number that the employer gave to the related person.",
+        "ar": "الرقم الوظيفي الذي أعطاه صاحب العمل للشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Uses the CX structure: 1 number, 4 assigning authority, 5 identifier type code. For an employer NK1, it holds the patient's own employee number.",
+        "ar": "يستخدم بنية CX: 1 الرقم، و4 الجهة المُصدِرة، و5 رمز نوع المعرّف. في مقطع NK1 الخاص بصاحب العمل يحمل الرقم الوظيفي للمريض نفسه."
+      },
+      "example": "EMP0001"
+    },
+    "NK1-13": {
+      "nameAr": "اسم المنظمة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The name of an organization that is a contact for the patient, such as the employer.",
+        "ar": "اسم منظمة تُعد جهة اتصال للمريض، مثل صاحب العمل."
+      },
+      "details": {
+        "en": "Repeatable; the legal name comes first. Used when the associated party is an organization, or for the place where the related person works. Component 1 holds the organization name.",
+        "ar": "حقل يتكرر، ويأتي الاسم الرسمي أولًا. يُستخدم عندما يكون الطرف المرتبط منظمة، أو لاسم المكان الذي يعمل فيه الشخص المرتبط. يحمل المكوّن 1 اسم المنظمة."
+      },
+      "tip": {
+        "en": "When this field is filled, NK1-30 to NK1-32 usually describe the person to contact at the organization.",
+        "ar": "عندما يُملأ هذا الحقل، تصف الحقول من NK1-30 إلى NK1-32 عادةً الشخص الذي يُتواصل معه داخل المنظمة."
+      },
+      "example": "DEMO EMPLOYER"
+    },
+    "NK1-14": {
+      "nameAr": "الحالة الاجتماعية",
+      "usage": "rare",
+      "summary": {
+        "en": "The marital status of the related person.",
+        "ar": "الحالة الاجتماعية للشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Uses table 0002, the same codes as PID-16, such as S (single), M (married) or D (divorced). The table is user-defined, so a site may use its own codes.",
+        "ar": "يستخدم الجدول 0002، أي رموز PID-16 نفسها، مثل S (أعزب) أو M (متزوج) أو D (مطلّق). الجدول يحدده المستخدم، لذلك يمكن لكل جهة استخدام رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) in v2.3, CE up to v2.5.1, CWE from v2.6.",
+        "ar": "نوع البيانات IS (رمز مجرد) في الإصدار v2.3، وCE حتى الإصدار v2.5.1، وCWE من الإصدار v2.6."
+      },
+      "example": "M^Married^HL70002",
+      "table": "0002",
+      "values": [
+        {
+          "code": "S",
+          "en": "Single",
+          "ar": "أعزب"
+        },
+        {
+          "code": "M",
+          "en": "Married",
+          "ar": "متزوج"
+        },
+        {
+          "code": "D",
+          "en": "Divorced",
+          "ar": "مطلّق"
+        },
+        {
+          "code": "W",
+          "en": "Widowed",
+          "ar": "أرمل"
+        },
+        {
+          "code": "A",
+          "en": "Separated",
+          "ar": "منفصل"
+        },
+        {
+          "code": "E",
+          "en": "Legally Separated",
+          "ar": "منفصل قانونيًا",
+          "since": "2.4"
+        },
+        {
+          "code": "C",
+          "en": "Common law",
+          "ar": "زواج بحكم العرف",
+          "since": "2.4"
+        },
+        {
+          "code": "P",
+          "en": "Domestic partner",
+          "ar": "شريك منزلي",
+          "since": "2.4"
+        },
+        {
+          "code": "G",
+          "en": "Living together",
+          "ar": "يعيشان معًا",
+          "since": "2.4"
+        },
+        {
+          "code": "B",
+          "en": "Unmarried",
+          "ar": "غير متزوج",
+          "since": "2.4"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.4"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.4"
+        }
+      ]
+    },
+    "NK1-15": {
+      "nameAr": "الجنس الإداري",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The administrative sex of the related person, such as F or M.",
+        "ar": "الجنس الإداري للشخص المرتبط بالمريض، مثل F أو M."
+      },
+      "details": {
+        "en": "Uses table 0001, the same codes as PID-8. The table is user-defined: HL7 suggests the codes below.",
+        "ar": "يستخدم الجدول 0001، أي رموز PID-8 نفسها. الجدول يحدده المستخدم: يقترح HL7 الرموز أدناه."
+      },
+      "versionNote": {
+        "en": "Called \"Sex\" in v2.3 and v2.3.1. Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "كان اسمه «Sex» في الإصدارين v2.3 وv2.3.1. نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "example": "M",
+      "table": "0001",
+      "values": [
+        {
+          "code": "F",
+          "en": "Female",
+          "ar": "أنثى"
+        },
+        {
+          "code": "M",
+          "en": "Male",
+          "ar": "ذكر"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "آخر"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف"
+        },
+        {
+          "code": "A",
+          "en": "Ambiguous",
+          "ar": "ملتبس",
+          "since": "2.4"
+        },
+        {
+          "code": "N",
+          "en": "Not applicable",
+          "ar": "لا ينطبق",
+          "since": "2.4"
+        }
+      ]
+    },
+    "NK1-16": {
+      "nameAr": "تاريخ ووقت الميلاد",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The birth date of the related person, and the time when known.",
+        "ar": "تاريخ ميلاد الشخص المرتبط بالمريض، ووقت الميلاد إن كان معروفًا."
+      },
+      "details": {
+        "en": "Format YYYYMMDD, or longer when the time is known. The number of digits shows the precision.",
+        "ar": "الصيغة YYYYMMDD، أو أطول عندما يكون الوقت معروفًا. عدد الأرقام يحدد مستوى الدقة."
+      },
+      "versionNote": {
+        "en": "Data type TS (time stamp) in v2.5.1 and earlier; its first component uses the same format.",
+        "ar": "كان نوع البيانات TS (الطابع الزمني) في الإصدار v2.5.1 وما قبله، ومكوّنه الأول بالصيغة نفسها."
+      },
+      "tip": {
+        "en": "Useful when the contact is also a patient, such as a mother, because it helps match the two records.",
+        "ar": "مفيد عندما تكون جهة الاتصال مريضًا أيضًا، مثل الأم، لأنه يساعد في مطابقة السجلين."
+      }
+    },
+    "NK1-17": {
+      "nameAr": "حالة الإعالة المعيشية",
+      "usage": "rare",
+      "summary": {
+        "en": "Living conditions that matter for the patient's care, such as a dependent spouse.",
+        "ar": "ظروف معيشية تؤثر في رعاية المريض، مثل زوج أو زوجة مُعال."
+      },
+      "details": {
+        "en": "Repeatable, because several conditions can apply at once. It helps with discharge planning. Table 0223 is user-defined: HL7 suggests the codes below.",
+        "ar": "حقل يتكرر، لأن أكثر من ظرف قد ينطبق في الوقت نفسه. يساعد في التخطيط للخروج من المستشفى. الجدول 0223 يحدده المستخدم: يقترح HL7 الرموز أدناه."
+      },
+      "versionNote": {
+        "en": "In v2.3 and v2.3.1, S meant small children and D meant spouse dependent. Data type IS up to v2.6; CWE from v2.7.",
+        "ar": "في الإصدارين v2.3 وv2.3.1 كان الرمز S يعني أطفالًا صغارًا، والرمز D يعني زوجًا أو زوجة مُعالًا. نوع البيانات IS حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "table": "0223",
+      "values": [
+        {
+          "code": "S",
+          "en": "Spouse Dependent",
+          "ar": "زوج أو زوجة مُعال",
+          "since": "2.4"
+        },
+        {
+          "code": "M",
+          "en": "Medical Supervision Required",
+          "ar": "يحتاج إلى إشراف طبي"
+        },
+        {
+          "code": "C",
+          "en": "Small Children Dependent",
+          "ar": "أطفال صغار مُعالون",
+          "since": "2.4"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.4"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.4"
+        }
+      ]
+    },
+    "NK1-18": {
+      "nameAr": "حالة الحركة",
+      "usage": "rare",
+      "summary": {
+        "en": "The related person's mobility and other physical limits, such as using a wheelchair.",
+        "ar": "قدرة الشخص المرتبط بالمريض على الحركة وقيوده الجسدية الأخرى، مثل استخدام كرسي متحرك."
+      },
+      "details": {
+        "en": "Repeatable. Table 0009 is user-defined: HL7 suggests codes such as those below, the same list that PV1-15 uses for the patient.",
+        "ar": "حقل يتكرر. الجدول 0009 يحدده المستخدم: يقترح HL7 رموزًا مثل الرموز أدناه، وهي القائمة نفسها التي يستخدمها PV1-15 للمريض."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "table": "0009",
+      "values": [
+        {
+          "code": "A0",
+          "en": "No functional limitations",
+          "ar": "لا توجد قيود وظيفية"
+        },
+        {
+          "code": "A1",
+          "en": "Ambulates with assistive device",
+          "ar": "يمشي بمساعدة أداة"
+        },
+        {
+          "code": "A2",
+          "en": "Wheelchair/stretcher bound",
+          "ar": "يلازم الكرسي المتحرك أو النقالة"
+        },
+        {
+          "code": "A3",
+          "en": "Comatose; non-responsive",
+          "ar": "في غيبوبة ولا يستجيب"
+        },
+        {
+          "code": "A4",
+          "en": "Disoriented",
+          "ar": "مشوَّش الإدراك"
+        },
+        {
+          "code": "A5",
+          "en": "Vision impaired",
+          "ar": "ضعف البصر"
+        },
+        {
+          "code": "A6",
+          "en": "Hearing impaired",
+          "ar": "ضعف السمع"
+        },
+        {
+          "code": "A7",
+          "en": "Speech impaired",
+          "ar": "ضعف النطق"
+        },
+        {
+          "code": "A8",
+          "en": "Non-English speaking",
+          "ar": "لا يتحدث الإنجليزية"
+        },
+        {
+          "code": "A9",
+          "en": "Functional level unknown",
+          "ar": "المستوى الوظيفي غير معروف"
+        },
+        {
+          "code": "B1",
+          "en": "Oxygen therapy",
+          "ar": "علاج بالأكسجين"
+        },
+        {
+          "code": "B6",
+          "en": "Pregnant",
+          "ar": "حامل"
+        }
+      ]
+    },
+    "NK1-19": {
+      "nameAr": "المواطنة",
+      "usage": "rare",
+      "summary": {
+        "en": "The country or countries where the related person is a citizen.",
+        "ar": "البلد أو البلدان التي يحمل الشخص المرتبط بالمريض جنسيتها."
+      },
+      "details": {
+        "en": "Repeatable. HL7 recommends ISO 3166 country codes; table 0171 is user-defined for local codes. Same meaning as PID-26.",
+        "ar": "حقل يتكرر. يوصي HL7 برموز الدول في المعيار ISO 3166، والجدول 0171 يحدده المستخدم للرموز المحلية. له معنى PID-26 نفسه."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) in v2.3, CE up to v2.5.1, CWE from v2.6.",
+        "ar": "نوع البيانات IS (رمز مجرد) في الإصدار v2.3، وCE حتى الإصدار v2.5.1، وCWE من الإصدار v2.6."
+      },
+      "table": "0171"
+    },
+    "NK1-20": {
+      "nameAr": "اللغة الأساسية",
+      "usage": "rare",
+      "summary": {
+        "en": "The main language the related person speaks.",
+        "ar": "اللغة الأساسية التي يتحدثها الشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Table 0296 is user-defined with no suggested values; HL7 recommends ISO 639 language codes. Same meaning as PID-15.",
+        "ar": "الجدول 0296 يحدده المستخدم ولا توجد له قيم مقترحة، ويوصي HL7 برموز اللغات في المعيار ISO 639. له معنى PID-15 نفسه."
+      },
+      "versionNote": {
+        "en": "Data type CE (coded element) in v2.5.1 and earlier; CWE from v2.6.",
+        "ar": "كان نوع البيانات CE (عنصر مرمّز) في الإصدار v2.5.1 وما قبله، وأصبح CWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Useful when staff must call this contact, for example to arrange an interpreter.",
+        "ar": "مفيد عندما يحتاج الموظفون إلى الاتصال بهذه الجهة، مثلًا لترتيب مترجم."
+      },
+      "example": "AR^Arabic^L",
+      "table": "0296"
+    },
+    "NK1-21": {
+      "nameAr": "وضع السكن",
+      "usage": "rare",
+      "summary": {
+        "en": "Who the related person lives with at home, such as alone or with family.",
+        "ar": "مع من يعيش الشخص المرتبط بالمريض في منزله، مثل العيش بمفرده أو مع العائلة."
+      },
+      "details": {
+        "en": "Table 0220 is user-defined: HL7 suggests the codes below.",
+        "ar": "الجدول 0220 يحدده المستخدم: يقترح HL7 الرموز أدناه."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "example": "F",
+      "table": "0220",
+      "values": [
+        {
+          "code": "A",
+          "en": "Alone",
+          "ar": "بمفرده"
+        },
+        {
+          "code": "F",
+          "en": "Family",
+          "ar": "مع العائلة"
+        },
+        {
+          "code": "I",
+          "en": "Institution",
+          "ar": "في مؤسسة رعاية"
+        },
+        {
+          "code": "R",
+          "en": "Relative",
+          "ar": "مع أحد الأقارب"
+        },
+        {
+          "code": "S",
+          "en": "Spouse Only",
+          "ar": "مع الزوج أو الزوجة فقط"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف"
+        }
+      ]
+    },
+    "NK1-22": {
+      "nameAr": "رمز الإفصاح (Publicity)",
+      "usage": "rare",
+      "summary": {
+        "en": "How much publicity is allowed about the related person, such as family only or none.",
+        "ar": "مستوى الإفصاح المسموح به عن الشخص المرتبط بالمريض، مثل العائلة فقط أو عدم الإفصاح."
+      },
+      "details": {
+        "en": "Table 0215 is user-defined: HL7 suggests the codes below.",
+        "ar": "الجدول 0215 يحدده المستخدم: يقترح HL7 الرموز أدناه."
+      },
+      "versionNote": {
+        "en": "Called \"Publicity Indicator\" in v2.3. Data type CE (coded element) up to v2.5.1; CWE from v2.6.",
+        "ar": "كان اسمه «Publicity Indicator» في الإصدار v2.3. نوع البيانات CE (عنصر مرمّز) حتى الإصدار v2.5.1، وCWE من الإصدار v2.6."
+      },
+      "table": "0215",
+      "values": [
+        {
+          "code": "F",
+          "en": "Family only",
+          "ar": "للعائلة فقط",
+          "since": "2.5"
+        },
+        {
+          "code": "N",
+          "en": "No Publicity",
+          "ar": "عدم الإفصاح",
+          "since": "2.5"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.5"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.5"
+        }
+      ]
+    },
+    "NK1-23": {
+      "nameAr": "مؤشر الحماية",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows whether access to this related person's information must be restricted.",
+        "ar": "يبيّن هل يجب تقييد الوصول إلى معلومات هذا الشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Uses table 0136: Y means protect access, so only users with enough authority may see the information; N means normal access.",
+        "ar": "يستخدم الجدول 0136: القيمة Y تعني حماية الوصول، فلا يرى المعلومات إلا المستخدمون الذين يملكون الصلاحية الكافية، والقيمة N تعني وصولًا عاديًا."
+      },
+      "example": "N",
+      "table": "0136",
+      "values": [
+        {
+          "code": "Y",
+          "en": "Yes",
+          "ar": "نعم"
+        },
+        {
+          "code": "N",
+          "en": "No",
+          "ar": "لا"
+        }
+      ]
+    },
+    "NK1-24": {
+      "nameAr": "مؤشر الطالب",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows whether the related person is a student, full time or part time.",
+        "ar": "يبيّن هل الشخص المرتبط بالمريض طالب، بدوام كامل أو جزئي."
+      },
+      "details": {
+        "en": "It does not give the level or field of study. Table 0231 is user-defined: HL7 suggests the codes below.",
+        "ar": "لا يذكر المرحلة الدراسية أو مجال الدراسة. الجدول 0231 يحدده المستخدم: يقترح HL7 الرموز أدناه."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "table": "0231",
+      "values": [
+        {
+          "code": "F",
+          "en": "Full-time student",
+          "ar": "طالب بدوام كامل"
+        },
+        {
+          "code": "P",
+          "en": "Part-time student",
+          "ar": "طالب بدوام جزئي"
+        },
+        {
+          "code": "N",
+          "en": "Not a student",
+          "ar": "ليس طالبًا"
+        }
+      ]
+    },
+    "NK1-25": {
+      "nameAr": "الديانة",
+      "usage": "rare",
+      "summary": {
+        "en": "The religion of the related person.",
+        "ar": "ديانة الشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Uses table 0006, the same list as PID-17. The table is user-defined, so a site may use its own codes.",
+        "ar": "يستخدم الجدول 0006، أي القائمة نفسها في PID-17. الجدول يحدده المستخدم، لذلك يمكن لكل جهة استخدام رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) in v2.3, CE up to v2.5.1, CWE from v2.6.",
+        "ar": "نوع البيانات IS (رمز مجرد) في الإصدار v2.3، وCE حتى الإصدار v2.5.1، وCWE من الإصدار v2.6."
+      },
+      "table": "0006"
+    },
+    "NK1-26": {
+      "nameAr": "اسم عائلة الأم قبل الزواج",
+      "usage": "rare",
+      "summary": {
+        "en": "The family name that the related person's mother had before marriage.",
+        "ar": "اسم العائلة الذي كانت تحمله أم الشخص المرتبط بالمريض قبل الزواج."
+      },
+      "details": {
+        "en": "Uses the same name components as PID-5, with the family name first.",
+        "ar": "يستخدم مكوّنات الاسم نفسها في PID-5، ويبدأ باسم العائلة."
+      }
+    },
+    "NK1-27": {
+      "nameAr": "القومية",
+      "usage": "rare",
+      "summary": {
+        "en": "The nation or national group the related person belongs to.",
+        "ar": "الأمة أو المجموعة القومية التي ينتمي إليها الشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "This can differ from citizenship in a country that recognizes several national groups. Table 0212 is user-defined with no suggested values.",
+        "ar": "قد تختلف قيمته عن المواطنة في بلد يعترف بعدة مجموعات قومية. الجدول 0212 يحدده المستخدم ولا توجد له قيم مقترحة."
+      },
+      "versionNote": {
+        "en": "Data type CE (coded element) in v2.5.1 and earlier; CWE from v2.6. Unlike PID-28, this field was not withdrawn.",
+        "ar": "كان نوع البيانات CE (عنصر مرمّز) في الإصدار v2.5.1 وما قبله، وأصبح CWE من الإصدار v2.6. بخلاف PID-28، لم يُسحب هذا الحقل."
+      },
+      "table": "0212"
+    },
+    "NK1-28": {
+      "nameAr": "المجموعة الإثنية",
+      "usage": "rare",
+      "summary": {
+        "en": "The ethnic group of the related person.",
+        "ar": "المجموعة الإثنية للشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Repeatable. Table 0189 is user-defined, so sites define their own codes. As in PID-22, the alternate code part is reserved for codes assigned by a government.",
+        "ar": "حقل يتكرر. الجدول 0189 يحدده المستخدم، لذلك تحدد كل جهة رموزها الخاصة. كما في PID-22، الجزء الخاص بالرمز البديل مخصص للرموز التي تحددها جهة حكومية."
+      },
+      "versionNote": {
+        "en": "In v2.3 a single plain code (IS). CE (coded element) and repeatable from v2.3.1; CWE from v2.6.",
+        "ar": "في الإصدار v2.3 كان رمزًا مجردًا واحدًا (IS). أصبح CE (عنصر مرمّز) وقابلًا للتكرار من الإصدار v2.3.1، وCWE من الإصدار v2.6."
+      },
+      "table": "0189"
+    },
+    "NK1-29": {
+      "nameAr": "سبب الاتصال",
+      "usage": "rare",
+      "summary": {
+        "en": "Why this contact should be used, for example for emergencies or billing questions.",
+        "ar": "سبب استخدام جهة الاتصال هذه، مثل حالات الطوارئ أو أسئلة الفوترة."
+      },
+      "details": {
+        "en": "Repeatable. Table 0222 is user-defined with no suggested values, so sites define their own codes.",
+        "ar": "حقل يتكرر. الجدول 0222 يحدده المستخدم ولا توجد له قيم مقترحة، لذلك تحدد كل جهة رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Data type CE (coded element) in v2.5.1 and earlier; CWE from v2.6.",
+        "ar": "كان نوع البيانات CE (عنصر مرمّز) في الإصدار v2.5.1 وما قبله، وأصبح CWE من الإصدار v2.6."
+      },
+      "table": "0222"
+    },
+    "NK1-30": {
+      "nameAr": "اسم الشخص المسؤول عن التواصل",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The name of the person to contact, mainly when the NK1 is an organization.",
+        "ar": "اسم الشخص الذي يُتواصل معه، خاصةً عندما يمثل مقطع NK1 منظمة."
+      },
+      "details": {
+        "en": "Repeatable. Uses the same name components as PID-5. Its meaning depends on NK1-3 (relationship), and it is mostly needed when NK1-13 holds an organization.",
+        "ar": "حقل يتكرر. يستخدم مكوّنات الاسم نفسها في PID-5. يعتمد معناه على NK1-3 (صلة القرابة)، ويُحتاج إليه غالبًا عندما يحمل NK1-13 اسم منظمة."
+      },
+      "versionNote": {
+        "en": "Up to v2.6, the legal name should come first. From v2.7, the name type code tells which name is which.",
+        "ar": "حتى الإصدار v2.6 يُفترض أن يأتي الاسم الرسمي أولًا. ومن الإصدار v2.7 يحدد رمز نوع الاسم معنى كل اسم."
+      },
+      "example": "TEST^CONTACT^TWO"
+    },
+    "NK1-31": {
+      "nameAr": "رقم هاتف الشخص المسؤول عن التواصل",
+      "usage": "legacy",
+      "summary": {
+        "en": "The phone numbers of the contact person named in NK1-30.",
+        "ar": "أرقام هاتف الشخص المذكور في NK1-30."
+      },
+      "details": {
+        "en": "Repeatable; the main number comes first (or the first repetition stays empty). Uses the same components as PID-13.",
+        "ar": "حقل يتكرر، ويأتي الرقم الرئيسي أولًا (أو يبقى التكرار الأول فارغًا). يستخدم مكوّنات PID-13 نفسها."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9; NK1-41 replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9، ويحل محله NK1-41."
+      },
+      "example": "555-0100^WPN^PH"
+    },
+    "NK1-32": {
+      "nameAr": "عنوان الشخص المسؤول عن التواصل",
+      "usage": "rare",
+      "summary": {
+        "en": "The address of the contact person named in NK1-30.",
+        "ar": "عنوان الشخص المذكور في NK1-30."
+      },
+      "details": {
+        "en": "Repeatable. Uses the same address components as PID-11. Mostly used when the NK1 is an organization.",
+        "ar": "حقل يتكرر. يستخدم مكوّنات العنوان نفسها في PID-11. يُستخدم غالبًا عندما يمثل مقطع NK1 منظمة."
+      },
+      "versionNote": {
+        "en": "Up to v2.6, the mailing address comes first when several are sent. HL7 removed this order rule in v2.7.",
+        "ar": "حتى الإصدار v2.6 يأتي العنوان البريدي أولًا عند إرسال أكثر من عنوان. وألغى HL7 قاعدة الترتيب هذه في الإصدار v2.7."
+      }
+    },
+    "NK1-33": {
+      "nameAr": "معرّفات الطرف المرتبط",
+      "usage": "sometimes",
+      "summary": {
+        "en": "IDs of the related person, such as a national ID, passport number or MRN.",
+        "ar": "معرّفات الشخص المرتبط بالمريض، مثل رقم الهوية الوطنية أو رقم جواز السفر أو رقم الملف الطبي (MRN)."
+      },
+      "details": {
+        "en": "Repeatable. Uses the CX structure: 1 ID, 4 assigning authority, 5 identifier type code, for example NI (national unique individual identifier) or PPN (passport number). HL7 strongly recommends filling the assigning authority and type code.",
+        "ar": "حقل يتكرر. يستخدم بنية CX: 1 المعرّف، و4 الجهة المُصدِرة، و5 رمز نوع المعرّف، مثل NI (المعرّف الوطني الفريد للفرد) أو PPN (رقم جواز السفر). يوصي HL7 بشدة بملء الجهة المُصدِرة ورمز النوع."
+      },
+      "tip": {
+        "en": "If the contact is also a patient, sending their MRN here lets the receiver link the two records.",
+        "ar": "إذا كانت جهة الاتصال مريضًا أيضًا، فإرسال رقم ملفه الطبي (MRN) هنا يسمح للنظام المستقبِل بربط السجلين."
+      },
+      "example": "TEST0002^^^DEMOHOSP^MR"
+    },
+    "NK1-34": {
+      "nameAr": "الوضع الوظيفي",
+      "usage": "rare",
+      "summary": {
+        "en": "The employment status of the related person, such as permanent or temporary.",
+        "ar": "الوضع الوظيفي للشخص المرتبط بالمريض، مثل دائم أو مؤقت."
+      },
+      "details": {
+        "en": "Table 0311 is user-defined: HL7 suggests the codes below.",
+        "ar": "الجدول 0311 يحدده المستخدم: يقترح HL7 الرموز أدناه."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "table": "0311",
+      "values": [
+        {
+          "code": "P",
+          "en": "Permanent",
+          "ar": "دائم",
+          "since": "2.4"
+        },
+        {
+          "code": "T",
+          "en": "Temporary",
+          "ar": "مؤقت",
+          "since": "2.4"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.4"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.4"
+        }
+      ]
+    },
+    "NK1-35": {
+      "nameAr": "العِرق",
+      "usage": "rare",
+      "summary": {
+        "en": "The race of the related person.",
+        "ar": "عِرق الشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Repeatable. Table 0005 is user-defined, so sites define their own codes. As in PID-10, the alternate code part is reserved for codes assigned by a government.",
+        "ar": "حقل يتكرر. الجدول 0005 يحدده المستخدم، لذلك تحدد كل جهة رموزها الخاصة. كما في PID-10، الجزء الخاص بالرمز البديل مخصص للرموز التي تحددها جهة حكومية."
+      },
+      "versionNote": {
+        "en": "In v2.3 a single plain code (IS). CE (coded element) and repeatable from v2.3.1; CWE from v2.6.",
+        "ar": "في الإصدار v2.3 كان رمزًا مجردًا واحدًا (IS). أصبح CE (عنصر مرمّز) وقابلًا للتكرار من الإصدار v2.3.1، وCWE من الإصدار v2.6."
+      },
+      "table": "0005"
+    },
+    "NK1-36": {
+      "nameAr": "الإعاقة",
+      "usage": "rare",
+      "summary": {
+        "en": "A code for a disability of the related person.",
+        "ar": "رمز يصف إعاقة لدى الشخص المرتبط بالمريض."
+      },
+      "details": {
+        "en": "Table 0295 is user-defined with no suggested values, so sites define their own codes.",
+        "ar": "الجدول 0295 يحدده المستخدم ولا توجد له قيم مقترحة، لذلك تحدد كل جهة رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "table": "0295"
+    },
+    "NK1-37": {
+      "nameAr": "رقم الضمان الاجتماعي للشخص المسؤول عن التواصل",
+      "usage": "rare",
+      "summary": {
+        "en": "The social security number of the contact person named in NK1-30.",
+        "ar": "رقم الضمان الاجتماعي للشخص المذكور في NK1-30."
+      },
+      "details": {
+        "en": "Plain text. It belongs to the contact person, not the associated party; the associated party's own number goes in NK1-33.",
+        "ar": "نص مجرد. يخص الشخص الذي يُتواصل معه، وليس الطرف المرتبط نفسه، أما رقم الطرف المرتبط فيُرسل في NK1-33."
+      },
+      "tip": {
+        "en": "Highly sensitive. Avoid sending it unless the receiver truly needs it.",
+        "ar": "معلومة شديدة الحساسية، فلا ترسلها إلا إذا كان النظام المستقبِل يحتاجها فعلًا."
+      }
+    },
+    "NK1-38": {
+      "nameAr": "مكان ميلاد القريب",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "The name of the place where the related person was born, as free text.",
+        "ar": "اسم المكان الذي وُلد فيه الشخص المرتبط بالمريض، كنص حر."
+      },
+      "details": {
+        "en": "Free text, such as a hospital or town name. The full birth address goes in NK1-4 with address type N (birth address).",
+        "ar": "نص حر، مثل اسم مستشفى أو بلدة. يُرسل عنوان الميلاد الكامل في NK1-4 بنوع العنوان N (عنوان الميلاد)."
+      },
+      "example": "DEMO HOSPITAL"
+    },
+    "NK1-39": {
+      "nameAr": "مؤشر كبار الشخصيات (VIP)",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "Marks the related person as a VIP (very important person) and gives the VIP type.",
+        "ar": "يحدد أن الشخص المرتبط بالمريض من كبار الشخصيات (VIP)، ويبيّن نوع هذه الصفة."
+      },
+      "details": {
+        "en": "Table 0099 is user-defined with no suggested values, so sites define their own codes.",
+        "ar": "الجدول 0099 يحدده المستخدم ولا توجد له قيم مقترحة، لذلك تحدد كل جهة رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "table": "0099"
+    },
+    "NK1-40": {
+      "nameAr": "بيانات الاتصال بالقريب",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "The related person's phone number or email, marked with its use and device type.",
+        "ar": "رقم هاتف الشخص المرتبط بالمريض أو بريده الإلكتروني، موسومًا بنوع الاستخدام ونوع الجهاز."
+      },
+      "details": {
+        "en": "The use code in component 2 (such as PRN, WPN or NET) and the equipment type in component 3 describe the number. It does not repeat.",
+        "ar": "يصف رمز الاستخدام في المكوّن 2 (مثل PRN أو WPN أو NET) ونوع الجهاز في المكوّن 3 طبيعة الرقم. هذا الحقل لا يتكرر."
+      },
+      "versionNote": {
+        "en": "Replaces NK1-5 and NK1-6, so older messages carry these numbers in those fields.",
+        "ar": "يحل محل NK1-5 وNK1-6، لذلك تحمل الرسائل الأقدم هذه الأرقام في هذين الحقلين."
+      },
+      "example": "^PRN^CP^^^^5550100"
+    },
+    "NK1-41": {
+      "nameAr": "بيانات الاتصال بالشخص المسؤول عن التواصل",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "The contact person's phone number or email, marked with its use and device type.",
+        "ar": "رقم هاتف الشخص المسؤول عن التواصل أو بريده الإلكتروني، موسومًا بنوع الاستخدام ونوع الجهاز."
+      },
+      "details": {
+        "en": "Belongs to the contact person in NK1-30. Components 2 (use) and 3 (equipment type) describe the number. It does not repeat.",
+        "ar": "يخص الشخص المذكور في NK1-30. يصف المكوّنان 2 (الاستخدام) و3 (نوع الجهاز) طبيعة الرقم. هذا الحقل لا يتكرر."
+      },
+      "versionNote": {
+        "en": "Replaces NK1-31, so older messages carry this number in that field.",
+        "ar": "يحل محل NK1-31، لذلك تحمل الرسائل الأقدم هذا الرقم في ذلك الحقل."
+      },
+      "example": "^WPN^PH^^^^5550100"
+    }
+  }
+}

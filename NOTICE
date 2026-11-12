@@ -1,0 +1,50 @@
+InfoGleam Message Explainer
+Copyright 2026 Hisham Alrashdan (InfoGleam)
+
+This project includes data from the HL7 Version 2 to FHIR project
+(https://github.com/HL7/v2-to-fhir), copyright HL7 International,
+licensed under the Apache License, Version 2.0.
+The file packages/core/src/dictionary/hl7-fields.json holds the segment
+field names, data types and repeat rules from that project's mapping
+tables (mappings/segments, commit 5e30516993). The data was reformatted
+to JSON and segment titles were added. Some values were corrected after
+checking the HL7 v2.9 standard text: some repeat and required rules, the
+v2.9 names and data types of ORC-4 and ORC-9, the data types of a few
+withdrawn fields, and field names that had a missing space or a footnote
+mark. The file lists each correction in its "corrections" entry. A copy
+of the Apache License 2.0 is in
+packages/core/src/dictionary/LICENSE-Apache-2.0.txt.
+
+The file packages/core/src/dictionary/hl7-datatypes.json holds the
+component names, data types and repeat rules of HL7 data types (for
+example XPN.1 Family Name), from the same project's mapping tables
+(mappings/datatypes, commit 5e30516993), under the same license. Only the
+identifier, name, data type and cardinality columns were used, and the
+data was reformatted to JSON. Where the source files disagree, the value
+that most files have is used. Six even splits were settled by checking
+the HL7 v2.9 standard text. A few component data types and names were
+corrected after checking the same text; the file lists them in its
+"corrections" entry.
+
+The HL7 v2 standard is copyright HL7 International, which owns all rights
+in it. Some data in this project are facts from the standard: the
+corrections listed in hl7-fields.json and hl7-datatypes.json. The
+licenses of this project cover only this project's own work in these
+files (the choice of facts and the format), not HL7's rights in the
+standard.
+
+The web page includes the font Noto Sans Arabic (Arabic letters, weights
+400 and 600), from the npm package @fontsource/noto-sans-arabic.
+Copyright 2022 The Noto Project Authors (https://github.com/notofonts/arabic).
+It is licensed under the SIL Open Font License, Version 1.1. A copy of the
+license is in apps/web/public/licenses/OFL-Noto-Sans-Arabic.txt and is
+published with the page at licenses/OFL-Noto-Sans-Arabic.txt.
+
+HL7 code values used in the explanations come from HL7 Terminology (THO),
+which HL7 International makes available under Creative Commons Zero (CC0).
+
+The explanations of segments and fields are original text written for this
+project. They are not copied from the HL7 standard.
+
+HL7 is the registered trademark of Health Level Seven International and the
+use does not constitute endorsement by HL7.

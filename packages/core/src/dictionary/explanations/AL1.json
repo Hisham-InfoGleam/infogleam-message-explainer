@@ -1,0 +1,216 @@
+{
+  "segment": "AL1",
+  "title": {
+    "en": "Patient Allergy Information",
+    "ar": "معلومات حساسية المريض"
+  },
+  "summary": {
+    "en": "One allergy of the patient: the allergen, its type, how severe it is and the reaction.",
+    "ar": "حساسية واحدة لدى المريض: مسبِّب الحساسية ونوعه ودرجة شدتها ورد الفعل الذي تسببه."
+  },
+  "details": {
+    "en": "AL1 appears in ADT (admission, discharge, transfer) messages such as ADT^A01 and ADT^A08, and in order messages such as OML (lab orders) and RDE (pharmacy orders). It repeats, one segment per allergy. AL1 uses snapshot mode: the allergies in a message replace the list the receiver had. The IAM segment (adverse reaction information) can add, change or delete single allergies.",
+    "ar": "يظهر AL1 في رسائل ADT (الدخول والخروج والنقل) مثل ADT^A01 وADT^A08، وفي رسائل الطلبات مثل OML (طلبات المختبر) وRDE (طلبات الصيدلية). ويتكرر بمعدل مقطع واحد لكل حساسية. ويعمل AL1 بنمط اللقطة الكاملة (snapshot): الحساسيات في الرسالة تحل محل القائمة السابقة لدى المستقبِل. أما المقطع IAM (معلومات التفاعلات الضارة) فيمكنه إضافة حساسية واحدة أو تعديلها أو حذفها."
+  },
+  "keyFields": [
+    "AL1-2",
+    "AL1-3",
+    "AL1-4",
+    "AL1-5"
+  ],
+  "fields": {
+    "AL1-1": {
+      "nameAr": "الرقم التسلسلي - AL1",
+      "usage": "common",
+      "summary": {
+        "en": "The number of this AL1 in the message: 1 for the first, 2 for the second, and so on.",
+        "ar": "رقم هذا المقطع AL1 في الرسالة: 1 للأول، و2 للثاني، وهكذا."
+      },
+      "details": {
+        "en": "SI (sequence ID) data type: a positive whole number that counts the AL1 segments in this message, starting at 1.",
+        "ar": "نوع البيانات SI (معرّف التسلسل): عدد صحيح موجب يعدّ مقاطع AL1 في هذه الرسالة بدءًا من 1."
+      },
+      "tip": {
+        "en": "Do not store AL1-1 as an allergy ID. The same allergy can get a different number in the next message.",
+        "ar": "لا تحفظ AL1-1 كمعرّف للحساسية، فقد تأخذ الحساسية نفسها رقمًا مختلفًا في الرسالة التالية."
+      },
+      "example": "1"
+    },
+    "AL1-2": {
+      "nameAr": "رمز نوع مسبِّب الحساسية",
+      "usage": "common",
+      "summary": {
+        "en": "The general category of the allergy, such as drug, food or environmental.",
+        "ar": "الفئة العامة للحساسية، مثل حساسية دواء أو طعام أو حساسية بيئية."
+      },
+      "details": {
+        "en": "Coded field: code ^ text ^ coding system, for example DA^Drug allergy^HL70127. Table 0127 is user-defined: HL7 suggests the codes listed here, and sites may add their own.",
+        "ar": "حقل مرمّز: الرمز ^ النص ^ نظام الترميز، مثل DA^Drug allergy^HL70127. وجدول الرموز 0127 يحدده المستخدم: يقترح HL7 الرموز المذكورة هنا، ويمكن لكل موقع إضافة رموزه."
+      },
+      "versionNote": {
+        "en": "Called Allergy Type, with data type IS (a bare code), in v2.3 and v2.3.1. Coded types CE from v2.4 and CWE from v2.6.",
+        "ar": "كان اسمه Allergy Type بنوع البيانات IS (رمز فقط) في الإصدارين v2.3 وv2.3.1. ثم صار من الأنواع المرمّزة: CE من v2.4، وCWE من v2.6."
+      },
+      "tip": {
+        "en": "Drug allergies (DA) matter most for safety checks. Make sure the receiving system maps each code, because unknown types are sometimes dropped silently.",
+        "ar": "حساسية الأدوية (DA) هي الأهم في فحوص السلامة. تأكد أن النظام المستقبِل يطابق كل رمز، لأن الأنواع غير المعروفة تُهمَل أحيانًا دون تنبيه."
+      },
+      "example": "DA^Drug allergy^HL70127",
+      "table": "0127",
+      "values": [
+        {
+          "code": "DA",
+          "en": "Drug allergy",
+          "ar": "حساسية دواء"
+        },
+        {
+          "code": "FA",
+          "en": "Food allergy",
+          "ar": "حساسية طعام"
+        },
+        {
+          "code": "MA",
+          "en": "Miscellaneous allergy",
+          "ar": "حساسية متنوعة (أخرى)"
+        },
+        {
+          "code": "MC",
+          "en": "Miscellaneous contraindication",
+          "ar": "مانع استعمال متنوع (أخرى)"
+        },
+        {
+          "code": "EA",
+          "en": "Environmental Allergy",
+          "ar": "حساسية بيئية",
+          "since": "2.4"
+        },
+        {
+          "code": "AA",
+          "en": "Animal Allergy",
+          "ar": "حساسية من الحيوانات",
+          "since": "2.4"
+        },
+        {
+          "code": "PA",
+          "en": "Plant Allergy",
+          "ar": "حساسية من النباتات",
+          "since": "2.4"
+        },
+        {
+          "code": "LA",
+          "en": "Pollen Allergy",
+          "ar": "حساسية حبوب اللقاح",
+          "since": "2.4"
+        }
+      ]
+    },
+    "AL1-3": {
+      "nameAr": "رمز مسبِّب الحساسية أو اختصاره أو وصفه",
+      "usage": "common",
+      "summary": {
+        "en": "The specific allergen, such as a drug, food or substance, as a code, short name or description.",
+        "ar": "مسبِّب الحساسية المحدد، مثل دواء أو طعام أو مادة، على شكل رمز أو اسم مختصر أو وصف."
+      },
+      "details": {
+        "en": "Coded field: code ^ text ^ coding system. The code can come from a named external coding system, or be a local code or plain text. When an external system is used, component 3 must name it.",
+        "ar": "حقل مرمّز: الرمز ^ النص ^ نظام الترميز. وقد يأتي الرمز من نظام ترميز خارجي معروف، أو يكون رمزًا محليًا أو نصًا عاديًا. وعند استخدام نظام خارجي يجب ذكر اسمه في المكوّن 3."
+      },
+      "versionNote": {
+        "en": "Called Allergy Code/Mnemonic/Description in v2.3 and v2.3.1. Data type CE up to v2.5.1, CWE from v2.6.",
+        "ar": "كان اسمه Allergy Code/Mnemonic/Description في الإصدارين v2.3 وv2.3.1. ونوع البيانات CE حتى v2.5.1، وCWE من v2.6."
+      },
+      "tip": {
+        "en": "Free text alone cannot drive automatic drug-allergy checks. Send a code with its coding system, and keep the readable name in component 2.",
+        "ar": "النص الحر وحده لا يكفي لتشغيل فحوص حساسية الأدوية الآلية. أرسل رمزًا مع نظام ترميزه، وضع الاسم المقروء في المكوّن 2."
+      },
+      "example": "PEN^Penicillin^L"
+    },
+    "AL1-4": {
+      "nameAr": "رمز شدة الحساسية",
+      "usage": "common",
+      "summary": {
+        "en": "How severe the allergy is: severe, moderate, mild or unknown.",
+        "ar": "درجة شدة الحساسية: شديدة أو متوسطة أو خفيفة أو غير معروفة."
+      },
+      "details": {
+        "en": "Coded field: code ^ text ^ coding system. Table 0128 is user-defined: HL7 suggests SV, MO, MI and U, and sites may add their own codes.",
+        "ar": "حقل مرمّز: الرمز ^ النص ^ نظام الترميز. وجدول الرموز 0128 يحدده المستخدم: يقترح HL7 الرموز SV وMO وMI وU، ويمكن لكل موقع إضافة رموزه."
+      },
+      "versionNote": {
+        "en": "Called Allergy Severity, with data type IS (a bare code), in v2.3 and v2.3.1. Coded types CE from v2.4 and CWE from v2.6.",
+        "ar": "كان اسمه Allergy Severity بنوع البيانات IS (رمز فقط) في الإصدارين v2.3 وv2.3.1. ثم صار من الأنواع المرمّزة: CE من v2.4، وCWE من v2.6."
+      },
+      "tip": {
+        "en": "Treat an empty severity as unknown, not as mild. Some systems show a missing severity as low risk, which can mislead clinicians.",
+        "ar": "اعتبر الشدة الفارغة غير معروفة لا خفيفة. فبعض الأنظمة تعرض الشدة المفقودة كأنها خطر منخفض، وقد يضلل ذلك الأطباء."
+      },
+      "example": "SV^Severe^HL70128",
+      "table": "0128",
+      "values": [
+        {
+          "code": "SV",
+          "en": "Severe",
+          "ar": "شديدة"
+        },
+        {
+          "code": "MO",
+          "en": "Moderate",
+          "ar": "متوسطة"
+        },
+        {
+          "code": "MI",
+          "en": "Mild",
+          "ar": "خفيفة"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروفة",
+          "since": "2.4"
+        }
+      ]
+    },
+    "AL1-5": {
+      "nameAr": "رمز رد الفعل التحسسي",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The reaction the patient had, such as rash, hives or breathing problems. It can repeat.",
+        "ar": "رد الفعل الذي ظهر على المريض، مثل الطفح الجلدي أو الشرى أو صعوبة التنفس. ويمكن أن يتكرر."
+      },
+      "details": {
+        "en": "A plain string (ST), so it holds one short code or word, not code^text^system. Each reaction goes in its own repetition. The length limit is 15 characters in v2.5.1.",
+        "ar": "نص بسيط (ST)، فيحمل رمزًا قصيرًا أو كلمة واحدة، لا الصيغة الرمز^النص^النظام. وكل رد فعل يوضع في تكرار مستقل. والحد الأقصى للطول 15 محرفًا في الإصدار v2.5.1."
+      },
+      "versionNote": {
+        "en": "Called Allergy Reaction in v2.3 and v2.3.1. It did not repeat in v2.3; repetition was allowed from v2.3.1.",
+        "ar": "كان اسمه Allergy Reaction في الإصدارين v2.3 وv2.3.1. ولم يكن يتكرر في الإصدار v2.3، وسُمح بتكراره من الإصدار v2.3.1."
+      },
+      "tip": {
+        "en": "Strict receivers may cut reaction text longer than 15 characters. Agree on short reaction codes or words with the sender.",
+        "ar": "قد تقصّ الأنظمة المستقبِلة الصارمة نص رد الفعل الأطول من 15 محرفًا. فاتفق مع المُرسِل على رموز أو كلمات قصيرة لردود الفعل."
+      },
+      "example": "RASH~HIVES"
+    },
+    "AL1-6": {
+      "nameAr": "تاريخ اكتشاف الحساسية",
+      "usage": "legacy",
+      "summary": {
+        "en": "The date when the allergy was first identified.",
+        "ar": "التاريخ الذي اكتُشفت فيه الحساسية أول مرة."
+      },
+      "details": {
+        "en": "DT (date) data type, format YYYYMMDD.",
+        "ar": "نوع البيانات DT (التاريخ) بالصيغة YYYYMMDD."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.4, and withdrawn in v2.7. The IAM segment has date fields, such as IAM-11 Onset Date.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.4، وأُلغي في الإصدار v2.7. وفي المقطع IAM حقول للتواريخ، مثل IAM-11 (تاريخ بدء الحساسية)."
+      },
+      "tip": {
+        "en": "Older systems still send this date. Read it if present, but do not make it required in new interfaces.",
+        "ar": "ما زالت الأنظمة القديمة ترسل هذا التاريخ. اقرأه إن وُجد، لكن لا تجعله إلزاميًا في الواجهات الجديدة."
+      },
+      "example": "20260310"
+    }
+  }
+}

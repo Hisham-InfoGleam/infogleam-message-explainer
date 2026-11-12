@@ -1,0 +1,686 @@
+{
+  "segment": "DG1",
+  "title": {
+    "en": "Diagnosis",
+    "ar": "التشخيص"
+  },
+  "summary": {
+    "en": "One diagnosis for the patient's visit, with its code, type (admitting, working or final), priority and the clinician who made it.",
+    "ar": "تشخيص واحد لزيارة المريض، مع رمزه ونوعه (عند الدخول أو مبدئي أو نهائي) وأولويته والطبيب الذي وضعه."
+  },
+  "details": {
+    "en": "DG1 appears in ADT (admission, discharge, transfer) messages such as ADT^A01, ADT^A03 and ADT^A08, in billing messages (BAR^P01, DFT^P03) and in some order messages. It repeats, one segment per diagnosis. Many DRG (diagnosis related group, a grouping used for hospital payment) fields moved to the DRG segment. DG1 is for coding and billing, not for the clinical problem list (PRB segment).",
+    "ar": "يظهر DG1 في رسائل ADT (الدخول والخروج والنقل) مثل ADT^A01 وADT^A03 وADT^A08، وفي رسائل الفوترة (BAR^P01 وDFT^P03)، وفي بعض رسائل الطلبات. ويتكرر بمعدل مقطع واحد لكل تشخيص. وقد انتقلت حقول كثيرة خاصة بمجموعات DRG (مجموعات التشخيص المرتبطة، وهي تصنيف يُستخدم في دفع تكاليف المستشفى) إلى المقطع DRG. والمقطع DG1 مخصص لترميز التشخيصات والفوترة، لا لقائمة المشكلات السريرية (المقطع PRB)."
+  },
+  "keyFields": [
+    "DG1-3",
+    "DG1-5",
+    "DG1-6",
+    "DG1-15",
+    "DG1-16"
+  ],
+  "fields": {
+    "DG1-1": {
+      "nameAr": "الرقم التسلسلي - DG1",
+      "usage": "common",
+      "summary": {
+        "en": "The number of this DG1 in the message: 1 for the first, 2 for the second, and so on.",
+        "ar": "رقم هذا المقطع DG1 في الرسالة: 1 للأول، و2 للثاني، وهكذا."
+      },
+      "details": {
+        "en": "SI (sequence ID) data type: a positive whole number that counts the DG1 segments in this message, starting at 1.",
+        "ar": "نوع البيانات SI (معرّف التسلسل): عدد صحيح موجب يعدّ مقاطع DG1 في هذه الرسالة بدءًا من 1."
+      },
+      "tip": {
+        "en": "DG1-1 is not the diagnosis rank. Use DG1-15 for the primary diagnosis, and DG1-20 for a stable diagnosis ID.",
+        "ar": "الحقل DG1-1 ليس ترتيب أهمية التشخيص. استخدم DG1-15 لتحديد التشخيص الرئيسي، وDG1-20 لمعرّف ثابت للتشخيص."
+      },
+      "example": "1"
+    },
+    "DG1-2": {
+      "nameAr": "طريقة ترميز التشخيص",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Names the coding system of the diagnosis code. Today this goes in DG1-3 component 3.",
+        "ar": "يذكر نظام الترميز الخاص برمز التشخيص. واليوم يوضع ذلك في المكوّن 3 من DG1-3."
+      },
+      "details": {
+        "en": "Table 0053 is user-defined, and HL7 gives no suggested values.",
+        "ar": "جدول الرموز 0053 يحدده المستخدم، ولا يقترح HL7 أي قيم له."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Old senders may still put a coding system name here and leave DG1-3 component 3 empty. Copy it across when you map the diagnosis.",
+        "ar": "قد تضع الأنظمة القديمة اسم نظام الترميز هنا وتترك المكوّن 3 من DG1-3 فارغًا، فانقله إليه عند مطابقة (mapping) التشخيص."
+      },
+      "table": "0053"
+    },
+    "DG1-3": {
+      "nameAr": "رمز التشخيص - DG1",
+      "usage": "common",
+      "summary": {
+        "en": "The diagnosis as a code with its text and coding system, often an ICD-10 (International Classification of Diseases) code.",
+        "ar": "التشخيص على شكل رمز مع نصه ونظام ترميزه، وغالبًا يكون رمزًا من ICD-10 (التصنيف الدولي للأمراض)."
+      },
+      "details": {
+        "en": "Coded field: code ^ text ^ coding system, for example HTN^Hypertension^L for a local code. Table 0051 is user-defined: each site defines its own codes. From v2.6, when component 1 has a code, component 3 must name the coding system.",
+        "ar": "حقل مرمّز: الرمز ^ النص ^ نظام الترميز، مثل HTN^Hypertension^L لرمز محلي. وجدول الرموز 0051 يحدده المستخدم، فكل موقع يحدد رموزه. ومن الإصدار v2.6، عندما يحمل المكوّن 1 رمزًا يجب أن يذكر المكوّن 3 نظام الترميز."
+      },
+      "versionNote": {
+        "en": "Optional, with the CE data type, in v2.5.1 and earlier. Required, with the CWE data type, from v2.6.",
+        "ar": "كان اختياريًا بنوع البيانات CE في الإصدار v2.5.1 وما قبله، وأصبح إلزاميًا بنوع البيانات CWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Check component 3 before mapping. The same code can mean different things in different coding systems or versions, and some senders leave component 3 empty.",
+        "ar": "افحص المكوّن 3 قبل المطابقة، فالرمز نفسه قد يعني أشياء مختلفة في أنظمة ترميز أو إصدارات مختلفة، وبعض المُرسِلين يتركون المكوّن 3 فارغًا."
+      },
+      "example": "HTN^Hypertension^L",
+      "table": "0051"
+    },
+    "DG1-4": {
+      "nameAr": "وصف التشخيص",
+      "usage": "sometimes",
+      "summary": {
+        "en": "A text description of the diagnosis. Today the text goes in DG1-3 component 2.",
+        "ar": "وصف نصي للتشخيص. واليوم يوضع النص في المكوّن 2 من DG1-3."
+      },
+      "details": {
+        "en": "A plain string (ST) of up to 40 characters in v2.5.1.",
+        "ar": "نص بسيط (ST) طوله حتى 40 محرفًا في الإصدار v2.5.1."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Many older systems still send the description here. If DG1-3 component 2 is empty, use DG1-4 as the display text.",
+        "ar": "ما زالت أنظمة قديمة كثيرة ترسل الوصف هنا. فإذا كان المكوّن 2 من DG1-3 فارغًا فاستخدم DG1-4 كنص للعرض."
+      },
+      "example": "Hypertension"
+    },
+    "DG1-5": {
+      "nameAr": "تاريخ ووقت التشخيص",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The date and time when the diagnosis was made.",
+        "ar": "التاريخ والوقت اللذان وُضع فيهما التشخيص."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMMSS; later parts may be left off, for example 20260315 for a date only. A time zone (+/-HHMM) may be added.",
+        "ar": "الصيغة YYYYMMDDHHMMSS، ويجوز حذف الأجزاء الأخيرة، مثل 20260315 للتاريخ فقط. ويجوز إضافة المنطقة الزمنية (+/-HHMM)."
+      },
+      "example": "20260315"
+    },
+    "DG1-6": {
+      "nameAr": "نوع التشخيص",
+      "usage": "common",
+      "summary": {
+        "en": "The kind of diagnosis: admitting, working or final.",
+        "ar": "نوع التشخيص: عند الدخول أو مبدئي أو نهائي."
+      },
+      "details": {
+        "en": "Table 0052 is user-defined: HL7 suggests A (admitting), W (working) and F (final), and sites may add more. It should not mark a DRG (diagnosis related group) diagnosis, because DRG data now has its own segment.",
+        "ar": "جدول الرموز 0052 يحدده المستخدم: يقترح HL7 الرموز A (عند الدخول) وW (مبدئي) وF (نهائي)، ويمكن لكل موقع إضافة غيرها. ولا يُستخدم للدلالة على تشخيص DRG (مجموعات التشخيص المرتبطة)، لأن بيانات DRG لها الآن مقطع خاص."
+      },
+      "versionNote": {
+        "en": "Data type IS (a bare code) up to v2.6. From v2.7 it is CWE, for example A^Admitting^HL70052.",
+        "ar": "نوع البيانات IS (رمز فقط) حتى الإصدار v2.6. ومن الإصدار v2.7 أصبح CWE، مثل A^Admitting^HL70052."
+      },
+      "tip": {
+        "en": "A visit often has several DG1 segments with different types. Receivers that keep only one diagnosis should pick by DG1-6 and DG1-15, not by order.",
+        "ar": "كثيرًا ما تحمل الزيارة عدة مقاطع DG1 بأنواع مختلفة. والأنظمة التي تحتفظ بتشخيص واحد فقط ينبغي أن تختاره بناءً على DG1-6 وDG1-15، لا بحسب ترتيب المقاطع."
+      },
+      "example": "A",
+      "table": "0052",
+      "values": [
+        {
+          "code": "A",
+          "en": "Admitting",
+          "ar": "عند الدخول (Admitting)"
+        },
+        {
+          "code": "W",
+          "en": "Working",
+          "ar": "مبدئي (Working)"
+        },
+        {
+          "code": "F",
+          "en": "Final",
+          "ar": "نهائي (Final)"
+        }
+      ]
+    },
+    "DG1-7": {
+      "nameAr": "الفئة التشخيصية الرئيسية (MDC)",
+      "usage": "legacy",
+      "summary": {
+        "en": "The major diagnostic category (MDC), a broad group of diagnoses used in DRG (diagnosis related group) systems.",
+        "ar": "الفئة التشخيصية الرئيسية (MDC)، وهي مجموعة واسعة من التشخيصات تُستخدم في أنظمة DRG (مجموعات التشخيص المرتبطة)."
+      },
+      "details": {
+        "en": "Coded field using table 0118, which is user-defined with no suggested values. In v2.5.1 HL7 says it should only be used in master file messages.",
+        "ar": "حقل مرمّز يستخدم جدول الرموز 0118، الذي يحدده المستخدم دون قيم مقترحة. وفي الإصدار v2.5.1 ينص HL7 على استخدامه في رسائل الملفات الرئيسية (Master Files) فقط."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6."
+      },
+      "table": "0118"
+    },
+    "DG1-8": {
+      "nameAr": "مجموعة التشخيص المرتبطة (DRG)",
+      "usage": "legacy",
+      "summary": {
+        "en": "The DRG (diagnosis related group) assigned for this case. It now belongs in the DRG segment.",
+        "ar": "مجموعة التشخيص المرتبطة (DRG) المحددة لهذه الحالة، ومكانها الآن في المقطع DRG."
+      },
+      "details": {
+        "en": "Coded field using table 0055, which is user-defined with no suggested values. An encounter may get interim DRGs before the final one.",
+        "ar": "حقل مرمّز يستخدم جدول الرموز 0055، الذي يحدده المستخدم دون قيم مقترحة. وقد تحصل الزيارة على مجموعات DRG مؤقتة قبل المجموعة النهائية."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6. Use DRG-1 in the DRG segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6. استخدم DRG-1 في المقطع DRG."
+      },
+      "table": "0055"
+    },
+    "DG1-9": {
+      "nameAr": "مؤشر اعتماد DRG",
+      "usage": "legacy",
+      "summary": {
+        "en": "Says if a reviewing body approved the DRG (diagnosis related group): Y for yes, N for no.",
+        "ar": "يبيّن هل اعتمدت جهة مراجعة مجموعة التشخيص المرتبطة (DRG): Y نعم، وN لا."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6. Use DRG-3 in the DRG segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6. استخدم DRG-3 في المقطع DRG."
+      },
+      "table": "0136",
+      "values": [
+        {
+          "code": "Y",
+          "en": "Yes",
+          "ar": "نعم"
+        },
+        {
+          "code": "N",
+          "en": "No",
+          "ar": "لا"
+        }
+      ]
+    },
+    "DG1-10": {
+      "nameAr": "رمز مراجعة أداة تجميع DRG",
+      "usage": "legacy",
+      "summary": {
+        "en": "A code showing that the results of the DRG grouper (the software that assigns the DRG) were reviewed.",
+        "ar": "رمز يبيّن أن نتائج أداة تجميع DRG (Grouper)، وهي البرنامج الذي يحدد مجموعة DRG، قد رُوجعت."
+      },
+      "details": {
+        "en": "Table 0056 is user-defined, and HL7 gives no suggested values.",
+        "ar": "جدول الرموز 0056 يحدده المستخدم، ولا يقترح HL7 أي قيم له."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6. Use DRG-4 in the DRG segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6. استخدم DRG-4 في المقطع DRG."
+      },
+      "table": "0056"
+    },
+    "DG1-11": {
+      "nameAr": "نوع الحالة الاستثنائية (Outlier)",
+      "usage": "legacy",
+      "summary": {
+        "en": "The type of outlier paid, meaning care beyond the DRG standard: D for extra days or C for extra cost.",
+        "ar": "نوع الحالة الاستثنائية (Outlier) المدفوعة، أي الرعاية التي تتجاوز معيار مجموعة DRG: D لأيام إضافية أو C لتكلفة إضافية."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6. Use DRG-5 in the DRG segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6. استخدم DRG-5 في المقطع DRG."
+      },
+      "table": "0083",
+      "values": [
+        {
+          "code": "D",
+          "en": "Outlier days",
+          "ar": "أيام إضافية (Outlier days)",
+          "since": "2.3.1"
+        },
+        {
+          "code": "C",
+          "en": "Outlier cost",
+          "ar": "تكلفة إضافية (Outlier cost)",
+          "since": "2.3.1"
+        }
+      ]
+    },
+    "DG1-12": {
+      "nameAr": "أيام الحالة الاستثنائية",
+      "usage": "legacy",
+      "summary": {
+        "en": "The number of days approved for an outlier payment.",
+        "ar": "عدد الأيام المعتمدة لدفعة الحالة الاستثنائية (Outlier)."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6. Use DRG-6 in the DRG segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6. استخدم DRG-6 في المقطع DRG."
+      }
+    },
+    "DG1-13": {
+      "nameAr": "تكلفة الحالة الاستثنائية",
+      "usage": "legacy",
+      "summary": {
+        "en": "The amount of money approved for an outlier payment.",
+        "ar": "المبلغ المالي المعتمد لدفعة الحالة الاستثنائية (Outlier)."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6. Use DRG-7 in the DRG segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6. استخدم DRG-7 في المقطع DRG."
+      }
+    },
+    "DG1-14": {
+      "nameAr": "إصدار أداة التجميع ونوعها",
+      "usage": "legacy",
+      "summary": {
+        "en": "The version and type of the DRG grouper software that was used.",
+        "ar": "إصدار برنامج تجميع DRG (Grouper) الذي استُخدم ونوعه."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3, and withdrawn in v2.6. From v2.6, DRG-18 and DRG-19 hold the grouper name and version.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3، وأُلغي في الإصدار v2.6. ومن الإصدار v2.6 يحمل DRG-18 وDRG-19 اسم برنامج التجميع وإصداره."
+      }
+    },
+    "DG1-15": {
+      "nameAr": "أولوية التشخيص",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The rank of this diagnosis: 1 is the primary diagnosis, 2 and higher are secondary, 0 means not ranked.",
+        "ar": "ترتيب أهمية هذا التشخيص: 1 هو التشخيص الرئيسي، و2 فما فوق تشخيصات ثانوية، و0 يعني أنه غير مرتّب."
+      },
+      "details": {
+        "en": "Uses table 0359. Numbers from 2 up rank the secondary diagnoses in order: 2 for the second, 3 for the third, and so on.",
+        "ar": "يستخدم جدول الرموز 0359. والأرقام من 2 فما فوق ترتّب التشخيصات الثانوية بالتسلسل: 2 للثاني، و3 للثالث، وهكذا."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility in v2.3, where 0 meant the admitting diagnosis. Later versions use table 0359, where 0 means not ranked.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط في الإصدار v2.3، وفيه كان الرقم 0 يعني التشخيص عند الدخول. وتستخدم الإصدارات اللاحقة جدول الرموز 0359، وفيه يعني 0 أن التشخيص غير مرتّب."
+      },
+      "tip": {
+        "en": "Avoid two diagnoses with priority 1 for the same diagnosis type. Billing and quality reports often take the primary diagnosis from DG1-15 = 1.",
+        "ar": "تجنّب وجود تشخيصين بالأولوية 1 لنفس نوع التشخيص، فتقارير الفوترة والجودة تأخذ التشخيص الرئيسي غالبًا من DG1-15 = 1."
+      },
+      "example": "1",
+      "table": "0359",
+      "values": [
+        {
+          "code": "0",
+          "en": "Not included in diagnosis ranking",
+          "ar": "غير مشمول في ترتيب التشخيصات",
+          "since": "2.3.1"
+        },
+        {
+          "code": "1",
+          "en": "The primary diagnosis",
+          "ar": "التشخيص الرئيسي",
+          "since": "2.3.1"
+        }
+      ]
+    },
+    "DG1-16": {
+      "nameAr": "الطبيب المشخِّص",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The clinician responsible for the diagnosis.",
+        "ar": "الطبيب (أو الممارس الصحي) المسؤول عن التشخيص."
+      },
+      "details": {
+        "en": "XCN (person ID and name) data type: ID ^ family name ^ given name. Up to v2.6, repetitions hold other names or IDs of the same person, not other clinicians, and the legal name comes first. From v2.7, their order has no meaning.",
+        "ar": "نوع البيانات XCN (معرّف الشخص واسمه): المعرّف ^ اسم العائلة ^ الاسم الأول. وحتى الإصدار v2.6 تحمل التكرارات أسماء أو معرّفات أخرى للشخص نفسه، لا أطباء آخرين، ويأتي الاسم القانوني أولًا. ومن الإصدار v2.7 لم يعد لترتيب التكرارات أي معنى."
+      },
+      "tip": {
+        "en": "Some senders put several different doctors in the repetitions. Check this before mapping, or you may join two people into one.",
+        "ar": "بعض المُرسِلين يضعون عدة أطباء مختلفين في التكرارات. افحص ذلك قبل المطابقة، وإلا فقد تدمج شخصين في شخص واحد."
+      },
+      "example": "D1001^DOCTOR^DEMO"
+    },
+    "DG1-17": {
+      "nameAr": "تصنيف التشخيص",
+      "usage": "rare",
+      "summary": {
+        "en": "Says whether the entry is a real diagnosis or another kind of item, such as a sign, symptom or consultation.",
+        "ar": "يبيّن هل البند تشخيص فعلي أم نوع آخر من البنود، مثل علامة أو عَرَض أو استشارة."
+      },
+      "details": {
+        "en": "Table 0228 is user-defined: HL7 suggests the codes listed here, and sites may add their own.",
+        "ar": "جدول الرموز 0228 يحدده المستخدم: يقترح HL7 الرموز المذكورة هنا، ويمكن لكل موقع إضافة رموزه."
+      },
+      "example": "D",
+      "table": "0228",
+      "values": [
+        {
+          "code": "C",
+          "en": "Consultation",
+          "ar": "استشارة"
+        },
+        {
+          "code": "D",
+          "en": "Diagnosis",
+          "ar": "تشخيص"
+        },
+        {
+          "code": "M",
+          "en": "Medication (antibiotic)",
+          "ar": "دواء (مضاد حيوي)"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "أخرى"
+        },
+        {
+          "code": "R",
+          "en": "Radiological scheduling (not using ICDA codes)",
+          "ar": "جدولة الأشعة (دون استخدام رموز ICDA)"
+        },
+        {
+          "code": "S",
+          "en": "Sign and symptom",
+          "ar": "علامة وعَرَض"
+        },
+        {
+          "code": "T",
+          "en": "Tissue diagnosis",
+          "ar": "تشخيص نسيجي"
+        },
+        {
+          "code": "I",
+          "en": "Invasive procedure not classified elsewhere (I.V., catheter, etc.)",
+          "ar": "إجراء تدخّلي غير مصنّف في مكان آخر (حقن وريدي، قسطرة، وغيرها)"
+        }
+      ]
+    },
+    "DG1-18": {
+      "nameAr": "مؤشر السرية",
+      "usage": "rare",
+      "summary": {
+        "en": "Says if this diagnosis is confidential: Y for yes, N for no.",
+        "ar": "يبيّن هل هذا التشخيص سري: Y نعم، وN لا."
+      },
+      "details": {
+        "en": "Uses HL7 table 0136 (yes/no indicator).",
+        "ar": "يستخدم جدول رموز HL7 رقم 0136 (مؤشر نعم/لا)."
+      },
+      "tip": {
+        "en": "If the receiver cannot hide confidential diagnoses, agree with the sender to filter them before sending, rather than displaying them to everyone.",
+        "ar": "إذا كان النظام المستقبِل لا يستطيع إخفاء التشخيصات السرية، فاتفق مع المُرسِل على تصفيتها قبل الإرسال بدلًا من عرضها للجميع."
+      },
+      "example": "N",
+      "table": "0136",
+      "values": [
+        {
+          "code": "Y",
+          "en": "Yes",
+          "ar": "نعم"
+        },
+        {
+          "code": "N",
+          "en": "No",
+          "ar": "لا"
+        }
+      ]
+    },
+    "DG1-19": {
+      "nameAr": "تاريخ ووقت المصادقة",
+      "usage": "rare",
+      "summary": {
+        "en": "When the attestation was signed, meaning the formal signed statement that confirms the diagnosis.",
+        "ar": "وقت توقيع المصادقة (Attestation)، أي الإقرار الرسمي الموقّع الذي يؤكد التشخيص."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMMSS, with an optional time zone.",
+        "ar": "الصيغة YYYYMMDDHHMMSS مع منطقة زمنية اختيارية."
+      },
+      "example": "20260316101500"
+    },
+    "DG1-20": {
+      "nameAr": "معرّف التشخيص",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "A unique ID for this diagnosis within the visit, so later messages can update or delete it.",
+        "ar": "معرّف فريد لهذا التشخيص داخل الزيارة، لكي تتمكن الرسائل اللاحقة من تحديثه أو حذفه."
+      },
+      "details": {
+        "en": "EI (entity identifier) data type: the ID ^ namespace ID ^ universal ID ^ universal ID type. It is unique across all segments and messages of the encounter. It is required where the update diagnosis/procedures message (BAR^P12) is used.",
+        "ar": "نوع البيانات EI (معرّف الكيان): المعرّف ^ معرّف النطاق ^ المعرّف العالمي ^ نوع المعرّف العالمي. وهو فريد في جميع المقاطع والرسائل الخاصة بالزيارة، وإلزامي حيث تُستخدم رسالة تحديث التشخيصات والإجراءات (BAR^P12)."
+      },
+      "example": "DX0001^DEMOHOSP"
+    },
+    "DG1-21": {
+      "nameAr": "رمز الإجراء على التشخيص",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "What the receiver should do with this diagnosis in an update: add, delete, update or no change.",
+        "ar": "ما يجب أن يفعله المستقبِل بهذا التشخيص عند التحديث: إضافة أو حذف أو تعديل أو بلا تغيير."
+      },
+      "details": {
+        "en": "Uses table 0206 (segment action code). It is required in the update diagnosis/procedures message (BAR^P12) and optional in other events. DG1-20 identifies which diagnosis the action applies to.",
+        "ar": "يستخدم جدول الرموز 0206 (رمز الإجراء على المقطع). وهو إلزامي في رسالة تحديث التشخيصات والإجراءات (BAR^P12) واختياري في الأحداث الأخرى. ويحدد DG1-20 التشخيص الذي ينطبق عليه الإجراء."
+      },
+      "example": "A",
+      "table": "0206",
+      "values": [
+        {
+          "code": "A",
+          "en": "Add/Insert",
+          "ar": "إضافة/إدراج"
+        },
+        {
+          "code": "D",
+          "en": "Delete",
+          "ar": "حذف"
+        },
+        {
+          "code": "U",
+          "en": "Update",
+          "ar": "تحديث"
+        },
+        {
+          "code": "X",
+          "en": "No Change",
+          "ar": "بلا تغيير",
+          "since": "2.6"
+        }
+      ]
+    },
+    "DG1-22": {
+      "nameAr": "التشخيص الأصل",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "Links this diagnosis to the diagnosis it comes from, using that diagnosis's identifier from DG1-20.",
+        "ar": "يربط هذا التشخيص بالتشخيص الذي ينشأ عنه، باستخدام معرّف ذلك التشخيص من DG1-20."
+      },
+      "details": {
+        "en": "EI (entity identifier) data type. It links a manifestation diagnosis (how a disease shows, marked *) to its etiology diagnosis (the underlying cause, marked +).",
+        "ar": "نوع البيانات EI (معرّف الكيان). ويربط تشخيص المظهر (كيف يظهر المرض، ويُعلَّم بالرمز *) بتشخيص السبب (السبب الأساسي، ويُعلَّم بالرمز +)."
+      },
+      "example": "DX0001^DEMOHOSP"
+    },
+    "DG1-23": {
+      "nameAr": "رمز قيمة CCL في DRG",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "The complexity level (CCL value) that DRG grouping gives this diagnosis, from 0 (nothing obvious) to 4 (very high).",
+        "ar": "مستوى التعقيد (قيمة CCL) الذي يعطيه تجميع DRG لهذا التشخيص، من 0 (لا شيء واضح) إلى 4 (مرتفع جدًا)."
+      },
+      "details": {
+        "en": "CWE (coded with exceptions) field using table 0728, which HL7 marks as externally defined. DRG-14 in the DRG segment uses the same table for the whole case.",
+        "ar": "حقل مرمّز من النوع CWE يستخدم جدول الرموز 0728، الذي يصنّفه HL7 جدولًا معرّفًا من جهة خارجية. ويستخدم الحقل DRG-14 في المقطع DRG الجدول نفسه للحالة كلها."
+      },
+      "example": "2",
+      "table": "0728",
+      "values": [
+        {
+          "code": "0",
+          "en": "Nothing obvious",
+          "ar": "لا شيء واضح",
+          "since": "2.6"
+        },
+        {
+          "code": "1",
+          "en": "Low",
+          "ar": "منخفض",
+          "since": "2.6"
+        },
+        {
+          "code": "2",
+          "en": "Moderate",
+          "ar": "متوسط",
+          "since": "2.6"
+        },
+        {
+          "code": "3",
+          "en": "High",
+          "ar": "مرتفع",
+          "since": "2.6"
+        },
+        {
+          "code": "4",
+          "en": "Very high",
+          "ar": "مرتفع جدًا",
+          "since": "2.6"
+        }
+      ]
+    },
+    "DG1-24": {
+      "nameAr": "استخدام التشخيص في تجميع DRG",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "Says if this diagnosis was used to determine the DRG: Y for yes, N for no.",
+        "ar": "يبيّن هل استُخدم هذا التشخيص في تحديد مجموعة DRG: Y نعم، وN لا."
+      },
+      "details": {
+        "en": "Uses HL7 table 0136 (yes/no indicator).",
+        "ar": "يستخدم جدول رموز HL7 رقم 0136 (مؤشر نعم/لا)."
+      },
+      "example": "Y",
+      "table": "0136",
+      "values": [
+        {
+          "code": "Y",
+          "en": "Yes",
+          "ar": "نعم"
+        },
+        {
+          "code": "N",
+          "en": "No",
+          "ar": "لا"
+        }
+      ]
+    },
+    "DG1-25": {
+      "nameAr": "حالة التشخيص في تحديد DRG",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "The status of this diagnosis in DRG grouping, such as valid code or invalid for the patient's age.",
+        "ar": "حالة هذا التشخيص في تجميع DRG، مثل رمز صالح أو رمز غير صالح لعمر المريض."
+      },
+      "details": {
+        "en": "Table 0731 is user-defined: HL7 suggests the codes 0 to 4 listed here, and sites may add their own.",
+        "ar": "جدول الرموز 0731 يحدده المستخدم: يقترح HL7 الرموز من 0 إلى 4 المذكورة هنا، ويمكن لكل موقع إضافة رموزه."
+      },
+      "example": "0",
+      "table": "0731",
+      "values": [
+        {
+          "code": "0",
+          "en": "Valid code",
+          "ar": "رمز صالح",
+          "since": "2.6"
+        },
+        {
+          "code": "1",
+          "en": "Invalid code",
+          "ar": "رمز غير صالح",
+          "since": "2.6"
+        },
+        {
+          "code": "2",
+          "en": "Two primary diagnosis codes",
+          "ar": "رمزان للتشخيص الرئيسي",
+          "since": "2.6"
+        },
+        {
+          "code": "3",
+          "en": "Invalid for this gender",
+          "ar": "غير صالح لهذا الجنس",
+          "since": "2.6"
+        },
+        {
+          "code": "4",
+          "en": "Invalid for this age",
+          "ar": "غير صالح لهذا العمر",
+          "since": "2.6"
+        }
+      ]
+    },
+    "DG1-26": {
+      "nameAr": "مؤشر وجود الحالة عند الدخول (POA)",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "Says if the condition was already present when the patient was admitted.",
+        "ar": "يبيّن هل كانت الحالة موجودة أصلًا عند دخول المريض (تنويمه)."
+      },
+      "details": {
+        "en": "Table 0895 is user-defined: HL7 suggests Y, N, U, W and E, listed here. Some payment rules need every diagnosis flagged as present on admission or not.",
+        "ar": "جدول الرموز 0895 يحدده المستخدم: يقترح HL7 الرموز Y وN وU وW وE المذكورة هنا. وبعض قواعد الدفع تشترط وسم كل تشخيص بأنه موجود عند الدخول أم لا."
+      },
+      "tip": {
+        "en": "Hospital-acquired conditions are usually flagged N. Billing teams often check this field closely, so confirm the codes your payer expects.",
+        "ar": "الحالات المكتسبة داخل المستشفى تُوسم عادةً بالرمز N. وفرق الفوترة تدقق هذا الحقل كثيرًا، فتأكد من الرموز التي تتوقعها جهة الدفع."
+      },
+      "example": "Y",
+      "table": "0895",
+      "values": [
+        {
+          "code": "Y",
+          "en": "Yes",
+          "ar": "نعم",
+          "since": "2.6"
+        },
+        {
+          "code": "N",
+          "en": "No",
+          "ar": "لا",
+          "since": "2.6"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.6"
+        },
+        {
+          "code": "W",
+          "en": "Not applicable",
+          "ar": "لا ينطبق",
+          "since": "2.6"
+        },
+        {
+          "code": "E",
+          "en": "Exempt",
+          "ar": "مستثنى",
+          "since": "2.6"
+        }
+      ]
+    }
+  }
+}

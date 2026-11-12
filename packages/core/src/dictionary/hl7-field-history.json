@@ -1,0 +1,19 @@
+{
+  "about": "This file can hold the field facts of each HL7 version from 2.3 to 2.9. For each field, the first entry gives the first version that has the field, with its name, data type (dataType), optionality (opt: R required, O optional, C conditional, B kept for backward compatibility only, W withdrawn, X not used) and repeat limit (max: 1, a number, or * for no limit). Each later entry gives only what changed in that version. The file is empty in this edition. The tool then shows the v2.9 facts of hl7-fields.json for every version and says so on the page. See history.ts.",
+  "versions": [
+    "2.3",
+    "2.3.1",
+    "2.4",
+    "2.5",
+    "2.5.1",
+    "2.6",
+    "2.7",
+    "2.7.1",
+    "2.8",
+    "2.8.1",
+    "2.8.2",
+    "2.9"
+  ],
+  "sources": [],
+  "fields": {}
+}

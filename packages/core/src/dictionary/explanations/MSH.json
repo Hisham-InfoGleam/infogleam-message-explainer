@@ -1,0 +1,791 @@
+{
+  "segment": "MSH",
+  "title": {
+    "en": "Message Header",
+    "ar": "ترويسة الرسالة"
+  },
+  "summary": {
+    "en": "The first segment of every HL7 message. It names the sender and receiver, the message type, and the rules for reading the message.",
+    "ar": "المقطع الأول في كل رسالة HL7. يحدد النظام المُرسِل والنظام المستقبِل ونوع الرسالة وقواعد قراءتها."
+  },
+  "details": {
+    "en": "Every HL7 v2 message starts with MSH, for example ADT^A01, ORU^R01 or ACK. It appears once per message and does not repeat. Its first two fields define the separators used in the rest of the message. The reply ACK (acknowledgment) copies MSH-10 into its MSA segment.",
+    "ar": "تبدأ كل رسالة HL7 v2 بالمقطع MSH، مثل ADT^A01 وORU^R01 وACK. ويظهر مرة واحدة في الرسالة ولا يتكرر. ويحدد أول حقلين فيه الفواصل المستخدمة في بقية الرسالة. وتنسخ رسالة الرد، وهي رسالة الإقرار (ACK)، قيمة MSH-10 في مقطعها MSA."
+  },
+  "keyFields": [
+    "MSH-3",
+    "MSH-4",
+    "MSH-7",
+    "MSH-9",
+    "MSH-10",
+    "MSH-12"
+  ],
+  "fields": {
+    "MSH-1": {
+      "nameAr": "فاصل الحقول",
+      "usage": "common",
+      "summary": {
+        "en": "The character that separates fields in the whole message. The recommended value is the pipe |.",
+        "ar": "الحرف الذي يفصل بين الحقول في الرسالة كلها. والقيمة الموصى بها هي الخط العمودي |."
+      },
+      "details": {
+        "en": "MSH-1 is the character right after the letters MSH. Because of this, field counting in MSH is special: the separator itself is field 1, and ^~\\& is field 2. In all other segments, the first field starts after the first separator.",
+        "ar": "MSH-1 هو الحرف الذي يأتي مباشرة بعد الأحرف MSH. لذلك يختلف ترقيم الحقول في MSH: الفاصل نفسه هو الحقل 1، و^~\\& هو الحقل 2. أما في باقي المقاطع فيبدأ الحقل الأول بعد الفاصل الأول."
+      },
+      "tip": {
+        "en": "If code splits the segment on |, item 0 is MSH and item 1 is MSH-2, not MSH-1. This off-by-one causes many parsing bugs.",
+        "ar": "إذا قسّم البرنامج المقطع عند الحرف |، فالعنصر 0 هو MSH والعنصر 1 هو MSH-2 وليس MSH-1. وهذا الفرق بمقدار واحد سبب شائع لأخطاء التحليل (parsing)."
+      },
+      "example": "|"
+    },
+    "MSH-2": {
+      "nameAr": "محارف الترميز",
+      "usage": "common",
+      "summary": {
+        "en": "Four special characters, in this order: component separator, repetition separator, escape character and sub-component separator. The recommended value is ^~\\&.",
+        "ar": "أربعة محارف خاصة بهذا الترتيب: فاصل المكوّنات، وفاصل التكرار، ومحرف الهروب (escape)، وفاصل المكوّنات الفرعية. والقيمة الموصى بها هي ^~\\&."
+      },
+      "details": {
+        "en": "Position 1 (^) splits components, position 2 (~) splits repetitions, position 3 (\\) starts escape sequences such as \\F\\, and position 4 (&) splits sub-components. The receiver uses the characters given here to parse the message.",
+        "ar": "الموضع 1 (^) يفصل المكوّنات، والموضع 2 (~) يفصل التكرارات، والموضع 3 (\\) يبدأ تسلسلات الهروب مثل \\F\\، والموضع 4 (&) يفصل المكوّنات الفرعية. ويعتمد المستقبِل على المحارف المذكورة هنا لتحليل الرسالة."
+      },
+      "versionNote": {
+        "en": "From v2.7, a fifth character may follow: the truncation character, by default #, which marks a value that was cut short. Example: ^~\\&#.",
+        "ar": "ابتداءً من الإصدار v2.7 قد يأتي محرف خامس هو محرف الاقتطاع (truncation)، وهو # افتراضيًا، ويدل على قيمة قُصّت. مثال: ^~\\&#."
+      },
+      "tip": {
+        "en": "Never hard-code ^~\\& in a parser. Read MSH-2 first. Senders that add # (v2.7 and later) can break parsers that expect exactly four characters.",
+        "ar": "لا تثبّت ^~\\& داخل برنامج التحليل، بل اقرأ MSH-2 أولًا. فالأنظمة التي تضيف # (من الإصدار v2.7) قد تُعطّل برامج تتوقع أربعة محارف بالضبط."
+      },
+      "example": "^~\\&"
+    },
+    "MSH-3": {
+      "nameAr": "النظام المُرسِل",
+      "usage": "common",
+      "summary": {
+        "en": "The name or ID of the application that sent the message.",
+        "ar": "اسم أو معرّف النظام (التطبيق) الذي أرسل الرسالة."
+      },
+      "details": {
+        "en": "HD (hierarchic designator) data type: namespace ID ^ universal ID ^ universal ID type. Component 1 holds a local name. Components 2 and 3 hold a global ID, such as an OID (object identifier) with type ISO. Each site defines its own values.",
+        "ar": "نوع البيانات HD (المعرّف الهرمي): معرّف النطاق ^ المعرّف العالمي ^ نوع المعرّف العالمي. يحمل المكوّن 1 اسمًا محليًا، ويحمل المكوّنان 2 و3 معرّفًا عالميًا مثل OID (معرّف الكائن) من النوع ISO. وكل موقع يحدد قيمه بنفسه."
+      },
+      "tip": {
+        "en": "Most interfaces send only component 1, such as DEMO_APP. Receivers often route or filter messages on MSH-3 and MSH-4, so agree on exact spelling and case.",
+        "ar": "ترسل معظم الواجهات المكوّن 1 فقط، مثل DEMO_APP. وكثيرًا ما يوجّه المستقبِل الرسائل أو يرشّحها بناءً على MSH-3 وMSH-4، لذا اتفقوا على الكتابة الدقيقة وحالة الأحرف."
+      },
+      "example": "DEMO_APP",
+      "table": "0361"
+    },
+    "MSH-4": {
+      "nameAr": "المنشأة المُرسِلة",
+      "usage": "common",
+      "summary": {
+        "en": "The facility or organization unit that sent the message, such as a hospital or department.",
+        "ar": "المنشأة الصحية أو الوحدة التنظيمية التي أرسلت الرسالة، مثل مستشفى أو قسم."
+      },
+      "details": {
+        "en": "HD (hierarchic designator) data type, like MSH-3: namespace ID ^ universal ID ^ universal ID type. It adds detail to MSH-3. It can name the facility, the unit responsible for the sending application, or another organizational entity. Each site defines its own values.",
+        "ar": "نوع البيانات HD (المعرّف الهرمي) مثل MSH-3: معرّف النطاق ^ المعرّف العالمي ^ نوع المعرّف العالمي. يضيف تفصيلًا إلى MSH-3، فقد يحمل اسم المنشأة أو الوحدة المسؤولة عن النظام المُرسِل أو جهة تنظيمية أخرى. وكل موقع يحدد قيمه بنفسه."
+      },
+      "tip": {
+        "en": "When one application serves several hospitals, MSH-4 is often the only way to tell them apart. Keep a mapping table of facility codes.",
+        "ar": "عندما يخدم نظام واحد عدة مستشفيات، يكون MSH-4 غالبًا الطريقة الوحيدة للتمييز بينها. احتفظ بجدول مطابقة (mapping) لرموز المنشآت."
+      },
+      "example": "DEMOHOSP",
+      "table": "0362"
+    },
+    "MSH-5": {
+      "nameAr": "النظام المستقبِل",
+      "usage": "common",
+      "summary": {
+        "en": "The name or ID of the application that should receive the message.",
+        "ar": "اسم أو معرّف النظام (التطبيق) الذي يجب أن يستقبل الرسالة."
+      },
+      "details": {
+        "en": "HD (hierarchic designator) data type: namespace ID ^ universal ID ^ universal ID type. It identifies the target application among all applications in the network. Each site defines its own values.",
+        "ar": "نوع البيانات HD (المعرّف الهرمي): معرّف النطاق ^ المعرّف العالمي ^ نوع المعرّف العالمي. يحدد النظام المقصود من بين جميع الأنظمة في الشبكة. وكل موقع يحدد قيمه بنفسه."
+      },
+      "tip": {
+        "en": "In an ACK (acknowledgment), MSH-5 and MSH-6 usually hold the original sender, because the roles swap. Some receivers reject messages whose MSH-5 does not match their own name.",
+        "ar": "في رسالة الإقرار (ACK) يحمل MSH-5 وMSH-6 عادةً المُرسِل الأصلي لأن الأدوار تنعكس. وبعض الأنظمة المستقبِلة ترفض الرسالة إذا لم يطابق MSH-5 اسمها."
+      },
+      "example": "DEMO_LAB",
+      "table": "0361"
+    },
+    "MSH-6": {
+      "nameAr": "المنشأة المستقبِلة",
+      "usage": "common",
+      "summary": {
+        "en": "The facility or organization that should receive the message.",
+        "ar": "المنشأة الصحية أو الجهة التي يجب أن تستقبل الرسالة."
+      },
+      "details": {
+        "en": "HD (hierarchic designator) data type: namespace ID ^ universal ID ^ universal ID type. It tells apart several copies of the same application that run for different organizations. Each site defines its own values.",
+        "ar": "نوع البيانات HD (المعرّف الهرمي): معرّف النطاق ^ المعرّف العالمي ^ نوع المعرّف العالمي. يميّز بين عدة نسخ من النظام نفسه تعمل لصالح جهات مختلفة. وكل موقع يحدد قيمه بنفسه."
+      },
+      "example": "DEMOLAB",
+      "table": "0362"
+    },
+    "MSH-7": {
+      "nameAr": "تاريخ ووقت الرسالة",
+      "usage": "common",
+      "summary": {
+        "en": "The date and time when the sending system created the message.",
+        "ar": "التاريخ والوقت اللذان أنشأ فيهما النظام المُرسِل الرسالة."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMMSS. Later parts may be left off, and fractions of a second and a time zone (+/-HHMM) may be added, for example 20260315143000+0100. A time zone given here is the default for all other times in the message.",
+        "ar": "الصيغة YYYYMMDDHHMMSS. يجوز حذف الأجزاء الأخيرة، ويجوز إضافة أجزاء من الثانية والمنطقة الزمنية (+/-HHMM)، مثل 20260315143000+0100. والمنطقة الزمنية المذكورة هنا هي الافتراضية لكل الأوقات الأخرى في الرسالة."
+      },
+      "versionNote": {
+        "en": "Optional before v2.4, required from v2.4. Data type TS (time stamp) in v2.5.1 and earlier, DTM (date/time) from v2.6; the value looks the same.",
+        "ar": "كان اختياريًا قبل الإصدار v2.4 وأصبح إلزاميًا منه. ونوع البيانات TS (الختم الزمني) في v2.5.1 وما قبله، وDTM (التاريخ والوقت) من v2.6، وشكل القيمة واحد."
+      },
+      "tip": {
+        "en": "Do not treat MSH-7 as the clinical event time; it only says when the message was built. Event times live in EVN and in clinical segments.",
+        "ar": "لا تعتبر MSH-7 وقت الحدث السريري، فهو يبيّن فقط وقت بناء الرسالة. أما أوقات الأحداث فتوجد في المقطع EVN وفي المقاطع السريرية."
+      },
+      "example": "20260315143000"
+    },
+    "MSH-8": {
+      "nameAr": "الأمان",
+      "usage": "rare",
+      "summary": {
+        "en": "A free-text field that some systems use for security features. HL7 does not define its content.",
+        "ar": "حقل نصي حر تستخدمه بعض الأنظمة لميزات الأمان، ولا يحدد HL7 محتواه."
+      },
+      "versionNote": {
+        "en": "From v2.9, coded security labels go in MSH-26 to MSH-28.",
+        "ar": "ابتداءً من الإصدار v2.9 توضع علامات الأمان المرمّزة في الحقول من MSH-26 إلى MSH-28."
+      },
+      "tip": {
+        "en": "Avoid sending passwords or keys here. HL7 messages are often logged in plain text by interface engines and monitoring tools.",
+        "ar": "تجنّب إرسال كلمات المرور أو المفاتيح هنا، فرسائل HL7 تُحفظ غالبًا كنص واضح في سجلات محركات الواجهات (interface engines) وأدوات المراقبة."
+      }
+    },
+    "MSH-9": {
+      "nameAr": "نوع الرسالة",
+      "usage": "common",
+      "summary": {
+        "en": "What kind of message this is: message code, trigger event and message structure, for example ADT^A01^ADT_A01.",
+        "ar": "نوع هذه الرسالة: رمز الرسالة والحدث المُطلِق (Trigger Event) وبنية الرسالة، مثل ADT^A01^ADT_A01."
+      },
+      "details": {
+        "en": "MSG data type. Component 1: message code (table 0076, for example ADT). Component 2: trigger event (table 0003, for example A01). Component 3: message structure (table 0354). Some events share a structure: ADT^A04 and ADT^A08 use ADT_A01.",
+        "ar": "نوع البيانات MSG. المكوّن 1: رمز الرسالة (جدول الرموز 0076، مثل ADT). المكوّن 2: الحدث المُطلِق (جدول الرموز 0003، مثل A01). المكوّن 3: بنية الرسالة (جدول الرموز 0354). وبعض الأحداث تشترك في بنية واحدة، فالرسالتان ADT^A04 وADT^A08 تستخدمان ADT_A01."
+      },
+      "versionNote": {
+        "en": "v2.3 had only two components, for example ADT^A01. The message structure component was added in v2.3.1.",
+        "ar": "في الإصدار v2.3 كان للحقل مكوّنان فقط، مثل ADT^A01. وأُضيف مكوّن بنية الرسالة في الإصدار v2.3.1."
+      },
+      "tip": {
+        "en": "Receivers often route messages on MSH-9. ORM^O01 is still common, but HL7 kept it only for backward compatibility from v2.4. It was withdrawn in v2.7, in favor of OML and OMG.",
+        "ar": "كثيرًا ما توجّه الأنظمة الرسائل بناءً على MSH-9. وما زالت الرسالة ORM^O01 شائعة، لكن HL7 أبقاها للتوافق مع الأنظمة القديمة فقط ابتداءً من الإصدار v2.4. وسُحبت في الإصدار v2.7، وحلّت محلها OML وOMG."
+      },
+      "example": "ADT^A01^ADT_A01",
+      "table": "0076",
+      "values": [
+        {
+          "code": "ACK",
+          "en": "General acknowledgment message",
+          "ar": "رسالة إقرار عامة"
+        },
+        {
+          "code": "ADT",
+          "en": "ADT message",
+          "ar": "رسالة ADT (الدخول والخروج والنقل)"
+        },
+        {
+          "code": "ORU",
+          "en": "Unsolicited transmission of an observation message",
+          "ar": "إرسال رسالة ملاحظة (نتيجة) دون طلب مسبق"
+        },
+        {
+          "code": "OML",
+          "en": "Laboratory order message",
+          "ar": "رسالة طلب مختبر",
+          "since": "2.4"
+        },
+        {
+          "code": "ORL",
+          "en": "Laboratory acknowledgment message (unsolicited)",
+          "ar": "رسالة إقرار خاصة بالمختبر (دون طلب مسبق)",
+          "since": "2.4"
+        },
+        {
+          "code": "RDE",
+          "en": "Pharmacy/treatment encoded order message",
+          "ar": "رسالة طلب دواء أو علاج مرمّز"
+        },
+        {
+          "code": "SIU",
+          "en": "Schedule information unsolicited",
+          "ar": "معلومات المواعيد (دون طلب مسبق)"
+        },
+        {
+          "code": "MDM",
+          "en": "Medical document management",
+          "ar": "إدارة الوثائق الطبية"
+        },
+        {
+          "code": "DFT",
+          "en": "Detail financial transactions",
+          "ar": "تفاصيل المعاملات المالية"
+        },
+        {
+          "code": "BAR",
+          "en": "Add/change billing account",
+          "ar": "إضافة حساب فوترة أو تعديله"
+        },
+        {
+          "code": "MFN",
+          "en": "Master files notification",
+          "ar": "إشعار الملفات الرئيسية (Master Files)"
+        },
+        {
+          "code": "QBP",
+          "en": "Query by parameter",
+          "ar": "استعلام بالمعاملات (parameters)",
+          "since": "2.4"
+        }
+      ]
+    },
+    "MSH-10": {
+      "nameAr": "معرّف التحكم بالرسالة",
+      "usage": "common",
+      "summary": {
+        "en": "A unique ID for this message. The receiver sends it back in the acknowledgment.",
+        "ar": "معرّف فريد لهذه الرسالة، ويعيده المستقبِل في رسالة الإقرار (ACK)."
+      },
+      "details": {
+        "en": "The sender creates a number or text that identifies this one message. The receiver copies it into MSA-2 of the ACK (acknowledgment), so the sender can match each answer to its message.",
+        "ar": "يُنشئ المُرسِل رقمًا أو نصًا يميّز هذه الرسالة بعينها. وينسخه المستقبِل في الحقل MSA-2 من رسالة الإقرار (ACK)، ليطابق المُرسِل كل رد مع رسالته."
+      },
+      "versionNote": {
+        "en": "Maximum length was 20 characters up to v2.5.1 and 199 from v2.6.",
+        "ar": "كان الطول الأقصى 20 محرفًا حتى الإصدار v2.5.1، وأصبح 199 محرفًا من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Never reuse a control ID. Duplicates confuse ACK matching and can make a receiver drop messages as repeats. Many systems use a counter or a timestamp plus counter.",
+        "ar": "لا تكرر معرّف التحكم أبدًا، فالتكرار يربك مطابقة رسائل الإقرار (ACK) وقد يجعل المستقبِل يتجاهل الرسالة لأنها مكررة. وتستخدم أنظمة كثيرة عدّادًا أو ختمًا زمنيًا مع عدّاد."
+      },
+      "example": "MSG00001"
+    },
+    "MSH-11": {
+      "nameAr": "معرّف المعالجة",
+      "usage": "common",
+      "summary": {
+        "en": "Says if the message is production, training or debugging data, so the receiver handles it correctly.",
+        "ar": "يبيّن هل الرسالة بيانات تشغيل فعلي أم تدريب أم تصحيح أخطاء، ليعالجها المستقبِل بالشكل الصحيح."
+      },
+      "details": {
+        "en": "PT (processing type) data type: processing ID ^ processing mode. Component 1 uses table 0103. Component 2 (table 0207) may be empty, which means current processing; A means archive, R restore from archive, I initial load, T current data sent at intervals.",
+        "ar": "نوع البيانات PT (نوع المعالجة): معرّف المعالجة ^ نمط المعالجة. يستخدم المكوّن 1 جدول الرموز 0103. أما المكوّن 2 (جدول الرموز 0207) فقد يكون فارغًا، ويعني ذلك المعالجة الحالية، وA تعني الأرشفة، وR الاسترجاع من الأرشيف، وI التحميل الأولي، وT بيانات حالية تُرسل على فترات."
+      },
+      "tip": {
+        "en": "Make test systems send T and production send P. Many receivers reject or quietly ignore messages whose MSH-11 does not match their environment.",
+        "ar": "اجعل أنظمة الاختبار ترسل T وأنظمة التشغيل الفعلي ترسل P. فكثير من الأنظمة المستقبِلة ترفض الرسالة أو تتجاهلها بصمت إذا لم يطابق MSH-11 بيئتها."
+      },
+      "example": "P",
+      "table": "0103",
+      "values": [
+        {
+          "code": "D",
+          "en": "Debugging",
+          "ar": "تصحيح الأخطاء (Debugging)"
+        },
+        {
+          "code": "P",
+          "en": "Production",
+          "ar": "تشغيل فعلي (Production)"
+        },
+        {
+          "code": "T",
+          "en": "Training",
+          "ar": "تدريب (Training)"
+        }
+      ]
+    },
+    "MSH-12": {
+      "nameAr": "معرّف الإصدار",
+      "usage": "common",
+      "summary": {
+        "en": "The HL7 version the message follows, such as 2.3, 2.5.1 or 2.9.",
+        "ar": "إصدار HL7 الذي تتبعه الرسالة، مثل 2.3 أو 2.5.1 أو 2.9."
+      },
+      "details": {
+        "en": "VID (version identifier) data type. Component 1 is the version (table 0104). Components 2 and 3 are for HL7 international affiliates: an internationalization code and an international version ID. The receiver compares the version with its own to read the message correctly.",
+        "ar": "نوع البيانات VID (معرّف الإصدار). المكوّن 1 هو الإصدار (جدول الرموز 0104). والمكوّنان 2 و3 مخصصان لفروع HL7 الدولية: رمز التدويل ومعرّف الإصدار الدولي. ويقارن المستقبِل الإصدار بإصداره ليقرأ الرسالة قراءة صحيحة."
+      },
+      "versionNote": {
+        "en": "In v2.3 this was a plain ID field holding only the version. The VID data type with extra components came in v2.3.1.",
+        "ar": "في الإصدار v2.3 كان حقلًا بسيطًا من النوع ID يحمل رقم الإصدار فقط، وجاء نوع البيانات VID بمكوّناته الإضافية في الإصدار v2.3.1."
+      },
+      "tip": {
+        "en": "Senders sometimes put a version in MSH-12 that does not match their real structure. Check real samples, and agree on one version per interface.",
+        "ar": "أحيانًا يضع المُرسِل في MSH-12 إصدارًا لا يطابق البنية الفعلية لرسائله. افحص أمثلة حقيقية من الرسائل، واتفقوا على إصدار واحد لكل واجهة."
+      },
+      "example": "2.5.1",
+      "table": "0104",
+      "values": [
+        {
+          "code": "2.3",
+          "en": "Release 2.3",
+          "ar": "الإصدار 2.3"
+        },
+        {
+          "code": "2.3.1",
+          "en": "Release 2.3.1",
+          "ar": "الإصدار 2.3.1",
+          "since": "2.3.1"
+        },
+        {
+          "code": "2.4",
+          "en": "Release 2.4",
+          "ar": "الإصدار 2.4",
+          "since": "2.4"
+        },
+        {
+          "code": "2.5",
+          "en": "Release 2.5",
+          "ar": "الإصدار 2.5",
+          "since": "2.5"
+        },
+        {
+          "code": "2.5.1",
+          "en": "Release 2.5.1",
+          "ar": "الإصدار 2.5.1",
+          "since": "2.5.1"
+        },
+        {
+          "code": "2.6",
+          "en": "Release 2.6",
+          "ar": "الإصدار 2.6",
+          "since": "2.6"
+        },
+        {
+          "code": "2.7",
+          "en": "Release 2.7",
+          "ar": "الإصدار 2.7",
+          "since": "2.7"
+        },
+        {
+          "code": "2.7.1",
+          "en": "Release 2.7.1",
+          "ar": "الإصدار 2.7.1",
+          "since": "2.7.1"
+        },
+        {
+          "code": "2.8",
+          "en": "Release 2.8",
+          "ar": "الإصدار 2.8",
+          "since": "2.8"
+        },
+        {
+          "code": "2.8.1",
+          "en": "Release 2.8.1",
+          "ar": "الإصدار 2.8.1",
+          "since": "2.8.1"
+        },
+        {
+          "code": "2.8.2",
+          "en": "Release 2.8.2",
+          "ar": "الإصدار 2.8.2",
+          "since": "2.8.2"
+        },
+        {
+          "code": "2.9",
+          "en": "Release 2.9",
+          "ar": "الإصدار 2.9",
+          "since": "2.9"
+        }
+      ]
+    },
+    "MSH-13": {
+      "nameAr": "الرقم التسلسلي",
+      "usage": "rare",
+      "summary": {
+        "en": "A running number for the optional sequence number protocol, which helps prevent duplicate or out-of-order messages.",
+        "ar": "رقم متتابع لبروتوكول الأرقام التسلسلية الاختياري، الذي يساعد على منع الرسائل المكررة أو التي تصل بغير ترتيبها."
+      },
+      "details": {
+        "en": "When this field has a value, the sequence number protocol is in use. The sender adds one for each message. The receiver checks the order and reports the next expected number in MSA-4. Zero is reserved for starting the link.",
+        "ar": "حين يحمل هذا الحقل قيمة فهذا يعني استخدام بروتوكول الأرقام التسلسلية. ويزيد المُرسِل الرقم بمقدار واحد مع كل رسالة. ويتحقق المستقبِل من الترتيب ويذكر الرقم المتوقع التالي في MSA-4. والصفر محجوز لبدء الاتصال."
+      },
+      "example": "1001"
+    },
+    "MSH-14": {
+      "nameAr": "مؤشر الاستكمال",
+      "usage": "rare",
+      "summary": {
+        "en": "Links the parts of a message that was split into several messages.",
+        "ar": "يربط بين أجزاء رسالة قُسّمت إلى عدة رسائل."
+      },
+      "details": {
+        "en": "Used when a message is split into parts. The sender puts a unique value in DSC-1 (continuation pointer segment) at the end of one part and repeats it in MSH-14 of the next part. The receiver matches these values to rebuild the full message.",
+        "ar": "يُستخدم عند تقسيم الرسالة إلى أجزاء. يضع المُرسِل قيمة فريدة في DSC-1 (مقطع مؤشر الاستكمال) في آخر الجزء، ثم يكررها في MSH-14 في الجزء التالي. ويطابق المستقبِل هذه القيم ليعيد بناء الرسالة كاملة."
+      },
+      "example": "DEMO-RPT-20260315-0001"
+    },
+    "MSH-15": {
+      "nameAr": "نوع إقرار القبول",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Says when the receiver must send an accept acknowledgment, which confirms the message was received and safely stored.",
+        "ar": "يحدد متى يجب أن يرسل المستقبِل إقرار القبول (Accept ACK)، الذي يؤكد أن الرسالة وصلت وحُفظت بأمان."
+      },
+      "details": {
+        "en": "Used by the enhanced acknowledgment mode. Values: AL always, NE never, ER only on error or reject, SU only on success. If MSH-15 and MSH-16 are both empty, the original mode applies, where the receiving application sends one ACK after processing.",
+        "ar": "يُستخدم في نمط الإقرار المحسّن (enhanced mode). القيم: AL دائمًا، وNE أبدًا، وER عند الخطأ أو الرفض فقط، وSU عند النجاح فقط. وإذا كان MSH-15 وMSH-16 فارغين معًا يُطبَّق النمط الأصلي (original mode)، وفيه يرسل النظام المستقبِل إقرارًا (ACK) واحدًا بعد المعالجة."
+      },
+      "versionNote": {
+        "en": "From v2.9, MSH-15 and MSH-16 must be both filled or both empty.",
+        "ar": "ابتداءً من الإصدار v2.9 يجب أن يُملأ MSH-15 وMSH-16 معًا أو يُتركا فارغين معًا."
+      },
+      "tip": {
+        "en": "Most simple interfaces leave MSH-15 and MSH-16 empty and use original mode. If you fill them, test that the receiver really supports enhanced mode.",
+        "ar": "تترك معظم الواجهات البسيطة MSH-15 وMSH-16 فارغين وتستخدم النمط الأصلي. وإذا ملأتهما فتأكد بالاختبار أن المستقبِل يدعم النمط المحسّن فعلًا."
+      },
+      "example": "AL",
+      "table": "0155",
+      "values": [
+        {
+          "code": "AL",
+          "en": "Always",
+          "ar": "دائمًا"
+        },
+        {
+          "code": "NE",
+          "en": "Never",
+          "ar": "أبدًا"
+        },
+        {
+          "code": "ER",
+          "en": "Error/reject conditions only",
+          "ar": "عند الخطأ أو الرفض فقط"
+        },
+        {
+          "code": "SU",
+          "en": "Successful completion only",
+          "ar": "عند النجاح فقط"
+        }
+      ]
+    },
+    "MSH-16": {
+      "nameAr": "نوع إقرار التطبيق",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Says when the receiving application must send an application acknowledgment after it processes the message.",
+        "ar": "يحدد متى يجب أن يرسل النظام المستقبِل إقرار التطبيق (Application ACK) بعد معالجة الرسالة."
+      },
+      "details": {
+        "en": "Used by the enhanced acknowledgment mode, with the same values as MSH-15: AL always, NE never, ER only on error or reject, SU only on success. The application acknowledgment reports the result of processing, not just receipt.",
+        "ar": "يُستخدم في نمط الإقرار المحسّن، وله قيم MSH-15 نفسها: AL دائمًا، وNE أبدًا، وER عند الخطأ أو الرفض فقط، وSU عند النجاح فقط. ويبيّن إقرار التطبيق نتيجة المعالجة، لا مجرد الاستلام."
+      },
+      "versionNote": {
+        "en": "From v2.9, MSH-15 and MSH-16 must be both filled or both empty.",
+        "ar": "ابتداءً من الإصدار v2.9 يجب أن يُملأ MSH-15 وMSH-16 معًا أو يُتركا فارغين معًا."
+      },
+      "tip": {
+        "en": "A common enhanced setup is AL in MSH-15 and NE in MSH-16. The receiver then confirms safe receipt only, not processing.",
+        "ar": "من الإعدادات الشائعة في النمط المحسّن وضع AL في MSH-15 وNE في MSH-16، فيؤكد المستقبِل الاستلام الآمن فقط دون نتيجة المعالجة."
+      },
+      "example": "NE",
+      "table": "0155",
+      "values": [
+        {
+          "code": "AL",
+          "en": "Always",
+          "ar": "دائمًا"
+        },
+        {
+          "code": "NE",
+          "en": "Never",
+          "ar": "أبدًا"
+        },
+        {
+          "code": "ER",
+          "en": "Error/reject conditions only",
+          "ar": "عند الخطأ أو الرفض فقط"
+        },
+        {
+          "code": "SU",
+          "en": "Successful completion only",
+          "ar": "عند النجاح فقط"
+        }
+      ]
+    },
+    "MSH-17": {
+      "nameAr": "رمز الدولة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The country where the message comes from, as a three-letter ISO 3166 code.",
+        "ar": "الدولة التي صدرت منها الرسالة، برمز من ثلاثة أحرف وفق معيار ISO 3166."
+      },
+      "details": {
+        "en": "HL7 uses the three-letter form of ISO 3166 (table 0399). The country gives defaults for the message, such as the currency of money amounts.",
+        "ar": "يستخدم HL7 صيغة الأحرف الثلاثة من معيار ISO 3166 (جدول الرموز 0399). وتحدد الدولة القيم الافتراضية في الرسالة، مثل عملة المبالغ المالية."
+      },
+      "tip": {
+        "en": "Many senders leave this field empty. If you fill it, use the three-letter code, because some validators reject the two-letter form.",
+        "ar": "يترك كثير من المُرسِلين هذا الحقل فارغًا. وإذا ملأته فاستخدم رمز الأحرف الثلاثة، لأن بعض أدوات التحقق ترفض صيغة الحرفين."
+      },
+      "table": "0399"
+    },
+    "MSH-18": {
+      "nameAr": "مجموعة المحارف",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The character encoding of the message, such as ASCII or UTF-8. Empty means plain 7-bit ASCII.",
+        "ar": "ترميز المحارف في الرسالة، مثل ASCII أو UTF-8. والحقل الفارغ يعني ASCII العادي ذا 7 بتات."
+      },
+      "details": {
+        "en": "Values come from table 0211. The first repetition is the default encoding of the whole message. Later repetitions name extra character sets used in ST, TX and FT text fields. 8859/6 covers Arabic letters; UNICODE UTF-8 covers all languages.",
+        "ar": "القيم من جدول الرموز 0211. التكرار الأول هو الترميز الافتراضي للرسالة كلها، والتكرارات التالية تذكر مجموعات محارف إضافية تُستخدم في حقول النص ST وTX وFT. وتغطي 8859/6 الحروف العربية، ويغطي UNICODE UTF-8 جميع اللغات."
+      },
+      "versionNote": {
+        "en": "Plain UNICODE is deprecated since v2.5. From v2.8, when UNICODE UTF-8 is used it must be the only value, with no byte order mark (BOM).",
+        "ar": "الرمز UNICODE وحده متروك منذ الإصدار v2.5. ومن الإصدار v2.8، إذا استُخدم UNICODE UTF-8 فيجب أن يكون القيمة الوحيدة، ومن دون علامة ترتيب البايتات (BOM)."
+      },
+      "tip": {
+        "en": "For Arabic text, agree on UNICODE UTF-8 and make sure both systems really read and write UTF-8. A mismatch turns Arabic names into question marks or broken symbols.",
+        "ar": "للنصوص العربية اتفقوا على UNICODE UTF-8، وتأكدوا أن النظامين يقرآن ويكتبان UTF-8 فعلًا. فعدم التطابق يحوّل الأسماء العربية إلى علامات استفهام أو رموز مشوّهة."
+      },
+      "example": "UNICODE UTF-8",
+      "table": "0211",
+      "values": [
+        {
+          "code": "ASCII",
+          "en": "The printable 7-bit ASCII character set",
+          "ar": "مجموعة محارف ASCII القابلة للطباعة ذات 7 بتات"
+        },
+        {
+          "code": "8859/1",
+          "en": "The printable characters from the ISO 8859/1 Character set",
+          "ar": "المحارف القابلة للطباعة من مجموعة المحارف ISO 8859/1"
+        },
+        {
+          "code": "8859/6",
+          "en": "The printable characters from the ISO 8859/6 Character set",
+          "ar": "المحارف القابلة للطباعة من مجموعة المحارف ISO 8859/6"
+        },
+        {
+          "code": "UNICODE",
+          "en": "The world wide character standard from ISO/IEC 10646-1-1993",
+          "ar": "معيار المحارف العالمي ISO/IEC 10646-1-1993"
+        },
+        {
+          "code": "UNICODE UTF-8",
+          "en": "UCS Transformation Format, 8-bit form",
+          "ar": "صيغة تحويل UCS بثمانية بتات (UTF-8)",
+          "since": "2.5"
+        }
+      ]
+    },
+    "MSH-19": {
+      "nameAr": "اللغة الرئيسية للرسالة",
+      "usage": "rare",
+      "summary": {
+        "en": "The main language of the text in the message, coded with ISO 639.",
+        "ar": "اللغة الرئيسية للنصوص في الرسالة، مرمّزة وفق معيار ISO 639."
+      },
+      "details": {
+        "en": "Coded field: code ^ text ^ name of coding system. The language codes come from ISO 639.",
+        "ar": "حقل مرمّز: الرمز ^ النص ^ اسم نظام الترميز. وتأتي رموز اللغات من معيار ISO 639."
+      },
+      "tip": {
+        "en": "Rarely used. Even when the text is Arabic, most receivers ignore this field and rely on MSH-18 for the encoding.",
+        "ar": "نادر الاستخدام. وحتى عندما يكون النص عربيًا، تتجاهل معظم الأنظمة المستقبِلة هذا الحقل وتعتمد على MSH-18 لمعرفة الترميز."
+      }
+    },
+    "MSH-20": {
+      "nameAr": "طريقة التعامل مع مجموعات المحارف البديلة",
+      "usage": "rare",
+      "since": "2.3.1",
+      "summary": {
+        "en": "How the message switches between character sets when MSH-18 lists more than one.",
+        "ar": "طريقة التنقل بين مجموعات المحارف عندما يذكر MSH-18 أكثر من مجموعة واحدة."
+      },
+      "details": {
+        "en": "Table 0356. ISO 2022-1994 means switching with the escape sequences of that ISO standard. 2.3 means switching with HL7 escape sequences, first defined in HL7 v2.3. Empty means no switching happens in the message.",
+        "ar": "جدول الرموز 0356. تعني ISO 2022-1994 التنقل باستخدام تسلسلات الهروب في ذلك المعيار. وتعني 2.3 التنقل باستخدام تسلسلات الهروب الخاصة بـ HL7، التي عُرّفت أول مرة في الإصدار v2.3. والقيمة الفارغة تعني عدم وجود تنقل في الرسالة."
+      },
+      "example": "ISO 2022-1994",
+      "table": "0356",
+      "values": [
+        {
+          "code": "ISO 2022-1994",
+          "en": "This standard is titled \"Information Technology - Character Code Structure and Extension Technique\".",
+          "ar": "عنوان هذا المعيار \"تقنية المعلومات - بنية رموز المحارف وأسلوب التوسعة\".",
+          "since": "2.3.1"
+        },
+        {
+          "code": "2.3",
+          "en": "The character set switching mode specified in HL7 2.5, section 2.7.2 and section 2.A.46, \"XPN - extended person name\".",
+          "ar": "نمط التنقل بين مجموعات المحارف المحدد في HL7 2.5، القسم 2.7.2 والقسم 2.A.46 \"XPN - الاسم الموسّع للشخص\".",
+          "since": "2.3.1"
+        }
+      ]
+    },
+    "MSH-21": {
+      "nameAr": "معرّف ملف تعريف الرسالة",
+      "usage": "sometimes",
+      "since": "2.4",
+      "summary": {
+        "en": "Names the message profile, a documented set of rules for a message type, that the message follows.",
+        "ar": "يذكر ملف تعريف الرسالة (Message Profile)، أي مجموعة القواعد الموثّقة لنوع من الرسائل، الذي تتبعه الرسالة."
+      },
+      "details": {
+        "en": "EI (entity identifier) data type: the ID ^ namespace ID ^ universal ID ^ universal ID type. A profile describes the exact segments, fields and codes expected. The field repeats, so one message can claim several profiles, such as a base and a local one.",
+        "ar": "نوع البيانات EI (معرّف الكيان): المعرّف ^ معرّف النطاق ^ المعرّف العالمي ^ نوع المعرّف العالمي. ويصف ملف التعريف المقاطع والحقول والرموز المتوقعة بدقة. والحقل يتكرر، فيمكن أن تعلن الرسالة الواحدة عدة ملفات تعريف، مثل ملف أساسي وآخر محلي."
+      },
+      "versionNote": {
+        "en": "Added in v2.4 as Conformance Statement ID (ID data type). Renamed Message Profile Identifier, with the EI data type, in v2.5.",
+        "ar": "أُضيف في الإصدار v2.4 باسم Conformance Statement ID (نوع البيانات ID)، ثم صار اسمه Message Profile Identifier بنوع البيانات EI في الإصدار v2.5."
+      },
+      "tip": {
+        "en": "Public health and national programs often require a specific profile ID here. Receivers may route or validate messages based on it.",
+        "ar": "كثيرًا ما تشترط برامج الصحة العامة والبرامج الوطنية معرّف ملف تعريف محددًا هنا، وقد يعتمد عليه المستقبِل في توجيه الرسائل أو التحقق منها."
+      },
+      "example": "ADT_PROFILE_V1^DEMOHOSP"
+    },
+    "MSH-22": {
+      "nameAr": "الجهة المسؤولة عن الإرسال",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "The business organization that sends the message and is accountable for its content.",
+        "ar": "الجهة (المؤسسة) التي ترسل الرسالة وتتحمل المسؤولية عن محتواها."
+      },
+      "details": {
+        "en": "XON (extended organization) data type: organization name in component 1, organization identifier in component 10. MSH-3 and MSH-4 do not always point to a legal entity. This field names the legal organization, for example when several organizations share one service provider.",
+        "ar": "نوع البيانات XON (اسم المؤسسة الموسّع): اسم المؤسسة في المكوّن 1، ومعرّف المؤسسة في المكوّن 10. ولا يدل MSH-3 وMSH-4 دائمًا على كيان قانوني، أما هذا الحقل فيذكر المؤسسة القانونية، مثلًا عندما تشترك عدة مؤسسات في مزوّد خدمة واحد."
+      },
+      "example": "DEMO HOSPITAL^^^^^^^^^DEMOHOSP"
+    },
+    "MSH-23": {
+      "nameAr": "الجهة المسؤولة عن الاستقبال",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "The business organization that should receive the message and is accountable for acting on its data.",
+        "ar": "الجهة (المؤسسة) التي يجب أن تستقبل الرسالة وتتحمل مسؤولية التصرف بناءً على بياناتها."
+      },
+      "details": {
+        "en": "XON (extended organization) data type, like MSH-22: organization name in component 1, organization identifier in component 10. It plays the same role as MSH-22, but for the receiving side.",
+        "ar": "نوع البيانات XON (اسم المؤسسة الموسّع) مثل MSH-22: اسم المؤسسة في المكوّن 1، ومعرّف المؤسسة في المكوّن 10. ودوره مثل دور MSH-22 ولكن لجهة الاستقبال."
+      },
+      "example": "DEMO LAB^^^^^^^^^DEMOLAB"
+    },
+    "MSH-24": {
+      "nameAr": "عنوان شبكة الإرسال",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "The network location the message was sent from, such as a host name or a URI (uniform resource identifier).",
+        "ar": "موقع الشبكة الذي أُرسلت منه الرسالة، مثل اسم مضيف (host) أو معرّف موارد موحّد (URI)."
+      },
+      "details": {
+        "en": "HD (hierarchic designator) data type: namespace ID ^ universal ID ^ universal ID type, for example a DNS (domain name system) name. Fill it only when the transport protocol cannot carry the sender's address. Partners must agree on the values.",
+        "ar": "نوع البيانات HD (المعرّف الهرمي): معرّف النطاق ^ المعرّف العالمي ^ نوع المعرّف العالمي، مثل اسم في نظام أسماء النطاقات (DNS). ويُملأ فقط عندما لا يستطيع بروتوكول النقل حمل عنوان المُرسِل، ويجب أن يتفق الطرفان على القيم."
+      },
+      "example": "^demo-node.example.org^DNS"
+    },
+    "MSH-25": {
+      "nameAr": "عنوان شبكة الاستقبال",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "The network location the message was sent to.",
+        "ar": "موقع الشبكة الذي أُرسلت إليه الرسالة."
+      },
+      "details": {
+        "en": "HD (hierarchic designator) data type, like MSH-24, but for the receiving side. Fill it only when the transport protocol cannot carry the receiver's address.",
+        "ar": "نوع البيانات HD (المعرّف الهرمي) مثل MSH-24 ولكن لجهة الاستقبال. ويُملأ فقط عندما لا يستطيع بروتوكول النقل حمل عنوان المستقبِل."
+      },
+      "example": "^lab-node.example.org^DNS"
+    },
+    "MSH-26": {
+      "nameAr": "وسم التصنيف الأمني",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "The confidentiality level of the whole message, used for access control decisions.",
+        "ar": "مستوى سرية الرسالة كلها، ويُستخدم في قرارات التحكم بالوصول."
+      },
+      "details": {
+        "en": "CWE (coded with exceptions) field with HL7 confidentiality codes (table 0952), from U unrestricted to V very restricted. It gives the highest protection level needed by any content in the message. It is required when MSH-27 or MSH-28 has a value.",
+        "ar": "حقل مرمّز من النوع CWE يستخدم رموز السرية في HL7 (جدول الرموز 0952)، من U غير مقيّد إلى V مقيّد جدًا. ويعطي أعلى مستوى حماية يحتاجه أي محتوى في الرسالة. ويصبح إلزاميًا إذا كان في MSH-27 أو MSH-28 قيمة."
+      },
+      "example": "R",
+      "table": "0952",
+      "values": [
+        {
+          "code": "U",
+          "en": "unrestricted",
+          "ar": "غير مقيّد",
+          "since": "2.9"
+        },
+        {
+          "code": "L",
+          "en": "low",
+          "ar": "منخفض",
+          "since": "2.9"
+        },
+        {
+          "code": "M",
+          "en": "moderate",
+          "ar": "متوسط",
+          "since": "2.9"
+        },
+        {
+          "code": "N",
+          "en": "normal",
+          "ar": "عادي",
+          "since": "2.9"
+        },
+        {
+          "code": "R",
+          "en": "restricted",
+          "ar": "مقيّد",
+          "since": "2.9"
+        },
+        {
+          "code": "V",
+          "en": "very restricted",
+          "ar": "مقيّد جدًا",
+          "since": "2.9"
+        }
+      ]
+    },
+    "MSH-27": {
+      "nameAr": "تعليمات المعالجة الأمنية",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "Coded instructions on how to protect the message, such as limits on sharing, storage or purpose of use.",
+        "ar": "تعليمات مرمّزة لكيفية حماية الرسالة، مثل قيود المشاركة أو التخزين أو الغرض من الاستخدام."
+      },
+      "details": {
+        "en": "Repeating CWE (coded with exceptions) field. Codes come from HL7 security control codes (table 0953). They tell receivers about obligations, such as encrypting or not sharing further, and the allowed purposes of use.",
+        "ar": "حقل مرمّز من النوع CWE يتكرر. وتأتي الرموز من رموز التحكم الأمني في HL7 (جدول الرموز 0953)، وتبلّغ المستقبِل بالالتزامات، مثل التشفير أو منع المشاركة لاحقًا، وبأغراض الاستخدام المسموح بها."
+      },
+      "table": "0953"
+    },
+    "MSH-28": {
+      "nameAr": "تعليمات تقييد الوصول الخاصة",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "Free-text instructions about protecting the patient's data that must be shown to users.",
+        "ar": "تعليمات نصية حرة عن حماية بيانات المريض يجب عرضها للمستخدمين."
+      },
+      "details": {
+        "en": "Repeating text (ST) field. It carries instructions based on patient consent, organization policy or law, such as a warning not to share the data again. It can also give instructions about releasing information to family and friends.",
+        "ar": "حقل نصي (ST) يتكرر. ويحمل تعليمات مبنية على موافقة المريض أو سياسة المؤسسة أو القانون، مثل تحذير من إعادة مشاركة البيانات. ويمكن أن يحمل أيضًا تعليمات عن إعطاء المعلومات لأفراد العائلة والأصدقاء."
+      },
+      "example": "Do not release information to visitors"
+    }
+  }
+}

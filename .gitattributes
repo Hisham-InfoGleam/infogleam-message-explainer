@@ -1,0 +1,11 @@
+# Normalize text files to LF in the repository.
+* text=auto eol=lf
+
+# HL7 samples use a single CR between segments, like real HL7.
+# Treat them as binary so git never changes the line endings.
+*.hl7 -text
+
+# Binary files
+*.png binary
+*.ico binary
+*.woff2 binary

@@ -1,0 +1,237 @@
+{
+  "segment": "EVN",
+  "title": {
+    "en": "Event Type",
+    "ar": "نوع الحدث"
+  },
+  "summary": {
+    "en": "Gives details about the trigger event of the message: when it was recorded, when it happened, why, and who entered it.",
+    "ar": "يعطي تفاصيل عن الحدث المُطلِق (Trigger Event) للرسالة: متى سُجّل، ومتى وقع، ولماذا، ومن أدخله."
+  },
+  "details": {
+    "en": "EVN comes after MSH (and any SFT software segments) in ADT (admission, discharge, transfer) messages, such as ADT^A01 or ADT^A08. It also appears in financial (BAR, DFT) and document (MDM) messages. It appears once and does not repeat. The event code itself is in MSH-9 component 2.",
+    "ar": "يأتي EVN بعد MSH (وأي مقاطع برمجيات SFT) في رسائل ADT (الدخول والخروج والنقل)، مثل ADT^A01 وADT^A08. ويظهر أيضًا في الرسائل المالية (BAR وDFT) ورسائل الوثائق (MDM). ويظهر مرة واحدة ولا يتكرر. أما رمز الحدث نفسه ففي المكوّن 2 من MSH-9."
+  },
+  "keyFields": [
+    "EVN-1",
+    "EVN-2",
+    "EVN-5",
+    "EVN-6"
+  ],
+  "fields": {
+    "EVN-1": {
+      "nameAr": "رمز نوع الحدث",
+      "usage": "common",
+      "summary": {
+        "en": "The trigger event code, such as A01. It is a copy of the second component of MSH-9.",
+        "ar": "رمز الحدث المُطلِق، مثل A01، وهو نسخة من المكوّن الثاني في MSH-9."
+      },
+      "details": {
+        "en": "Holds an event code from table 0003, such as A01 admit or A08 update. HL7 recommends sending the event in MSH-9 component 2 instead.",
+        "ar": "يحمل رمز حدث من جدول الرموز 0003، مثل A01 للدخول أو A08 للتحديث. ويوصي HL7 بإرسال الحدث في المكوّن 2 من MSH-9 بدلًا منه."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3 to v2.6, and withdrawn in v2.7.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط من الإصدار v2.3 حتى v2.6، وأُلغي في الإصدار v2.7."
+      },
+      "tip": {
+        "en": "Many senders still fill EVN-1 with the same code as MSH-9.2, because older receivers read it. If both exist and differ, trust MSH-9.",
+        "ar": "ما زال كثير من المُرسِلين يملؤون EVN-1 بنفس رمز MSH-9.2 لأن الأنظمة القديمة تقرؤه. وإذا وُجد الاثنان واختلفا فاعتمد على MSH-9."
+      },
+      "example": "A01",
+      "table": "0003",
+      "values": [
+        {
+          "code": "A01",
+          "en": "ADT/ACK - Admit/visit notification",
+          "ar": "ADT/ACK - إشعار دخول أو زيارة"
+        },
+        {
+          "code": "A02",
+          "en": "ADT/ACK - Transfer a patient",
+          "ar": "ADT/ACK - نقل مريض"
+        },
+        {
+          "code": "A03",
+          "en": "ADT/ACK - Discharge/end visit",
+          "ar": "ADT/ACK - خروج المريض أو انتهاء الزيارة"
+        },
+        {
+          "code": "A04",
+          "en": "ADT/ACK - Register a patient",
+          "ar": "ADT/ACK - تسجيل مريض"
+        },
+        {
+          "code": "A05",
+          "en": "ADT/ACK - Pre-admit a patient",
+          "ar": "ADT/ACK - تسجيل مسبق قبل الدخول"
+        },
+        {
+          "code": "A06",
+          "en": "ADT/ACK - Change an outpatient to an inpatient",
+          "ar": "ADT/ACK - تحويل مريض خارجي إلى مريض منوَّم"
+        },
+        {
+          "code": "A07",
+          "en": "ADT/ACK - Change an inpatient to an outpatient",
+          "ar": "ADT/ACK - تحويل مريض منوَّم إلى مريض خارجي"
+        },
+        {
+          "code": "A08",
+          "en": "ADT/ACK - Update patient information",
+          "ar": "ADT/ACK - تحديث بيانات المريض"
+        },
+        {
+          "code": "A11",
+          "en": "ADT/ACK - Cancel admit/visit notification",
+          "ar": "ADT/ACK - إلغاء إشعار الدخول أو الزيارة"
+        },
+        {
+          "code": "A13",
+          "en": "ADT/ACK - Cancel discharge/end visit",
+          "ar": "ADT/ACK - إلغاء الخروج أو انتهاء الزيارة"
+        },
+        {
+          "code": "A28",
+          "en": "ADT/ACK - Add person information",
+          "ar": "ADT/ACK - إضافة بيانات شخص"
+        },
+        {
+          "code": "A31",
+          "en": "ADT/ACK - Update person information",
+          "ar": "ADT/ACK - تحديث بيانات شخص"
+        }
+      ]
+    },
+    "EVN-2": {
+      "nameAr": "تاريخ ووقت التسجيل",
+      "usage": "common",
+      "summary": {
+        "en": "The date and time the event was entered in the sending system.",
+        "ar": "التاريخ والوقت اللذان أُدخل فيهما الحدث في النظام المُرسِل."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMMSS, with an optional time zone. By default it is the system time at data entry, but HL7 expects systems to allow a different value. This field is required.",
+        "ar": "الصيغة YYYYMMDDHHMMSS مع منطقة زمنية اختيارية. وافتراضيًا هو وقت النظام عند إدخال البيانات، لكن HL7 يتوقع أن تسمح الأنظمة بقيمة مختلفة. وهذا الحقل إلزامي."
+      },
+      "tip": {
+        "en": "EVN-2 is when the data was recorded, not when the event happened. For the real admit or transfer time, look at EVN-6 or PV1 dates.",
+        "ar": "يمثّل EVN-2 وقت تسجيل البيانات لا وقت وقوع الحدث. ولمعرفة الوقت الفعلي للدخول أو النقل انظر إلى EVN-6 أو تواريخ المقطع PV1."
+      },
+      "example": "20260315143000"
+    },
+    "EVN-3": {
+      "nameAr": "تاريخ ووقت الحدث المخطط له",
+      "usage": "rare",
+      "summary": {
+        "en": "The date and time when a planned event is expected to happen, such as a planned admission.",
+        "ar": "التاريخ والوقت المتوقعان لوقوع حدث مخطط له، مثل دخول مخطط له."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMMSS. HL7 recommends the more specific PV2 (additional visit information) fields when possible: PV2-8 expected admit, PV2-9 expected discharge and PV2-47 expected return from leave of absence.",
+        "ar": "الصيغة YYYYMMDDHHMMSS. ويوصي HL7 باستخدام حقول المقطع PV2 (معلومات إضافية عن الزيارة) الأدق عند الإمكان: PV2-8 للدخول المتوقع، وPV2-9 للخروج المتوقع، وPV2-47 للعودة المتوقعة من الإجازة المؤقتة."
+      },
+      "example": "20260316090000"
+    },
+    "EVN-4": {
+      "nameAr": "رمز سبب الحدث",
+      "usage": "rare",
+      "summary": {
+        "en": "Why the event happened, for example at the patient's request or by a doctor's order.",
+        "ar": "سبب وقوع الحدث، مثلًا بناءً على طلب المريض أو بأمر من الطبيب."
+      },
+      "details": {
+        "en": "Uses table 0062, which is user-defined: HL7 suggests the codes listed here, and sites may add their own.",
+        "ar": "يستخدم جدول الرموز 0062، وهو جدول يحدده المستخدم: يقترح HL7 الرموز المذكورة هنا، ويمكن لكل موقع إضافة رموزه."
+      },
+      "versionNote": {
+        "en": "Data type IS (a bare code) up to v2.6. From v2.7 it is CWE, so it may carry code^text^coding system.",
+        "ar": "نوع البيانات IS (رمز فقط) حتى الإصدار v2.6. ومن الإصدار v2.7 أصبح CWE، فقد يحمل الرمز^النص^نظام الترميز."
+      },
+      "example": "01",
+      "table": "0062",
+      "values": [
+        {
+          "code": "01",
+          "en": "Patient request",
+          "ar": "بطلب من المريض"
+        },
+        {
+          "code": "02",
+          "en": "Physician/health practitioner order",
+          "ar": "بأمر من الطبيب أو الممارس الصحي"
+        },
+        {
+          "code": "03",
+          "en": "Census management",
+          "ar": "إدارة إحصاء المرضى المنوَّمين (Census)"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.5"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.5"
+        }
+      ]
+    },
+    "EVN-5": {
+      "nameAr": "معرّف المشغّل (المستخدم)",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The person responsible for the event, such as the user who entered it in the system.",
+        "ar": "الشخص المسؤول عن الحدث، مثل المستخدم الذي أدخله في النظام."
+      },
+      "details": {
+        "en": "XCN (person ID and name) data type: ID number ^ family name ^ given name, and more components. The field can repeat. Table 0188 holds operator codes, and each site defines its own.",
+        "ar": "نوع البيانات XCN (معرّف الشخص واسمه): رقم المعرّف ^ اسم العائلة ^ الاسم الأول، ومكوّنات أخرى. والحقل قابل للتكرار. ويحمل جدول الرموز 0188 رموز المشغّلين، ويحدد كل موقع رموزه."
+      },
+      "versionNote": {
+        "en": "It did not repeat in v2.3.",
+        "ar": "لم يكن الحقل يتكرر في الإصدار v2.3."
+      },
+      "tip": {
+        "en": "Useful for audit trails. Some systems send only a user ID in component 1; map it to a real name in the receiving system if users need it.",
+        "ar": "مفيد لسجلات التدقيق (audit trail). وبعض الأنظمة ترسل معرّف المستخدم فقط في المكوّن 1، فطابقه مع الاسم الحقيقي في النظام المستقبِل إذا احتاجه المستخدمون."
+      },
+      "example": "U1001^OPERATOR^DEMO",
+      "table": "0188"
+    },
+    "EVN-6": {
+      "nameAr": "وقت وقوع الحدث",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The date and time the event really happened, such as the actual transfer time.",
+        "ar": "التاريخ والوقت اللذان وقع فيهما الحدث فعلًا، مثل الوقت الفعلي لنقل المريض."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMMSS. For a transfer (A02) it is the time the patient actually moved. For a cancel event, it is the time of the original event that is being cancelled.",
+        "ar": "الصيغة YYYYMMDDHHMMSS. في حدث النقل (A02) هو الوقت الذي انتقل فيه المريض فعلًا. وفي أحداث الإلغاء هو وقت الحدث الأصلي الذي يُلغى."
+      },
+      "tip": {
+        "en": "When EVN-6 is empty, many receivers fall back to EVN-2. Agree with the sender which field holds the real event time.",
+        "ar": "عندما يكون EVN-6 فارغًا تعتمد أنظمة كثيرة على EVN-2 بدلًا منه. فاتفق مع المُرسِل على الحقل الذي يحمل الوقت الفعلي للحدث."
+      },
+      "example": "20260315141500"
+    },
+    "EVN-7": {
+      "nameAr": "منشأة الحدث",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "The facility where the event really happened, when it differs from the sending facility in MSH-4.",
+        "ar": "المنشأة الصحية التي وقع فيها الحدث فعلًا، عندما تختلف عن المنشأة المُرسِلة في MSH-4."
+      },
+      "details": {
+        "en": "HD (hierarchic designator) data type: namespace ID ^ universal ID ^ universal ID type. It is the facility where the operator in EVN-5 entered the event. Example: a central MPI (master patient index) forwards a registration made at another facility.",
+        "ar": "نوع البيانات HD (المعرّف الهرمي): معرّف النطاق ^ المعرّف العالمي ^ نوع المعرّف العالمي. وهي المنشأة التي أدخل فيها المشغّل المذكور في EVN-5 الحدث. مثال: فهرس المرضى الرئيسي (MPI) المركزي يعيد إرسال تسجيل تمّ في منشأة أخرى."
+      },
+      "example": "DEMOHOSP"
+    }
+  }
+}

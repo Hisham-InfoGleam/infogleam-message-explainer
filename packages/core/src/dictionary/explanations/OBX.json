@@ -1,0 +1,600 @@
+{
+  "segment": "OBX",
+  "title": { "en": "Observation/Result", "ar": "الملاحظة/النتيجة" },
+  "summary": {
+    "en": "Carries one single observation or result, such as one lab value, one vital sign or one section of a report.",
+    "ar": "يحمل ملاحظة أو نتيجة واحدة فقط، مثل قيمة مخبرية واحدة أو علامة حيوية واحدة أو قسم واحد من تقرير."
+  },
+  "details": {
+    "en": "OBX is used most in result messages (ORU^R01), after the OBR it belongs to. It also appears in orders to send clinical facts, in ADT messages such as ADT^A01 (for example height or weight), and in document messages (MDM^T02). It repeats, one OBX per value, and NTE comment segments can follow it.",
+    "ar": "يُستخدم المقطع OBX أكثر ما يُستخدم في رسائل النتائج (ORU^R01)، بعد مقطع OBR الذي يتبع له. ويظهر أيضًا في رسائل الطلبات لإرسال معلومات سريرية، وفي رسائل ADT مثل ADT^A01 (مثل الطول أو الوزن)، وفي رسائل المستندات (MDM^T02). وهو مقطع متكرر، لكل قيمة مقطع OBX، وقد تليه مقاطع الملاحظات النصية NTE."
+  },
+  "keyFields": ["OBX-2", "OBX-3", "OBX-5", "OBX-6", "OBX-8", "OBX-11"],
+  "fields": {
+    "OBX-1": {
+      "nameAr": "الرقم التسلسلي - OBX",
+      "usage": "common",
+      "summary": {
+        "en": "Sequence number of this OBX: 1 for the first, 2 for the second, and so on.",
+        "ar": "الرقم التسلسلي لهذا المقطع OBX: 1 للأول، و2 للثاني، وهكذا."
+      },
+      "details": {
+        "en": "A simple counter for the OBX segments. It is not a test code and carries no other meaning.",
+        "ar": "عدّاد بسيط لمقاطع OBX. وليس رمز فحص، ولا يحمل أي معنى آخر."
+      },
+      "tip": {
+        "en": "Most systems restart the count at 1 under each OBR. Some receivers reject numbers that skip or repeat.",
+        "ar": "معظم الأنظمة تبدأ العد من 1 تحت كل مقطع OBR. وبعض الأنظمة المستقبِلة ترفض الأرقام المتخطّاة أو المكررة."
+      },
+      "example": "1"
+    },
+    "OBX-2": {
+      "nameAr": "نوع القيمة",
+      "usage": "common",
+      "summary": {
+        "en": "The data type of the value in OBX-5, such as number, text or coded value.",
+        "ar": "نوع البيانات للقيمة في OBX-5، مثل رقم أو نص أو قيمة مرمَّزة."
+      },
+      "details": {
+        "en": "Fill it whenever OBX-5 has a value. Common types: NM (number), ST (short text), TX (long text), CE or CWE (coded), SN (number with a symbol, like >50) and ED (embedded file).",
+        "ar": "املأه كلما كانت في OBX-5 قيمة. الأنواع الشائعة: NM (رقم)، وST (نص قصير)، وTX (نص طويل)، وCE أو CWE (قيمة مرمَّزة)، وSN (رقم مع رمز، مثل >50)، وED (ملف مضمَّن)."
+      },
+      "versionNote": {
+        "en": "CWE and DTM are valid from v2.6. In v2.5.1 and earlier, CE and TS are used instead.",
+        "ar": "النوعان CWE وDTM صالحان ابتداءً من v2.6. وفي v2.5.1 وما قبله يُستخدم CE وTS بدلًا منهما."
+      },
+      "tip": {
+        "en": "Values like <0.5 do not fit NM. Send them as SN, or the receiver may reject the message or lose the symbol.",
+        "ar": "القيم مثل <0.5 لا تناسب النوع NM. أرسلها بالنوع SN، وإلا فقد يرفض النظام المستقبِل الرسالة أو يضيع الرمز."
+      },
+      "example": "NM",
+      "table": "0125",
+      "values": [
+        { "code": "NM", "en": "Numeric", "ar": "رقمي" },
+        { "code": "ST", "en": "String data", "ar": "بيانات نصية قصيرة" },
+        { "code": "TX", "en": "Text data", "ar": "بيانات نصية" },
+        { "code": "FT", "en": "Formatted text", "ar": "نص منسَّق" },
+        { "code": "CE", "en": "Coded element", "ar": "عنصر مرمَّز", "until": "2.5.1" },
+        { "code": "CWE", "en": "Coded with exceptions", "ar": "مرمَّز مع استثناءات", "since": "2.6" },
+        { "code": "SN", "en": "Structured numeric", "ar": "رقمي منظَّم" },
+        { "code": "ED", "en": "Encapsulated data", "ar": "بيانات مغلَّفة" },
+        { "code": "RP", "en": "Reference pointer", "ar": "مؤشر مرجعي" },
+        { "code": "DT", "en": "Date", "ar": "تاريخ" },
+        { "code": "TS", "en": "Time stamp", "ar": "طابع زمني", "until": "2.5.1" },
+        { "code": "DTM", "en": "Date/time", "ar": "التاريخ والوقت", "since": "2.6" }
+      ]
+    },
+    "OBX-3": {
+      "nameAr": "معرّف الملاحظة",
+      "usage": "common",
+      "summary": {
+        "en": "The code and name of what was measured or observed, such as one lab test.",
+        "ar": "رمز واسم ما قيس أو لوحظ، مثل فحص مخبري واحد."
+      },
+      "details": {
+        "en": "Format: code^name^coding system. The code can be local or from a standard system, often LOINC. With a local code, the standard encourages also sending a standard code in components 4 to 6.",
+        "ar": "الصيغة: الرمز^الاسم^نظام الترميز. قد يكون الرمز محليًا أو من نظام قياسي، وغالبًا LOINC. وعند استخدام رمز محلي، يشجع المعيار على إرسال رمز قياسي أيضًا في المكوّنات من 4 إلى 6."
+      },
+      "tip": {
+        "en": "Map each local result code to the receiver's code before go-live. Unmapped codes are a common reason for missing results.",
+        "ar": "اربط كل رمز نتيجة محلي برمز النظام المستقبِل قبل بدء التشغيل الفعلي. فالرموز غير المربوطة سبب شائع لضياع النتائج."
+      },
+      "example": "GLU^Glucose^L"
+    },
+    "OBX-4": {
+      "nameAr": "المعرّف الفرعي للملاحظة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Tells apart OBX segments with the same OBX-3 under one OBR, or groups related OBX segments.",
+        "ar": "يميّز بين مقاطع OBX التي لها القيمة نفسها في OBX-3 تحت مقطع OBR واحد، أو يجمع مقاطع OBX المترابطة."
+      },
+      "details": {
+        "en": "Use 1, 2, 3 for repeats of the same observation, such as several impressions in one report. It can also group results, for example by organism or tissue. Dotted values like 2.1 show nesting.",
+        "ar": "استخدم 1، 2، 3 لتكرارات الملاحظة نفسها، مثل عدة انطباعات تشخيصية في تقرير واحد. ويمكنه أيضًا جمع النتائج في مجموعات، مثلًا حسب الكائن الدقيق أو النسيج. والقيم ذات النقطة مثل 2.1 تبيّن التداخل."
+      },
+      "versionNote": {
+        "en": "Simple text (ST) up to v2.8.1. From v2.8.2 the data type is OG; its first component keeps the old value.",
+        "ar": "نص بسيط (ST) حتى v2.8.1. وابتداءً من v2.8.2 أصبح نوع البيانات OG، ويحتفظ مكوّنه الأول بالقيمة القديمة."
+      },
+      "tip": {
+        "en": "If several OBX segments share OBX-3 and OBX-4 by mistake, many receivers keep only the last one. Give separate results different sub-IDs.",
+        "ar": "إذا تشابهت عدة مقاطع OBX في OBX-3 وOBX-4 عن طريق الخطأ، فكثير من الأنظمة المستقبِلة تحتفظ بالأخير فقط. أعطِ النتائج المنفصلة معرّفات فرعية مختلفة."
+      },
+      "example": "1"
+    },
+    "OBX-5": {
+      "nameAr": "قيمة الملاحظة",
+      "usage": "common",
+      "summary": {
+        "en": "The actual result value, such as a number, text, code or embedded document.",
+        "ar": "قيمة النتيجة الفعلية، مثل رقم أو نص أو رمز أو مستند مضمَّن."
+      },
+      "details": {
+        "en": "Its format follows the data type in OBX-2. It can repeat for parts of one answer, such as paragraphs of long text. It can be empty when only a flag in OBX-8 is sent.",
+        "ar": "تتبع صيغته نوع البيانات المحدد في OBX-2. ويمكن أن يتكرر لأجزاء الإجابة الواحدة، مثل فقرات نص طويل. وقد يكون فارغًا عندما يُرسَل مؤشر في OBX-8 فقط."
+      },
+      "tip": {
+        "en": "Text results may contain | or ^. The sender must escape them, for example \\F\\ for | and \\S\\ for ^.",
+        "ar": "قد تحتوي النتائج النصية على | أو ^. ويجب على المُرسِل تحويلها إلى تسلسلات هروب (Escape)، مثل \\F\\ بدل | و\\S\\ بدل ^."
+      },
+      "example": "7.2"
+    },
+    "OBX-6": {
+      "nameAr": "وحدة القياس",
+      "usage": "common",
+      "summary": {
+        "en": "The unit of measure for the value in OBX-5, such as mmol/L.",
+        "ar": "وحدة القياس للقيمة في OBX-5، مثل mmol/L."
+      },
+      "details": {
+        "en": "A coded value: code^name^coding system. It is needed when a value is measured on a scale. With a local unit code, also send the unit name in the second component.",
+        "ar": "قيمة مرمَّزة: الرمز^الاسم^نظام الترميز. وهي لازمة عندما تُقاس القيمة على مقياس. وعند استخدام رمز وحدة محلي، أرسل اسم الوحدة أيضًا في المكوّن الثاني."
+      },
+      "versionNote": {
+        "en": "Up to v2.6 the default unit system is ISO+. From v2.7 the standard strongly recommends UCUM.",
+        "ar": "حتى v2.6 كان نظام الوحدات الافتراضي هو ISO+. وابتداءً من v2.7 يوصي المعيار بقوة باستخدام UCUM."
+      },
+      "tip": {
+        "en": "The same test can arrive in different units from different labs. Check units before you compare or chart results.",
+        "ar": "قد يصل الفحص نفسه بوحدات مختلفة من مختبرات مختلفة. تحقق من الوحدات قبل مقارنة النتائج أو رسمها بيانيًا."
+      },
+      "example": "mmol/L^millimoles per liter^L"
+    },
+    "OBX-7": {
+      "nameAr": "المدى المرجعي",
+      "usage": "common",
+      "summary": {
+        "en": "The normal or reference range for the result, such as 3.9-5.5.",
+        "ar": "المدى الطبيعي أو المرجعي للنتيجة، مثل 3.9-5.5."
+      },
+      "details": {
+        "en": "For numbers: lower-upper (3.5-4.5), >lower (>10) or <upper (<15). For text results, the normal value can go here. For drugs it is the therapeutic range; for toxic substances the upper limit is the toxic limit.",
+        "ar": "للأرقام: الحد الأدنى-الحد الأعلى (3.5-4.5)، أو >الحد الأدنى (>10)، أو <الحد الأعلى (<15). وللنتائج النصية يمكن وضع القيمة الطبيعية هنا. وللأدوية هو المدى العلاجي، وللمواد السامة يكون الحد الأعلى هو حد السمية."
+      },
+      "tip": {
+        "en": "It is a plain text field. Receivers that convert it to numbers can fail on spaces, units or extra words.",
+        "ar": "هذا حقل نصي بسيط. والأنظمة المستقبِلة التي تحوّله إلى أرقام قد تفشل بسبب المسافات أو الوحدات أو الكلمات الزائدة."
+      },
+      "example": "3.9-5.5"
+    },
+    "OBX-8": {
+      "nameAr": "رموز تفسير النتيجة",
+      "usage": "common",
+      "summary": {
+        "en": "Flags that show how to read the result, such as high, low, normal or abnormal.",
+        "ar": "مؤشرات تبيّن كيف تُقرأ النتيجة، مثل مرتفعة أو منخفضة أو طبيعية أو غير طبيعية."
+      },
+      "details": {
+        "en": "It can repeat, for example A~W. For text results, send N or A when the normal status is known. A flag can be sent alone, with no value in OBX-5. Sites may add local codes.",
+        "ar": "يمكن أن يتكرر، مثل A~W. وفي النتائج النصية أرسل N أو A عندما تكون الحالة الطبيعية معروفة. ويمكن إرسال المؤشر وحده دون قيمة في OBX-5. ويمكن للجهات إضافة رموز محلية."
+      },
+      "versionNote": {
+        "en": "Called \"Abnormal Flags\" up to v2.6, with data type ID or IS. Renamed \"Interpretation Codes\" (CWE data type) in v2.7.",
+        "ar": "كان اسمه \"Abnormal Flags\" (مؤشرات النتيجة غير الطبيعية) حتى v2.6، بنوع البيانات ID أو IS. وأصبح اسمه \"Interpretation Codes\" بنوع CWE في v2.7."
+      },
+      "tip": {
+        "en": "Result screens often highlight values using this field. If it is empty, a high value may not stand out, so ask the lab to send it.",
+        "ar": "كثيرًا ما تعتمد شاشات النتائج على هذا الحقل لإبراز القيم. وإذا كان فارغًا فقد لا تظهر القيمة المرتفعة بوضوح، لذا اطلب من المختبر إرساله."
+      },
+      "example": "H",
+      "table": "0078",
+      "values": [
+        { "code": "N", "en": "Normal", "ar": "طبيعي" },
+        { "code": "A", "en": "Abnormal", "ar": "غير طبيعي" },
+        { "code": "AA", "en": "Critical abnormal", "ar": "غير طبيعي بدرجة حرجة" },
+        { "code": "H", "en": "High", "ar": "مرتفع" },
+        { "code": "HH", "en": "Critical high", "ar": "مرتفع بدرجة حرجة" },
+        { "code": "L", "en": "Low", "ar": "منخفض" },
+        { "code": "LL", "en": "Critical low", "ar": "منخفض بدرجة حرجة" },
+        { "code": "<", "en": "Off scale low", "ar": "أدنى من مدى جهاز القياس" },
+        { "code": ">", "en": "Off scale high", "ar": "أعلى من مدى جهاز القياس" },
+        { "code": "S", "en": "Susceptible", "ar": "حسّاس" },
+        { "code": "R", "en": "Resistant", "ar": "مقاوِم" },
+        { "code": "I", "en": "Intermediate", "ar": "متوسط" }
+      ]
+    },
+    "OBX-9": {
+      "nameAr": "الاحتمالية",
+      "usage": "rare",
+      "summary": {
+        "en": "The probability that a coded result is true, as a decimal from 0 to 1.",
+        "ar": "احتمال أن تكون النتيجة المرمَّزة صحيحة، كرقم عشري من 0 إلى 1."
+      },
+      "example": "0.85"
+    },
+    "OBX-10": {
+      "nameAr": "طبيعة الفحص غير الطبيعي",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows which population group the normal range is based on, such as age or sex.",
+        "ar": "يبيّن الفئة السكانية التي بُني عليها المدى الطبيعي، مثل العمر أو الجنس."
+      },
+      "details": {
+        "en": "Uses HL7 table 0080. Several codes can be sent with ~, for example A~S for a range based on age and sex.",
+        "ar": "يستخدم جدول HL7 رقم 0080. ويمكن إرسال عدة رموز مفصولة بالرمز ~، مثل A~S لمدى مبني على العمر والجنس."
+      },
+      "example": "A~S",
+      "table": "0080",
+      "values": [
+        { "code": "A", "en": "An age-based population", "ar": "فئة سكانية حسب العمر" },
+        { "code": "N", "en": "None - generic normal range", "ar": "لا شيء - مدى طبيعي عام" },
+        { "code": "R", "en": "A race-based population", "ar": "فئة سكانية حسب العِرق" },
+        { "code": "S", "en": "A sex-based population", "ar": "فئة سكانية حسب الجنس" },
+        { "code": "SP", "en": "Species", "ar": "النوع الحيّ", "since": "2.5" },
+        { "code": "B", "en": "Breed", "ar": "السلالة", "since": "2.5" },
+        { "code": "ST", "en": "Strain", "ar": "السلالة الفرعية", "since": "2.5" }
+      ]
+    },
+    "OBX-11": {
+      "nameAr": "حالة نتيجة الملاحظة",
+      "usage": "common",
+      "summary": {
+        "en": "The status of this one result, such as preliminary, final or corrected.",
+        "ar": "حالة هذه النتيجة الواحدة، مثل أولية أو نهائية أو مصحَّحة."
+      },
+      "details": {
+        "en": "Required in every OBX. F is final. C corrects an earlier final result with the same OBX-3 and OBX-4, and D deletes it. Normal progress from preliminary to final is not a correction.",
+        "ar": "مطلوب في كل مقطع OBX. وتعني F نهائية. وتصحّح C نتيجة نهائية سابقة لها OBX-3 وOBX-4 نفسيهما، وتحذفها D. والانتقال الطبيعي من أولية إلى نهائية لا يُعد تصحيحًا."
+      },
+      "versionNote": {
+        "en": "Code S (partial) is kept only for backward compatibility from v2.6. v2.8 adds A (amended), B (appended) and V (verified).",
+        "ar": "الرمز S (جزئية) يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.6. ويضيف v2.8 الرموز A (معدَّلة) وB (مُلحَق بها) وV (مُتحقَّق منها)."
+      },
+      "tip": {
+        "en": "Test how the receiver handles C and W. Some systems add a new result instead of replacing the old one.",
+        "ar": "اختبر طريقة تعامل النظام المستقبِل مع C وW. فبعض الأنظمة تضيف نتيجة جديدة بدل أن تستبدل القديمة."
+      },
+      "example": "F",
+      "table": "0085",
+      "values": [
+        { "code": "F", "en": "Final results", "ar": "نتائج نهائية" },
+        { "code": "P", "en": "Preliminary results", "ar": "نتائج أولية" },
+        { "code": "C", "en": "Record coming over is a correction and thus replaces a final result", "ar": "السجل المرسَل تصحيح، ولذلك يحل محل نتيجة نهائية" },
+        { "code": "R", "en": "Results entered -- not verified", "ar": "أُدخلت النتائج ولم يُتحقَّق منها" },
+        { "code": "I", "en": "Specimen in lab; results pending", "ar": "العيّنة في المختبر؛ النتائج قيد الانتظار" },
+        { "code": "S", "en": "Partial results", "ar": "نتائج جزئية" },
+        { "code": "X", "en": "Results cannot be obtained for this observation", "ar": "لا يمكن الحصول على نتيجة لهذه الملاحظة" },
+        { "code": "D", "en": "Deletes the OBX record", "ar": "حذف سجل OBX" },
+        { "code": "W", "en": "Post original as wrong, e.g., transmitted for wrong patient", "ar": "تعليم النتيجة الأصلية بأنها خاطئة، مثل إرسالها لمريض آخر" },
+        { "code": "U", "en": "Results status change to final without retransmitting results already sent as 'preliminary.'", "ar": "تغيير الحالة إلى نهائية دون إعادة إرسال النتائج المرسلة سابقًا كأولية" },
+        { "code": "N", "en": "Not asked", "ar": "لم يُطلب", "since": "2.3.1" },
+        { "code": "O", "en": "Order detail description only (no result)", "ar": "وصف لتفاصيل الطلب فقط (بلا نتيجة)", "since": "2.3.1" }
+      ]
+    },
+    "OBX-12": {
+      "nameAr": "تاريخ سريان المدى المرجعي",
+      "usage": "rare",
+      "summary": {
+        "en": "The date when the reference range in OBX-7 started to apply.",
+        "ar": "التاريخ الذي بدأ فيه العمل بالمدى المرجعي الوارد في OBX-7."
+      },
+      "details": {
+        "en": "Only filled when OBX-7 has a value. It helps compare results over time when the lab changed its ranges, for example after new equipment.",
+        "ar": "لا يُملأ إلا إذا كانت في OBX-7 قيمة. ويساعد على مقارنة النتائج عبر الزمن عندما يغيّر المختبر مدياته المرجعية، مثلًا بعد استخدام أجهزة جديدة."
+      },
+      "versionNote": {
+        "en": "Called \"Date Last Observation Normal Value\" in v2.4 and earlier, meaning the date the method or normal values last changed.",
+        "ar": "كان اسمه \"Date Last Observation Normal Value\" في v2.4 وما قبله، ويعني تاريخ آخر تغيير في طريقة الفحص أو القيم الطبيعية."
+      },
+      "example": "20260101"
+    },
+    "OBX-13": {
+      "nameAr": "ضوابط الوصول التي يحددها المستخدم",
+      "usage": "rare",
+      "summary": {
+        "en": "Codes from the result producer that the receiver can use to control who sees the result.",
+        "ar": "رموز من الجهة المنتِجة للنتيجة يستخدمها النظام المستقبِل للتحكم في من يرى النتيجة."
+      },
+      "details": {
+        "en": "Rarely needed. Example: show all antibiotic results to infection specialists, but only preferred ones to other users.",
+        "ar": "نادرًا ما يُحتاج إليه. مثال: عرض جميع نتائج المضادات الحيوية لأطباء الأمراض المعدية، وعرض المفضَّل منها فقط لبقية المستخدمين."
+      }
+    },
+    "OBX-14": {
+      "nameAr": "تاريخ ووقت الملاحظة",
+      "usage": "common",
+      "summary": {
+        "en": "The clinically relevant time of this result, such as the specimen collection time.",
+        "ar": "الوقت المهم سريريًا لهذه النتيجة، مثل وقت جمع العيّنة."
+      },
+      "details": {
+        "en": "Needed when results under one OBR have different times, or when the ordering system sends earlier results with an order. For specimen tests it is the collection time. Format YYYYMMDDHHMMSS.",
+        "ar": "يلزم عندما تختلف أوقات النتائج تحت مقطع OBR واحد، أو عندما يرسل نظام الطلبات نتائج سابقة مع الطلب. وفي فحوص العيّنات هو وقت جمع العيّنة. الصيغة YYYYMMDDHHMMSS."
+      },
+      "tip": {
+        "en": "Many systems copy OBR-7 into this field for every OBX. Check which of the two fields the receiver displays.",
+        "ar": "كثير من الأنظمة تنسخ قيمة OBR-7 إلى هذا الحقل في كل مقطع OBX. تحقق أي الحقلين يعرضه النظام المستقبِل."
+      },
+      "example": "20260315083000"
+    },
+    "OBX-15": {
+      "nameAr": "معرّف الجهة المنتِجة للنتيجة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Identifies the lab or service that produced the result, mainly when it is an outside lab.",
+        "ar": "يحدد المختبر أو الجهة التي أنتجت النتيجة، وخاصة عندما يكون مختبرًا خارجيًا."
+      },
+      "details": {
+        "en": "If empty, the receiver assumes the sending organization produced the result. It is a coded value: code^name^coding system.",
+        "ar": "إذا كان فارغًا، يفترض النظام المستقبِل أن الجهة المُرسِلة هي التي أنتجت النتيجة. وهو قيمة مرمَّزة: الرمز^الاسم^نظام الترميز."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7. The PRT (participation) segment carries the producer instead.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.7، ويحمل المقطع PRT (المشاركة) الجهة المنتِجة بدلًا منه."
+      },
+      "example": "DEMOLAB^Demo Hospital Laboratory^L"
+    },
+    "OBX-16": {
+      "nameAr": "المسؤول عن الملاحظة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The person who performed or verified the observation, such as the lab technician or the nurse.",
+        "ar": "الشخص الذي أجرى الملاحظة أو تحقق منها، مثل فنّي المختبر أو الممرض."
+      },
+      "details": {
+        "en": "Format: ID^family name^given name. It can repeat. A local ID should be unique when combined with OBX-15.",
+        "ar": "الصيغة: المعرّف^اسم العائلة^الاسم الأول. ويمكن أن يتكرر. ويجب أن يكون المعرّف المحلي فريدًا عند جمعه مع OBX-15."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7. The PRT (participation) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.7، ويحلّ محله المقطع PRT (المشاركة)."
+      },
+      "example": "T3001^TECH^DEMO"
+    },
+    "OBX-17": {
+      "nameAr": "طريقة الملاحظة",
+      "usage": "rare",
+      "summary": {
+        "en": "The method used to get the result, when the test code does not already show it.",
+        "ar": "الطريقة المستخدمة للحصول على النتيجة، عندما لا يبيّنها رمز الفحص."
+      },
+      "details": {
+        "en": "A coded value that can repeat. Sites can use a standard method code system or their own codes.",
+        "ar": "قيمة مرمَّزة يمكن أن تتكرر. ويمكن للجهات استخدام نظام ترميز قياسي للطرق أو رموزها الخاصة."
+      },
+      "example": "ENZ^Enzymatic method^L"
+    },
+    "OBX-18": {
+      "nameAr": "معرّف الجهاز",
+      "usage": "legacy",
+      "since": "2.4",
+      "summary": {
+        "en": "Identifies the instrument or analyzer that produced the result.",
+        "ar": "يحدد الجهاز أو المحلِّل (Analyzer) الذي أنتج النتيجة."
+      },
+      "details": {
+        "en": "The ID comes from the site's equipment list. It can repeat to show a hierarchy, lowest level first, such as a module and then its analyzer.",
+        "ar": "يأتي المعرّف من قائمة أجهزة الجهة. ويمكن أن يتكرر ليبيّن تسلسلًا هرميًا يبدأ من المستوى الأدنى، مثل وحدة ثم المحلِّل الذي يضمها."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7. The PRT (participation) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.7، ويحلّ محله المقطع PRT (المشاركة)."
+      },
+      "example": "ANALYZER01^DEMO_LAB"
+    },
+    "OBX-19": {
+      "nameAr": "تاريخ ووقت التحليل",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "When the instrument produced the result.",
+        "ar": "الوقت الذي أنتج فيه الجهاز النتيجة."
+      },
+      "details": {
+        "en": "It refers to the instrument named in OBX-18. Format YYYYMMDDHHMMSS.",
+        "ar": "يخص الجهاز المذكور في OBX-18. الصيغة YYYYMMDDHHMMSS."
+      },
+      "example": "20260315094500"
+    },
+    "OBX-20": {
+      "nameAr": "موضع الملاحظة في الجسم",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "The body site where the measurement was taken, such as the left arm for blood pressure.",
+        "ar": "موضع الجسم الذي أُخذ منه القياس، مثل الذراع اليسرى لقياس ضغط الدم."
+      },
+      "details": {
+        "en": "Not for the specimen source or collection site. It matters when the site changes the meaning of the value. It can use HL7 table 0163 (body site) or a standard code system.",
+        "ar": "لا يُستخدم لمصدر العيّنة أو موضع جمعها. وتظهر أهميته عندما يغيّر الموضع معنى القيمة. ويمكن أن يستخدم جدول HL7 رقم 0163 (مواضع الجسم) أو نظام ترميز قياسيًا."
+      },
+      "example": "LA^Left Arm^HL70163",
+      "table": "0163"
+    },
+    "OBX-21": {
+      "nameAr": "المعرّف الفريد للملاحظة",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "A unique ID for this observation that stays the same across messages.",
+        "ar": "معرّف فريد لهذه الملاحظة يبقى ثابتًا عبر الرسائل."
+      },
+      "details": {
+        "en": "Added for patient care messages. The standard advises care when using it in other messages.",
+        "ar": "أُضيف لرسائل رعاية المريض (Patient Care). وينصح المعيار بالحذر عند استخدامه في الرسائل الأخرى."
+      },
+      "example": "OBS0001^DEMO_LAB"
+    },
+    "OBX-22": {
+      "nameAr": "رمز الصيغة (Mood Code)",
+      "usage": "rare",
+      "since": "2.6",
+      "summary": {
+        "en": "Says whether the observation really happened or is an intent, request or proposal.",
+        "ar": "يبيّن هل حدثت الملاحظة فعلًا أم هي نية أو طلب أو اقتراح."
+      },
+      "details": {
+        "en": "Uses HL7 table 0725. If empty, EVN (an event that happened) is assumed. Use it with care, because it changes the meaning of the segment.",
+        "ar": "يستخدم جدول HL7 رقم 0725. وإذا كان فارغًا فالمفترض EVN (حدث وقع فعلًا). استخدمه بحذر، لأنه يغيّر معنى المقطع."
+      },
+      "example": "EVN",
+      "table": "0725"
+    },
+    "OBX-23": {
+      "nameAr": "اسم الجهة المنفِّذة للفحص",
+      "usage": "sometimes",
+      "since": "2.5.1",
+      "summary": {
+        "en": "The name of the organization or lab that performed the test.",
+        "ar": "اسم الجهة أو المختبر الذي أجرى الفحص."
+      },
+      "details": {
+        "en": "If empty, the receiver assumes the sending organization did the test. It should be sent when an outside lab produced the result. Component 10 can hold the organization ID.",
+        "ar": "إذا كان فارغًا، يفترض النظام المستقبِل أن الجهة المُرسِلة هي التي أجرت الفحص. ويجب إرساله عندما ينتج النتيجةَ مختبرٌ خارجي. ويمكن أن يحمل المكوّن العاشر معرّف الجهة."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7. The PRT (participation) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.7، ويحلّ محله المقطع PRT (المشاركة)."
+      },
+      "example": "DEMO HOSPITAL LAB"
+    },
+    "OBX-24": {
+      "nameAr": "عنوان الجهة المنفِّذة للفحص",
+      "usage": "legacy",
+      "since": "2.5.1",
+      "summary": {
+        "en": "The address of the organization or lab that performed the test.",
+        "ar": "عنوان الجهة أو المختبر الذي أجرى الفحص."
+      },
+      "details": {
+        "en": "It should be sent when an outside lab produced the result.",
+        "ar": "يجب إرساله عندما ينتج النتيجةَ مختبرٌ خارجي."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7. The PRT (participation) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.7، ويحلّ محله المقطع PRT (المشاركة)."
+      },
+      "example": "1 EXAMPLE ST^^DEMO CITY^^00000"
+    },
+    "OBX-25": {
+      "nameAr": "المدير الطبي للجهة المنفِّذة للفحص",
+      "usage": "legacy",
+      "since": "2.5.1",
+      "summary": {
+        "en": "The medical director of the organization or lab that performed the test.",
+        "ar": "المدير الطبي للجهة أو المختبر الذي أجرى الفحص."
+      },
+      "details": {
+        "en": "Different from OBX-16, which names the person who did the test.",
+        "ar": "يختلف عن OBX-16 الذي يذكر الشخص الذي أجرى الفحص."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7. The PRT (participation) segment replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط ابتداءً من v2.7، ويحلّ محله المقطع PRT (المشاركة)."
+      },
+      "example": "D1003^DIRECTOR^DEMO"
+    },
+    "OBX-26": {
+      "nameAr": "فئة إتاحة النتائج للمريض",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "Instructions on whether and when this result can be shared with the patient.",
+        "ar": "تعليمات حول إمكانية مشاركة هذه النتيجة مع المريض وتوقيت ذلك."
+      },
+      "details": {
+        "en": "Uses HL7 table 0909, for example share now, share after a delay, or withhold.",
+        "ar": "يستخدم جدول HL7 رقم 0909، مثل المشاركة فورًا، أو بعد مدة، أو الحجب."
+      },
+      "table": "0909"
+    },
+    "OBX-27": {
+      "nameAr": "السبب الجذري",
+      "usage": "rare",
+      "since": "2.8",
+      "summary": {
+        "en": "The root cause when a released result is issued again, such as an equipment problem.",
+        "ar": "السبب الجذري لإعادة إصدار نتيجة سبق إصدارها، مثل عطل في جهاز."
+      },
+      "details": {
+        "en": "Used with OBX-11 for corrected or changed results. Sites define their own codes (table 0914).",
+        "ar": "يُستخدم مع OBX-11 للنتائج المصحَّحة أو المعدَّلة. وتحدد كل جهة رموزها الخاصة (الجدول 0914)."
+      },
+      "table": "0914"
+    },
+    "OBX-28": {
+      "nameAr": "ضبط المعالجة المحلية",
+      "usage": "rare",
+      "since": "2.8",
+      "summary": {
+        "en": "Information for locally defined processing, set by a profile or a local agreement.",
+        "ar": "معلومات لمعالجة تُحدَّد محليًا، بحسب ملف تعريف (Profile) أو اتفاق محلي."
+      },
+      "details": {
+        "en": "It can repeat. Example: a lab's internal status before the result leaves the organization. Sites define their own codes (table 0915).",
+        "ar": "يمكن أن يتكرر. مثال: حالة داخلية في المختبر قبل أن تخرج النتيجة من المؤسسة. وتحدد كل جهة رموزها الخاصة (الجدول 0915)."
+      },
+      "table": "0915"
+    },
+    "OBX-29": {
+      "nameAr": "نوع الملاحظة",
+      "usage": "rare",
+      "since": "2.8.1",
+      "summary": {
+        "en": "Shows whether this OBX is a result or information sent along with an order.",
+        "ar": "يبيّن هل هذا المقطع OBX نتيجة أم معلومات مرسلة مع الطلب."
+      },
+      "details": {
+        "en": "Uses HL7 table 0936, for example a result, an answer to a question, or supporting clinical information.",
+        "ar": "يستخدم جدول HL7 رقم 0936، مثل نتيجة، أو إجابة عن سؤال، أو معلومات سريرية داعمة."
+      },
+      "table": "0936"
+    },
+    "OBX-30": {
+      "nameAr": "النوع الفرعي للملاحظة",
+      "usage": "rare",
+      "since": "2.8.2",
+      "summary": {
+        "en": "A finer grouping under OBX-29 that can help group OBX segments.",
+        "ar": "تصنيف أدق تحت OBX-29 يساعد على تجميع مقاطع OBX."
+      },
+      "details": {
+        "en": "Uses HL7 table 0937, for example an answer to an ask-at-order-entry question or a susceptibility result.",
+        "ar": "يستخدم جدول HL7 رقم 0937، مثل إجابة عن سؤال عند إدخال الطلب (Ask at Order Entry) أو نتيجة حساسية للمضادات الحيوية."
+      },
+      "table": "0937"
+    },
+    "OBX-31": {
+      "nameAr": "رمز الإجراء",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "Tells the receiver to add, update or delete this observation.",
+        "ar": "يطلب من النظام المستقبِل إضافة هذه الملاحظة أو تحديثها أو حذفها."
+      },
+      "details": {
+        "en": "Uses HL7 table 0206: A add, U update, D delete, X no change. It can be used only when OBX-21 has a value.",
+        "ar": "يستخدم جدول HL7 رقم 0206: A إضافة، وU تحديث، وD حذف، وX دون تغيير. ولا يُستخدم إلا إذا كانت في OBX-21 قيمة."
+      },
+      "table": "0206"
+    },
+    "OBX-32": {
+      "nameAr": "سبب غياب قيمة الملاحظة",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "The reason why there is no value in OBX-5.",
+        "ar": "سبب عدم وجود قيمة في OBX-5."
+      },
+      "details": {
+        "en": "It must be empty when OBX-5 has a value. It can repeat. Uses HL7 table 0960.",
+        "ar": "يجب أن يكون فارغًا إذا كانت في OBX-5 قيمة. ويمكن أن يتكرر. ويستخدم جدول HL7 رقم 0960."
+      },
+      "table": "0960"
+    },
+    "OBX-33": {
+      "nameAr": "معرّف العيّنة المرتبطة بالملاحظة",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "Links this result to its specimen, using the specimen IDs from the SPM segment.",
+        "ar": "يربط هذه النتيجة بعيّنتها، باستخدام معرّفات العيّنة الواردة في المقطع SPM."
+      },
+      "details": {
+        "en": "Two components: the specimen ID from the ordering system and the one from the performing system. It can repeat.",
+        "ar": "مكوّنان: معرّف العيّنة لدى نظام الطلبات، ومعرّفها لدى النظام المنفِّذ. ويمكن أن يتكرر."
+      },
+      "example": "SP0001&DEMO_APP^SF0001&DEMO_LAB"
+    }
+  }
+}

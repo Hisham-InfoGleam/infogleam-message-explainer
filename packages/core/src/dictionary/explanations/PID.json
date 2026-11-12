@@ -1,0 +1,1030 @@
+{
+  "segment": "PID",
+  "title": {
+    "en": "Patient Identification",
+    "ar": "بيانات تعريف المريض"
+  },
+  "summary": {
+    "en": "Identifies the patient and carries basic demographics: IDs, name, birth date, sex, address and phone numbers.",
+    "ar": "يحدد هوية المريض ويحمل بياناته الديموغرافية الأساسية: المعرّفات، والاسم، وتاريخ الميلاد، والجنس، والعنوان، وأرقام الهاتف."
+  },
+  "details": {
+    "en": "Most patient messages carry PID, for example ADT^A01 (admission), ADT^A08 (patient update), ORM^O01 (order) and ORU^R01 (result). It appears once per patient, after MSH (and EVN in ADT messages) and before PV1, the visit segment. Messages with several patients, such as some ORU^R01 messages, repeat PID inside each patient group.",
+    "ar": "تحمل معظم رسائل المرضى المقطع PID، مثل ADT^A01 (الدخول أو التنويم)، وADT^A08 (تحديث بيانات المريض)، وORM^O01 (الطلب)، وORU^R01 (النتيجة). يظهر مرة واحدة لكل مريض، بعد MSH (وبعد EVN في رسائل ADT) وقبل PV1، وهو مقطع الزيارة. الرسائل التي تحمل عدة مرضى، مثل بعض رسائل ORU^R01، تكرر PID داخل مجموعة كل مريض."
+  },
+  "keyFields": [
+    "PID-3",
+    "PID-5",
+    "PID-7",
+    "PID-8",
+    "PID-11",
+    "PID-18"
+  ],
+  "fields": {
+    "PID-1": {
+      "nameAr": "رقم تسلسل مقطع PID",
+      "usage": "common",
+      "summary": {
+        "en": "A sequence number for this PID segment in the message, usually 1.",
+        "ar": "رقم تسلسلي لمقطع PID داخل الرسالة، وقيمته غالبًا 1."
+      },
+      "details": {
+        "en": "Numbers the PID segments in one message, starting at 1. Most messages carry one patient, so the value is 1. It is not a patient identifier.",
+        "ar": "يرقّم مقاطع PID في الرسالة الواحدة بدءًا من 1. معظم الرسائل تحمل مريضًا واحدًا، لذلك تكون القيمة 1. هذا الحقل ليس معرّفًا للمريض."
+      },
+      "tip": {
+        "en": "Many systems leave it empty or always send 1. Receivers rarely check it.",
+        "ar": "كثير من الأنظمة تتركه فارغًا أو ترسل 1 دائمًا، ونادرًا ما يتحقق منه النظام المستقبِل."
+      },
+      "example": "1"
+    },
+    "PID-2": {
+      "nameAr": "معرّف المريض",
+      "usage": "sometimes",
+      "summary": {
+        "en": "An older field for an extra patient ID, often one from another facility.",
+        "ar": "حقل قديم لمعرّف إضافي للمريض، وغالبًا يكون صادرًا عن منشأة صحية أخرى."
+      },
+      "details": {
+        "en": "Meant for an ID from outside the facility, for example a number given by another institution. It uses the same CX structure as PID-3.",
+        "ar": "مخصص لمعرّف من خارج المنشأة الصحية، مثل رقم أعطته مؤسسة أخرى. يستخدم بنية CX نفسها المستخدمة في PID-3."
+      },
+      "versionNote": {
+        "en": "Called \"Patient ID (External ID)\" in v2.3. Kept only for backward compatibility from v2.3.1 and withdrawn in v2.7; use PID-3.",
+        "ar": "كان اسمه «Patient ID (External ID)» في الإصدار v2.3. يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.3.1، وسُحب في الإصدار v2.7؛ استخدم PID-3."
+      },
+      "tip": {
+        "en": "Some older systems still send an ID here. Ask what it means before you ignore it or map it.",
+        "ar": "بعض الأنظمة القديمة ما زالت ترسل معرّفًا هنا. اسأل عن معناه قبل أن تتجاهله أو تربطه بحقل آخر."
+      }
+    },
+    "PID-3": {
+      "nameAr": "قائمة معرّفات المريض",
+      "usage": "common",
+      "summary": {
+        "en": "The list of IDs that identify the patient, such as the MRN (medical record number).",
+        "ar": "قائمة المعرّفات التي تحدد هوية المريض، مثل رقم الملف الطبي (MRN)."
+      },
+      "details": {
+        "en": "Required and repeatable, one ID per repetition. Main components: 1 ID number, 4 assigning authority (who issued the ID), 5 identifier type code, for example MR (medical record number), NI (national unique individual identifier) or PPN (passport number).",
+        "ar": "حقل إلزامي يتكرر، وكل تكرار يحمل معرّفًا واحدًا. أهم المكوّنات: 1 رقم المعرّف، و4 الجهة المُصدِرة للمعرّف (Assigning Authority)، و5 رمز نوع المعرّف، مثل MR (رقم الملف الطبي) أو NI (المعرّف الوطني الفريد للفرد) أو PPN (رقم جواز السفر)."
+      },
+      "versionNote": {
+        "en": "Called \"Patient ID (Internal ID)\" in v2.3.",
+        "ar": "كان اسمه «Patient ID (Internal ID)» في الإصدار v2.3."
+      },
+      "tip": {
+        "en": "Do not assume the first repetition is the MRN. Pick each ID by its type code and assigning authority, as agreed with the sender.",
+        "ar": "لا تفترض أن التكرار الأول هو رقم الملف الطبي. اختر كل معرّف حسب رمز نوعه والجهة المُصدِرة له، كما اتفقت مع النظام المُرسِل."
+      },
+      "example": "TEST0001^^^DEMOHOSP^MR"
+    },
+    "PID-4": {
+      "nameAr": "معرّف المريض البديل",
+      "usage": "legacy",
+      "summary": {
+        "en": "An older field for other patient IDs, such as a temporary ID.",
+        "ar": "حقل قديم لمعرّفات أخرى للمريض، مثل معرّف مؤقت."
+      },
+      "details": {
+        "en": "Held other IDs for the patient, for example a temporary number used until the official one is ready. It uses the CX structure and can repeat.",
+        "ar": "كان يحمل معرّفات أخرى للمريض، مثل رقم مؤقت يُستخدم حتى يجهز الرقم الرسمي. يستخدم بنية CX ويمكن أن يتكرر."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3.1 and withdrawn in v2.7; send each ID as a repetition of PID-3.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.3.1، وسُحب في الإصدار v2.7؛ أرسل كل معرّف كتكرار في PID-3."
+      },
+      "tip": {
+        "en": "If a sender still uses it, ask what the ID is and which system issued it.",
+        "ar": "إذا كان النظام المُرسِل ما زال يستخدمه، فاسأل عن نوع المعرّف وعن النظام الذي أصدره."
+      }
+    },
+    "PID-5": {
+      "nameAr": "اسم المريض",
+      "usage": "common",
+      "summary": {
+        "en": "The patient's name, with the family name first.",
+        "ar": "اسم المريض، ويبدأ باسم العائلة."
+      },
+      "details": {
+        "en": "Required. Main components: 1 family name, 2 given name, 3 middle names or initials, 4 suffix, 5 prefix (such as DR), 7 name type code. More repetitions can hold other names.",
+        "ar": "حقل إلزامي. أهم المكوّنات: 1 اسم العائلة، و2 الاسم الأول، و3 الأسماء الوسطى أو أحرفها الأولى، و4 اللاحقة، و5 البادئة (مثل DR)، و7 رمز نوع الاسم. ويمكن أن تحمل التكرارات الأخرى أسماء أخرى."
+      },
+      "versionNote": {
+        "en": "Up to v2.6, the legal name (type L) comes first. From v2.7, the name type code tells which name is which, not the order.",
+        "ar": "حتى الإصدار v2.6 يأتي الاسم الرسمي (النوع L) أولًا. ومن الإصدار v2.7 يحدد رمز نوع الاسم معنى كل اسم، وليس ترتيبه."
+      },
+      "tip": {
+        "en": "When a system stores both Arabic and English names, it often sends them as separate repetitions. Agree which repetition holds which language, and use a character set that supports Arabic.",
+        "ar": "عندما يحفظ النظام الاسم بالعربية والإنجليزية، يرسلهما غالبًا في تكرارين منفصلين. اتفق على التكرار الخاص بكل لغة، واستخدم مجموعة محارف (Character Set) تدعم العربية."
+      },
+      "example": "TEST^PATIENT^ONE^^^^L"
+    },
+    "PID-6": {
+      "nameAr": "اسم عائلة الأم قبل الزواج",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The family name the patient's mother had before marriage.",
+        "ar": "اسم العائلة الذي كانت تحمله أم المريض قبل الزواج."
+      },
+      "details": {
+        "en": "Uses the same name components as PID-5, with the family name first. Its purpose is to help tell apart patients who have the same name.",
+        "ar": "يستخدم مكوّنات الاسم نفسها في PID-5، ويبدأ باسم العائلة. الغرض منه المساعدة في التمييز بين المرضى الذين يحملون الاسم نفسه."
+      },
+      "tip": {
+        "en": "Some patient-matching systems use it as an extra check. Many registration systems do not collect it, so do not make it required.",
+        "ar": "بعض أنظمة مطابقة المرضى (Patient Matching) تستخدمه كتحقق إضافي. كثير من أنظمة التسجيل لا تجمع هذه المعلومة، فلا تجعله حقلًا إلزاميًا."
+      },
+      "example": "DEMO^MOTHER"
+    },
+    "PID-7": {
+      "nameAr": "تاريخ ووقت الميلاد",
+      "usage": "common",
+      "summary": {
+        "en": "The patient's date of birth, and the time of birth when known.",
+        "ar": "تاريخ ميلاد المريض، ووقت الميلاد إن كان معروفًا."
+      },
+      "details": {
+        "en": "Format YYYYMMDD, or YYYYMMDDHHMM when the time is known, for example for newborns. The number of digits shows the precision, so 2026 alone means only the year is known.",
+        "ar": "الصيغة YYYYMMDD، أو YYYYMMDDHHMM عندما يكون الوقت معروفًا، كما في حالة المواليد الجدد. عدد الأرقام يحدد مستوى الدقة، فالقيمة 2026 وحدها تعني أن السنة فقط معروفة."
+      },
+      "versionNote": {
+        "en": "Data type TS (time stamp) in v2.5.1 and earlier; its first component uses the same format.",
+        "ar": "كان نوع البيانات TS (الطابع الزمني) في الإصدار v2.5.1 وما قبله، ومكوّنه الأول بالصيغة نفسها."
+      },
+      "tip": {
+        "en": "Some systems send a default date such as 19000101 when the real one is unknown; PID-32 can flag this.",
+        "ar": "بعض الأنظمة ترسل تاريخًا افتراضيًا مثل 19000101 عندما يكون التاريخ الحقيقي غير معروف، ويمكن للحقل PID-32 أن يشير إلى ذلك."
+      },
+      "example": "20260115"
+    },
+    "PID-8": {
+      "nameAr": "الجنس الإداري",
+      "usage": "common",
+      "summary": {
+        "en": "The patient's administrative sex, for example F (female) or M (male).",
+        "ar": "الجنس الإداري للمريض، مثل F (أنثى) أو M (ذكر)."
+      },
+      "details": {
+        "en": "The sex recorded for administrative use, such as registration and billing. Table 0001 is user-defined: HL7 suggests the codes below, and a site may add its own.",
+        "ar": "الجنس المسجَّل للأغراض الإدارية، مثل التسجيل والفوترة. الجدول 0001 يحدده المستخدم (User-defined): يقترح HL7 الرموز أدناه، ويمكن لكل جهة إضافة رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Called \"Sex\" in v2.3 and v2.3.1. Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "كان اسمه «Sex» في الإصدارين v2.3 وv2.3.1. نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "tip": {
+        "en": "Map codes carefully between systems. Some accept only F, M and U, and may reject A, N or O.",
+        "ar": "انتبه عند تحويل الرموز بين الأنظمة. بعض الأنظمة تقبل F وM وU فقط، وقد ترفض A أو N أو O."
+      },
+      "example": "F",
+      "table": "0001",
+      "values": [
+        {
+          "code": "F",
+          "en": "Female",
+          "ar": "أنثى"
+        },
+        {
+          "code": "M",
+          "en": "Male",
+          "ar": "ذكر"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "آخر"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف"
+        },
+        {
+          "code": "A",
+          "en": "Ambiguous",
+          "ar": "ملتبس",
+          "since": "2.4"
+        },
+        {
+          "code": "N",
+          "en": "Not applicable",
+          "ar": "لا ينطبق",
+          "since": "2.4"
+        }
+      ]
+    },
+    "PID-9": {
+      "nameAr": "الاسم المستعار للمريض",
+      "usage": "legacy",
+      "summary": {
+        "en": "An older field for other names the patient has used.",
+        "ar": "حقل قديم لأسماء أخرى استخدمها المريض."
+      },
+      "details": {
+        "en": "Held names the patient was known by at some time, such as an alias. It uses the same name components as PID-5 and can repeat.",
+        "ar": "كان يحمل أسماء عُرف بها المريض في وقت ما، مثل الاسم المستعار. يستخدم مكوّنات الاسم نفسها في PID-5 ويمكن أن يتكرر."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.4 and withdrawn in v2.7; send other names as repetitions of PID-5.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.4، وسُحب في الإصدار v2.7؛ أرسل الأسماء الأخرى كتكرارات في PID-5."
+      },
+      "tip": {
+        "en": "When an older sender fills it, you can move each name to a PID-5 repetition with name type A (alias).",
+        "ar": "إذا كان نظام قديم يملؤه، يمكنك نقل كل اسم إلى تكرار في PID-5 بنوع الاسم A (اسم مستعار)."
+      }
+    },
+    "PID-10": {
+      "nameAr": "العِرق",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The patient's race, as one or more coded values.",
+        "ar": "عِرق المريض، كقيمة مرمّزة واحدة أو أكثر."
+      },
+      "details": {
+        "en": "Repeatable. Table 0005 is user-defined, so each site or reporting program defines its codes. The alternate code part of the field is reserved for codes assigned by a government.",
+        "ar": "حقل يتكرر. الجدول 0005 يحدده المستخدم، لذلك تحدد كل جهة أو كل برنامج إبلاغ رموزه. الجزء الخاص بالرمز البديل في الحقل مخصص للرموز التي تحددها جهة حكومية."
+      },
+      "versionNote": {
+        "en": "In v2.3 a single plain code (IS). CE (coded element) and repeatable from v2.3.1; CWE from v2.6.",
+        "ar": "في الإصدار v2.3 كان رمزًا مجردًا واحدًا (IS). أصبح CE (عنصر مرمّز) وقابلًا للتكرار من الإصدار v2.3.1، وCWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Often empty. Send it only when the receiver or a reporting rule needs it, and agree on the code list.",
+        "ar": "غالبًا يكون فارغًا. أرسله فقط عندما يحتاجه النظام المستقبِل أو قاعدة إبلاغ، واتفق على قائمة الرموز."
+      },
+      "table": "0005"
+    },
+    "PID-11": {
+      "nameAr": "عنوان المريض",
+      "usage": "common",
+      "summary": {
+        "en": "The patient's addresses, such as the home or mailing address.",
+        "ar": "عناوين المريض، مثل عنوان السكن أو العنوان البريدي."
+      },
+      "details": {
+        "en": "Repeatable. Main components: 1 street, 2 other designation, 3 city, 4 state or province, 5 postal code, 6 country, 7 address type, such as H (home) or M (mailing).",
+        "ar": "حقل يتكرر. أهم المكوّنات: 1 الشارع، و2 تفاصيل إضافية للعنوان (Other Designation)، و3 المدينة، و4 الولاية أو المقاطعة، و5 الرمز البريدي، و6 الدولة، و7 نوع العنوان، مثل H (السكن) أو M (البريدي)."
+      },
+      "versionNote": {
+        "en": "Up to v2.6, the main mailing address comes first; if it is missing, the first repetition stays empty. HL7 removed this order rule in v2.7.",
+        "ar": "حتى الإصدار v2.6 يأتي العنوان البريدي الرئيسي أولًا، وإذا لم يتوفر يبقى التكرار الأول فارغًا. وألغى HL7 قاعدة الترتيب هذه في الإصدار v2.7."
+      },
+      "tip": {
+        "en": "Address quality is often poor. Many systems send free text in component 1 only, so check what each component really holds before you map it.",
+        "ar": "جودة العناوين غالبًا ضعيفة. كثير من الأنظمة ترسل نصًا حرًا في المكوّن 1 فقط، فتحقق مما يحمله كل مكوّن فعليًا قبل ربطه."
+      },
+      "example": "1 EXAMPLE ST^^DEMO CITY^^00000^^H"
+    },
+    "PID-12": {
+      "nameAr": "رمز المقاطعة (County)",
+      "usage": "legacy",
+      "summary": {
+        "en": "An older field for the code of the county where the patient lives.",
+        "ar": "حقل قديم لرمز المقاطعة (County) التي يسكن فيها المريض."
+      },
+      "details": {
+        "en": "A plain code from table 0289, which is user-defined, so sites define their own codes.",
+        "ar": "رمز مجرد من الجدول 0289، وهو جدول يحدده المستخدم، لذلك تحدد كل جهة رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Already kept only for backward compatibility in v2.3 and withdrawn in v2.7; use component 9 (county/parish code) of PID-11.",
+        "ar": "كان يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.3، وسُحب في الإصدار v2.7؛ استخدم المكوّن 9 (رمز المقاطعة) في PID-11."
+      },
+      "table": "0289"
+    },
+    "PID-13": {
+      "nameAr": "رقم هاتف المنزل",
+      "usage": "common",
+      "summary": {
+        "en": "The patient's home and personal phone numbers; it can also carry email addresses.",
+        "ar": "أرقام هاتف المنزل والأرقام الشخصية للمريض، ويمكن أن يحمل أيضًا عناوين البريد الإلكتروني."
+      },
+      "details": {
+        "en": "Repeatable; the main number comes first (or the first repetition stays empty). Key components: 1 number as text, 2 use code (PRN home, NET email), 3 equipment type (PH phone, CP mobile), 4 email address.",
+        "ar": "حقل يتكرر، ويأتي الرقم الرئيسي أولًا (أو يبقى التكرار الأول فارغًا). أهم المكوّنات: 1 الرقم كنص، و2 رمز الاستخدام (PRN للمنزل، وNET للبريد الإلكتروني)، و3 نوع الجهاز (PH هاتف، وCP جوال)، و4 عنوان البريد الإلكتروني."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9; PID-40 replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9، ويحل محله PID-40."
+      },
+      "tip": {
+        "en": "Still the usual home phone field in v2.3 to v2.6 messages. Many senders put the whole number in component 1; others split it into components 5 to 7.",
+        "ar": "ما زال الحقل المعتاد لهاتف المنزل في رسائل الإصدارات من v2.3 إلى v2.6. كثير من الأنظمة تضع الرقم كاملًا في المكوّن 1، وبعضها يقسّمه على المكوّنات من 5 إلى 7."
+      },
+      "example": "555-0100^PRN^PH"
+    },
+    "PID-14": {
+      "nameAr": "رقم هاتف العمل",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The patient's work phone numbers.",
+        "ar": "أرقام هاتف العمل الخاصة بالمريض."
+      },
+      "details": {
+        "en": "Repeatable; the main work number comes first (or the first repetition stays empty). It uses the same components as PID-13, usually with use code WPN (work number).",
+        "ar": "حقل يتكرر، ويأتي رقم العمل الرئيسي أولًا (أو يبقى التكرار الأول فارغًا). يستخدم مكوّنات PID-13 نفسها، وغالبًا مع رمز الاستخدام WPN (رقم العمل)."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9; PID-40 replaces it.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9، ويحل محله PID-40."
+      },
+      "tip": {
+        "en": "Often empty. When you move to PID-40, send the work number there with use code WPN.",
+        "ar": "غالبًا يكون فارغًا. عند الانتقال إلى PID-40، أرسل رقم العمل فيه مع رمز الاستخدام WPN."
+      },
+      "example": "555-0100^WPN^PH"
+    },
+    "PID-15": {
+      "nameAr": "اللغة الأساسية",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The main language the patient speaks.",
+        "ar": "اللغة الأساسية التي يتحدثها المريض."
+      },
+      "details": {
+        "en": "A coded value. Table 0296 is user-defined with no suggested values, so sites define their own codes. HL7 recommends ISO 639 language codes.",
+        "ar": "قيمة مرمّزة. الجدول 0296 يحدده المستخدم ولا توجد له قيم مقترحة، لذلك تحدد كل جهة رموزها الخاصة. يوصي HL7 باستخدام رموز اللغات في المعيار ISO 639."
+      },
+      "versionNote": {
+        "en": "Data type CE (coded element) in v2.5.1 and earlier; CWE from v2.6.",
+        "ar": "كان نوع البيانات CE (عنصر مرمّز) في الإصدار v2.5.1 وما قبله، وأصبح CWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Useful for arranging an interpreter. Agree on the code list, because senders mix two-letter codes, three-letter codes and local codes.",
+        "ar": "مفيد لترتيب مترجم للمريض. اتفق على قائمة الرموز، لأن الأنظمة المُرسِلة تخلط بين الرموز الثنائية والثلاثية والرموز المحلية."
+      },
+      "example": "AR^Arabic^L",
+      "table": "0296"
+    },
+    "PID-16": {
+      "nameAr": "الحالة الاجتماعية",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The patient's marital (civil) status, such as single or married.",
+        "ar": "الحالة الاجتماعية (المدنية) للمريض، مثل أعزب أو متزوج."
+      },
+      "details": {
+        "en": "A coded value, usually code^text^coding system, such as M^Married^HL70002. Table 0002 is user-defined: HL7 suggests the codes below, and a site may use its own.",
+        "ar": "قيمة مرمّزة، غالبًا بالصيغة code^text^coding system، مثل M^Married^HL70002. الجدول 0002 يحدده المستخدم: يقترح HL7 الرموز أدناه، ويمكن لكل جهة استخدام رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) in v2.3, CE up to v2.5.1, CWE from v2.6.",
+        "ar": "نوع البيانات IS (رمز مجرد) في الإصدار v2.3، وCE حتى الإصدار v2.5.1، وCWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Some systems send only the code, such as M, with no text. Map local codes to the HL7 suggested codes when you can.",
+        "ar": "بعض الأنظمة ترسل الرمز فقط، مثل M، دون نص. حوّل الرموز المحلية إلى الرموز التي تقترحها HL7 عندما يكون ذلك ممكنًا."
+      },
+      "example": "M^Married^HL70002",
+      "table": "0002",
+      "values": [
+        {
+          "code": "S",
+          "en": "Single",
+          "ar": "أعزب"
+        },
+        {
+          "code": "M",
+          "en": "Married",
+          "ar": "متزوج"
+        },
+        {
+          "code": "D",
+          "en": "Divorced",
+          "ar": "مطلّق"
+        },
+        {
+          "code": "W",
+          "en": "Widowed",
+          "ar": "أرمل"
+        },
+        {
+          "code": "A",
+          "en": "Separated",
+          "ar": "منفصل"
+        },
+        {
+          "code": "E",
+          "en": "Legally Separated",
+          "ar": "منفصل قانونيًا",
+          "since": "2.4"
+        },
+        {
+          "code": "C",
+          "en": "Common law",
+          "ar": "زواج بحكم العرف",
+          "since": "2.4"
+        },
+        {
+          "code": "P",
+          "en": "Domestic partner",
+          "ar": "شريك منزلي",
+          "since": "2.4"
+        },
+        {
+          "code": "G",
+          "en": "Living together",
+          "ar": "يعيشان معًا",
+          "since": "2.4"
+        },
+        {
+          "code": "B",
+          "en": "Unmarried",
+          "ar": "غير متزوج",
+          "since": "2.4"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.4"
+        },
+        {
+          "code": "O",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.4"
+        }
+      ]
+    },
+    "PID-17": {
+      "nameAr": "الديانة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The patient's religion, as a coded value.",
+        "ar": "ديانة المريض، كقيمة مرمّزة."
+      },
+      "details": {
+        "en": "Table 0006 is user-defined. HL7 suggests a long list of codes, and a site may use its own list instead.",
+        "ar": "الجدول 0006 يحدده المستخدم. يقترح HL7 قائمة طويلة من الرموز، ويمكن لكل جهة استخدام قائمتها الخاصة بدلًا منها."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) in v2.3, CE up to v2.5.1, CWE from v2.6.",
+        "ar": "نوع البيانات IS (رمز مجرد) في الإصدار v2.3، وCE حتى الإصدار v2.5.1، وCWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Used for spiritual care, diet and end-of-life arrangements. Treat it as sensitive data and send it only to systems that need it.",
+        "ar": "يُستخدم للرعاية الروحية والنظام الغذائي وترتيبات نهاية الحياة. تعامل معه كبيانات حساسة، ولا ترسله إلا للأنظمة التي تحتاجه."
+      },
+      "table": "0006"
+    },
+    "PID-18": {
+      "nameAr": "رقم حساب المريض",
+      "usage": "common",
+      "summary": {
+        "en": "The account number that collects the charges and payments for the patient's care.",
+        "ar": "رقم الحساب الذي تُسجَّل عليه رسوم رعاية المريض ومدفوعاتها."
+      },
+      "details": {
+        "en": "Assigned by the accounting or billing system. Uses the CX structure: 1 account number, 4 assigning authority, 5 identifier type code, usually AN (account number).",
+        "ar": "يصدره نظام المحاسبة أو الفوترة. يستخدم بنية CX: 1 رقم الحساب، و4 الجهة المُصدِرة، و5 رمز نوع المعرّف، وغالبًا AN (رقم الحساب)."
+      },
+      "tip": {
+        "en": "In many systems one account equals one visit, so PID-18 works like a visit number. Others use PV1-19 for the visit; check which one the sender uses.",
+        "ar": "في كثير من الأنظمة يساوي الحساب الواحد زيارة واحدة، فيعمل PID-18 كرقم للزيارة. أنظمة أخرى تستخدم PV1-19 للزيارة، فتحقق مما يستخدمه النظام المُرسِل."
+      },
+      "example": "ACC0001^^^DEMOHOSP^AN"
+    },
+    "PID-19": {
+      "nameAr": "رقم الضمان الاجتماعي للمريض",
+      "usage": "sometimes",
+      "summary": {
+        "en": "An older field for the patient's social security number (SSN).",
+        "ar": "حقل قديم لرقم الضمان الاجتماعي (SSN) الخاص بالمريض."
+      },
+      "details": {
+        "en": "Plain text with no assigning authority, so the receiver cannot tell who issued the number.",
+        "ar": "نص مجرد دون جهة مُصدِرة، لذلك لا يستطيع النظام المستقبِل معرفة الجهة التي أصدرت الرقم."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.3.1 and withdrawn in v2.7; use PID-3 with identifier type SS.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.3.1، وسُحب في الإصدار v2.7؛ استخدم PID-3 بنوع المعرّف SS."
+      },
+      "tip": {
+        "en": "Treat any national ID number as highly sensitive. Avoid sending it unless the receiver truly needs it.",
+        "ar": "تعامل مع أي رقم هوية وطني كبيانات شديدة الحساسية، ولا ترسله إلا إذا كان النظام المستقبِل يحتاجه فعلًا."
+      }
+    },
+    "PID-20": {
+      "nameAr": "رقم رخصة القيادة للمريض",
+      "usage": "legacy",
+      "summary": {
+        "en": "An older field for the patient's driver's license number.",
+        "ar": "حقل قديم لرقم رخصة القيادة الخاصة بالمريض."
+      },
+      "details": {
+        "en": "Components: 1 license number, 2 issuing state, province or country, 3 expiration date.",
+        "ar": "المكوّنات: 1 رقم الرخصة، و2 الولاية أو المقاطعة أو الدولة المُصدِرة، و3 تاريخ انتهاء الصلاحية."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.5 and withdrawn in v2.7; use PID-3 with identifier type DL.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.5، وسُحب في الإصدار v2.7؛ استخدم PID-3 بنوع المعرّف DL."
+      }
+    },
+    "PID-21": {
+      "nameAr": "معرّف الأم",
+      "usage": "rare",
+      "summary": {
+        "en": "An ID of the patient's mother, used mainly to link a newborn to the mother.",
+        "ar": "معرّف أم المريض، ويُستخدم أساسًا لربط المولود بأمه."
+      },
+      "details": {
+        "en": "Repeatable, so it can hold more than one ID for the same mother, such as her patient ID or account number. Uses the CX structure: 1 ID, 4 assigning authority, 5 identifier type code.",
+        "ar": "حقل يتكرر، لذلك يمكن أن يحمل أكثر من معرّف للأم نفسها، مثل معرّفها كمريضة أو رقم حسابها. يستخدم بنية CX: 1 المعرّف، و4 الجهة المُصدِرة، و5 رمز نوع المعرّف."
+      },
+      "tip": {
+        "en": "Birth and newborn interfaces use it to link baby and mother records. Send the mother's MRN with its assigning authority so the receiver can match her.",
+        "ar": "تستخدمه واجهات الولادة وحديثي الولادة لربط سجل المولود بسجل الأم. أرسل رقم الملف الطبي (MRN) للأم مع الجهة المُصدِرة له ليتمكن النظام المستقبِل من مطابقتها."
+      },
+      "example": "TEST0002^^^DEMOHOSP^MR"
+    },
+    "PID-22": {
+      "nameAr": "المجموعة الإثنية",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The patient's ethnic group or ancestry, as one or more coded values.",
+        "ar": "المجموعة الإثنية للمريض أو أصوله، كقيمة مرمّزة واحدة أو أكثر."
+      },
+      "details": {
+        "en": "Repeatable. Table 0189 is user-defined, so each site or reporting program defines its codes. The alternate code part of the field is reserved for codes assigned by a government.",
+        "ar": "حقل يتكرر. الجدول 0189 يحدده المستخدم، لذلك تحدد كل جهة أو كل برنامج إبلاغ رموزه. الجزء الخاص بالرمز البديل في الحقل مخصص للرموز التي تحددها جهة حكومية."
+      },
+      "versionNote": {
+        "en": "In v2.3 a single plain code (IS). CE (coded element) and repeatable from v2.3.1; CWE from v2.6.",
+        "ar": "في الإصدار v2.3 كان رمزًا مجردًا واحدًا (IS). أصبح CE (عنصر مرمّز) وقابلًا للتكرار من الإصدار v2.3.1، وCWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Often empty. Do not mix it up with race (PID-10) or citizenship (PID-26); agree with the receiver what each field means.",
+        "ar": "غالبًا يكون فارغًا. لا تخلط بينه وبين العِرق (PID-10) أو المواطنة (PID-26)، واتفق مع النظام المستقبِل على معنى كل حقل."
+      },
+      "table": "0189"
+    },
+    "PID-23": {
+      "nameAr": "مكان الميلاد",
+      "usage": "rare",
+      "summary": {
+        "en": "The name of the place where the patient was born, as free text.",
+        "ar": "اسم المكان الذي وُلد فيه المريض، كنص حر."
+      },
+      "details": {
+        "en": "Free text, such as a hospital or town name. When the full birth address is needed, it goes in PID-11 as a repetition with address type N (birth address).",
+        "ar": "نص حر، مثل اسم مستشفى أو بلدة. عند الحاجة إلى عنوان الميلاد الكامل، يُرسل في PID-11 كتكرار بنوع العنوان N (عنوان الميلاد)."
+      },
+      "example": "DEMO HOSPITAL"
+    },
+    "PID-24": {
+      "nameAr": "مؤشر الولادة المتعددة",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows whether the patient was born as part of a multiple birth, such as twins.",
+        "ar": "يبيّن هل وُلد المريض ضمن ولادة متعددة، مثل التوائم."
+      },
+      "details": {
+        "en": "Uses table 0136: Y means the patient was part of a multiple birth; N means a single birth. When it is Y, PID-25 gives the birth order.",
+        "ar": "يستخدم الجدول 0136: القيمة Y تعني أن المريض وُلد ضمن ولادة متعددة، والقيمة N تعني ولادة مفردة. عندما تكون القيمة Y، يحدد PID-25 ترتيب الولادة."
+      },
+      "tip": {
+        "en": "Important for newborn matching, because twins share the mother, the birth date and often the family name.",
+        "ar": "مهم لمطابقة سجلات المواليد، لأن التوائم يشتركون في الأم وتاريخ الميلاد وغالبًا في اسم العائلة."
+      },
+      "example": "Y",
+      "table": "0136",
+      "values": [
+        {
+          "code": "Y",
+          "en": "Yes",
+          "ar": "نعم"
+        },
+        {
+          "code": "N",
+          "en": "No",
+          "ar": "لا"
+        }
+      ]
+    },
+    "PID-25": {
+      "nameAr": "ترتيب الولادة",
+      "usage": "rare",
+      "summary": {
+        "en": "The patient's position in a multiple birth, such as 1 for the first twin.",
+        "ar": "ترتيب المريض في الولادة المتعددة، مثل 1 للتوأم الأول."
+      },
+      "details": {
+        "en": "A number. It is used only when the patient was part of a multiple birth (PID-24 = Y).",
+        "ar": "رقم. يُستخدم فقط عندما يكون المريض جزءًا من ولادة متعددة (PID-24 = Y)."
+      },
+      "example": "2"
+    },
+    "PID-26": {
+      "nameAr": "المواطنة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The country or countries where the patient is a citizen.",
+        "ar": "البلد أو البلدان التي يحمل المريض جنسيتها."
+      },
+      "details": {
+        "en": "Repeatable, because a person can hold more than one citizenship. HL7 recommends ISO 3166 country codes; table 0171 is user-defined for local codes. Name the code list in the coding system component.",
+        "ar": "حقل يتكرر، لأن الشخص قد يحمل أكثر من جنسية. يوصي HL7 برموز الدول في المعيار ISO 3166، والجدول 0171 يحدده المستخدم للرموز المحلية. اذكر اسم قائمة الرموز في مكوّن نظام الترميز."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) in v2.3, CE up to v2.5.1, CWE from v2.6.",
+        "ar": "نوع البيانات IS (رمز مجرد) في الإصدار v2.3، وCE حتى الإصدار v2.5.1، وCWE من الإصدار v2.6."
+      },
+      "tip": {
+        "en": "Registration systems often call this nationality. Agree whether the sender uses PID-26 or the older PID-28, and which country code list.",
+        "ar": "أنظمة التسجيل تسمي هذه المعلومة غالبًا «الجنسية». اتفق على الحقل الذي يستخدمه النظام المُرسِل، PID-26 أم الحقل الأقدم PID-28، وعلى قائمة رموز الدول."
+      },
+      "example": "DC^Demo Country^L",
+      "table": "0171"
+    },
+    "PID-27": {
+      "nameAr": "الوضع العسكري للمحاربين القدامى",
+      "usage": "rare",
+      "summary": {
+        "en": "The patient's military veteran status, as a coded value.",
+        "ar": "وضع المريض كمحارب قديم في الخدمة العسكرية، كقيمة مرمّزة."
+      },
+      "details": {
+        "en": "Table 0172 is user-defined with no suggested values, so sites define their own codes.",
+        "ar": "الجدول 0172 يحدده المستخدم ولا توجد له قيم مقترحة، لذلك تحدد كل جهة رموزها الخاصة."
+      },
+      "versionNote": {
+        "en": "Data type CE (coded element) in v2.5.1 and earlier; CWE from v2.6.",
+        "ar": "كان نوع البيانات CE (عنصر مرمّز) في الإصدار v2.5.1 وما قبله، وأصبح CWE من الإصدار v2.6."
+      },
+      "table": "0172"
+    },
+    "PID-28": {
+      "nameAr": "القومية",
+      "usage": "sometimes",
+      "summary": {
+        "en": "An older field for the nation or national group the patient belongs to.",
+        "ar": "حقل قديم للأمة أو المجموعة القومية التي ينتمي إليها المريض."
+      },
+      "details": {
+        "en": "This can differ from citizenship in a country that recognizes several national groups. Table 0212 is user-defined with no suggested values.",
+        "ar": "قد تختلف قيمته عن المواطنة في بلد يعترف بعدة مجموعات قومية. الجدول 0212 يحدده المستخدم ولا توجد له قيم مقترحة."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.4 and withdrawn in v2.7; use PID-26, PID-10 or PID-22 instead.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.4، وسُحب في الإصدار v2.7؛ استخدم بدلًا منه PID-26 أو PID-10 أو PID-22."
+      },
+      "tip": {
+        "en": "Some systems still send the patient's nationality here. Check the interface specification and map it to PID-26 if needed.",
+        "ar": "بعض الأنظمة ما زالت ترسل جنسية المريض هنا. راجع مواصفات الواجهة (Interface Specification)، وانقلها إلى PID-26 عند الحاجة."
+      },
+      "table": "0212"
+    },
+    "PID-29": {
+      "nameAr": "تاريخ ووقت وفاة المريض",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The date and time when the patient died.",
+        "ar": "تاريخ ووقت وفاة المريض."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMMSS, shortened to the precision that is known. It goes together with PID-30 (death indicator).",
+        "ar": "الصيغة YYYYMMDDHHMMSS، وتُختصر حسب الدقة المعروفة. يُرسل مع الحقل PID-30 (مؤشر الوفاة)."
+      },
+      "versionNote": {
+        "en": "Data type TS (time stamp) in v2.5.1 and earlier; its first component uses the same format.",
+        "ar": "كان نوع البيانات TS (الطابع الزمني) في الإصدار v2.5.1 وما قبله، ومكوّنه الأول بالصيغة نفسها."
+      },
+      "tip": {
+        "en": "Death is often sent in ADT^A03 (discharge) or ADT^A08 (update). Fill PID-29 and PID-30 together so receivers do not miss it.",
+        "ar": "تُرسل الوفاة غالبًا في رسالة ADT^A03 (الخروج) أو ADT^A08 (التحديث). املأ PID-29 وPID-30 معًا حتى لا تفوت الأنظمة المستقبِلة هذه المعلومة."
+      },
+      "example": "202601151030"
+    },
+    "PID-30": {
+      "nameAr": "مؤشر وفاة المريض",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Shows whether the patient has died: Y for yes, N for no.",
+        "ar": "يبيّن هل توفي المريض: Y تعني نعم، وN تعني لا."
+      },
+      "details": {
+        "en": "Uses table 0136 (yes/no). Y means the patient is deceased; N means the patient is not deceased.",
+        "ar": "يستخدم الجدول 0136 (نعم/لا). القيمة Y تعني أن المريض متوفى، والقيمة N تعني أنه غير متوفى."
+      },
+      "tip": {
+        "en": "Do not read an empty value as alive. Some senders fill this field only when the patient dies.",
+        "ar": "لا تفسّر الحقل الفارغ على أن المريض على قيد الحياة. بعض الأنظمة لا تملأ هذا الحقل إلا عند الوفاة."
+      },
+      "example": "Y",
+      "table": "0136",
+      "values": [
+        {
+          "code": "Y",
+          "en": "Yes",
+          "ar": "نعم"
+        },
+        {
+          "code": "N",
+          "en": "No",
+          "ar": "لا"
+        }
+      ]
+    },
+    "PID-31": {
+      "nameAr": "مؤشر الهوية غير المعروفة",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "Shows whether the patient's real identity is unknown, for example an unconscious emergency patient.",
+        "ar": "يبيّن هل هوية المريض الحقيقية غير معروفة، مثل مريض طوارئ فاقد للوعي."
+      },
+      "details": {
+        "en": "Uses table 0136: Y means the person's identity is not known; N means it is known.",
+        "ar": "يستخدم الجدول 0136: القيمة Y تعني أن هوية الشخص غير معروفة، والقيمة N تعني أنها معروفة."
+      },
+      "tip": {
+        "en": "Common when unknown patients are registered in emergency. When the identity is found, expect an update or merge message, such as ADT^A08 or ADT^A40.",
+        "ar": "شائع عند تسجيل مرضى مجهولي الهوية في الطوارئ. عند معرفة الهوية، توقّع رسالة تحديث أو دمج، مثل ADT^A08 أو ADT^A40."
+      },
+      "example": "N",
+      "table": "0136",
+      "values": [
+        {
+          "code": "Y",
+          "en": "Yes",
+          "ar": "نعم"
+        },
+        {
+          "code": "N",
+          "en": "No",
+          "ar": "لا"
+        }
+      ]
+    },
+    "PID-32": {
+      "nameAr": "رمز موثوقية الهوية",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "Codes that warn that some identity data in PID is a default value or not reliable.",
+        "ar": "رموز تنبّه إلى أن بعض بيانات الهوية في PID قيم افتراضية أو غير موثوقة."
+      },
+      "details": {
+        "en": "Repeatable. For example, UD says the birth date is unknown or a default value. Table 0445 is user-defined: HL7 suggests the codes below.",
+        "ar": "حقل يتكرر. مثلًا، الرمز UD يعني أن تاريخ الميلاد غير معروف أو قيمة افتراضية. الجدول 0445 يحدده المستخدم: يقترح HL7 الرموز أدناه."
+      },
+      "versionNote": {
+        "en": "Data type IS (a plain code) up to v2.6; CWE from v2.7.",
+        "ar": "نوع البيانات IS (رمز مجرد) حتى الإصدار v2.6، وCWE من الإصدار v2.7."
+      },
+      "tip": {
+        "en": "Very useful for patient matching. A matching system should not trust a birth date flagged UD or an address flagged UA.",
+        "ar": "مفيد جدًا في مطابقة المرضى. لا ينبغي لنظام المطابقة أن يثق بتاريخ ميلاد عليه الرمز UD أو بعنوان عليه الرمز UA."
+      },
+      "example": "UD",
+      "table": "0445",
+      "values": [
+        {
+          "code": "US",
+          "en": "Unknown/Default Social Security Number",
+          "ar": "رقم ضمان اجتماعي غير معروف أو افتراضي",
+          "since": "2.4"
+        },
+        {
+          "code": "UD",
+          "en": "Unknown/Default Date of Birth",
+          "ar": "تاريخ ميلاد غير معروف أو افتراضي",
+          "since": "2.4"
+        },
+        {
+          "code": "UA",
+          "en": "Unknown/Default Address",
+          "ar": "عنوان غير معروف أو افتراضي",
+          "since": "2.4"
+        },
+        {
+          "code": "AL",
+          "en": "Patient/Person Name is an Alias",
+          "ar": "اسم المريض أو الشخص اسم مستعار",
+          "since": "2.4"
+        }
+      ]
+    },
+    "PID-33": {
+      "nameAr": "تاريخ ووقت آخر تحديث",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "When the patient's identity and demographic data were last changed.",
+        "ar": "وقت آخر تغيير على بيانات هوية المريض وبياناته الديموغرافية."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMMSS. A receiver can compare it with its own record: if its copy is newer, it may decide not to apply this update.",
+        "ar": "الصيغة YYYYMMDDHHMMSS. يمكن للنظام المستقبِل مقارنته بسجله: إذا كانت نسخته أحدث، فقد يقرر عدم تطبيق هذا التحديث."
+      },
+      "versionNote": {
+        "en": "Data type TS (time stamp) in v2.5.1 and earlier; its first component uses the same format.",
+        "ar": "كان نوع البيانات TS (الطابع الزمني) في الإصدار v2.5.1 وما قبله، ومكوّنه الأول بالصيغة نفسها."
+      },
+      "tip": {
+        "en": "Helpful when messages can arrive out of order. Do not confuse it with MSH-7 (message time) or EVN-2 (when the event was recorded).",
+        "ar": "مفيد عندما قد تصل الرسائل بغير ترتيبها. لا تخلط بينه وبين MSH-7 (وقت الرسالة) أو EVN-2 (وقت تسجيل الحدث)."
+      },
+      "example": "20260115103000"
+    },
+    "PID-34": {
+      "nameAr": "المنشأة الصحية التي أجرت آخر تحديث",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "The facility that made the last change to the patient's identity data.",
+        "ar": "المنشأة الصحية التي أجرت آخر تغيير على بيانات هوية المريض."
+      },
+      "details": {
+        "en": "Uses the HD structure: 1 namespace ID (a local name), 2 universal ID, 3 universal ID type. A receiver can use it to decide whether the update comes from a source it trusts.",
+        "ar": "يستخدم بنية HD: 1 معرّف النطاق (Namespace ID، اسم محلي)، و2 المعرّف العالمي (Universal ID)، و3 نوع المعرّف العالمي. يمكن للنظام المستقبِل استخدامه ليقرر هل التحديث صادر عن مصدر يثق به."
+      },
+      "tip": {
+        "en": "Use a stable facility code agreed with all partners, not a free-text name that may change.",
+        "ar": "استخدم رمزًا ثابتًا للمنشأة متفقًا عليه مع جميع الأطراف، وليس اسمًا نصيًا قد يتغير."
+      },
+      "example": "DEMOHOSP"
+    },
+    "PID-35": {
+      "nameAr": "رمز تصنيف الكائن الحي",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "The species or other classification of a non-human patient, such as a dog.",
+        "ar": "النوع أو التصنيف الحيوي لمريض غير بشري، مثل الكلب."
+      },
+      "details": {
+        "en": "Empty means the patient is human. It must be filled when PID-36 (breed) or PID-38 (production class) is filled. Table 0446 has no suggested values; SNOMED CT is the recommended code system.",
+        "ar": "إذا كان فارغًا فالمريض إنسان. يجب ملؤه عند ملء PID-36 (السلالة) أو PID-38 (فئة الإنتاج). الجدول 0446 ليست له قيم مقترحة، ونظام الترميز الموصى به هو SNOMED CT."
+      },
+      "versionNote": {
+        "en": "Called \"Species Code\" in v2.4 to v2.7.1. From v2.8 it may also carry the breed, and the fill rule above no longer applies.",
+        "ar": "كان اسمه «Species Code» من الإصدار v2.4 إلى v2.7.1. من الإصدار v2.8 يمكن أن يحمل السلالة أيضًا، ولم تعد قاعدة الملء المذكورة أعلاه تنطبق."
+      },
+      "example": "DOG^Dog^L",
+      "table": "0446"
+    },
+    "PID-36": {
+      "nameAr": "رمز السلالة",
+      "usage": "legacy",
+      "since": "2.4",
+      "summary": {
+        "en": "The breed of an animal patient.",
+        "ar": "سلالة الحيوان عندما يكون المريض حيوانًا."
+      },
+      "details": {
+        "en": "Only for animals, unlike PID-35 and PID-37. It must be filled when PID-37 (strain) is filled. Table 0447 has no suggested values; SNOMED CT is the recommended code system.",
+        "ar": "للحيوانات فقط، بخلاف PID-35 وPID-37. يجب ملؤه عند ملء PID-37 (السلالة الفرعية). الجدول 0447 ليست له قيم مقترحة، ونظام الترميز الموصى به هو SNOMED CT."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.8, when PID-35 started to carry the breed as well.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.8، عندما أصبح PID-35 يحمل السلالة أيضًا."
+      },
+      "table": "0447"
+    },
+    "PID-37": {
+      "nameAr": "السلالة الفرعية (Strain)",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "The specific strain of an animal or other living organism, as free text.",
+        "ar": "السلالة الفرعية المحددة لحيوان أو لكائن حي آخر، كنص حر."
+      },
+      "details": {
+        "en": "Free text, for example the strain of a laboratory animal. It can describe any living organism, not only animals.",
+        "ar": "نص حر، مثل سلالة حيوان مختبر. يمكن أن يصف أي كائن حي، وليس الحيوانات فقط."
+      }
+    },
+    "PID-38": {
+      "nameAr": "رمز فئة الإنتاج",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "The main purpose an animal was bred or raised for, such as dairy or meat.",
+        "ar": "الغرض الرئيسي الذي رُبّي الحيوان من أجله، مثل إنتاج الألبان أو اللحوم."
+      },
+      "details": {
+        "en": "Can repeat up to two times. Table 0429 is user-defined: HL7 suggests the codes below.",
+        "ar": "يمكن أن يتكرر حتى مرتين. الجدول 0429 يحدده المستخدم: يقترح HL7 الرموز أدناه."
+      },
+      "versionNote": {
+        "en": "Data type CE (coded element) in v2.5.1 and earlier; CWE from v2.6.",
+        "ar": "كان نوع البيانات CE (عنصر مرمّز) في الإصدار v2.5.1 وما قبله، وأصبح CWE من الإصدار v2.6."
+      },
+      "example": "DA^Dairy^HL70429",
+      "table": "0429",
+      "values": [
+        {
+          "code": "BR",
+          "en": "Breeding/genetic stock",
+          "ar": "للتكاثر وتحسين السلالات",
+          "since": "2.4"
+        },
+        {
+          "code": "DA",
+          "en": "Dairy",
+          "ar": "إنتاج الألبان",
+          "since": "2.4"
+        },
+        {
+          "code": "DR",
+          "en": "Draft",
+          "ar": "حيوانات الجرّ",
+          "since": "2.4"
+        },
+        {
+          "code": "DU",
+          "en": "Dual Purpose",
+          "ar": "مزدوج الغرض",
+          "since": "2.4"
+        },
+        {
+          "code": "LY",
+          "en": "Layer, Includes Multiplier flocks",
+          "ar": "دواجن بيّاضة، ويشمل قطعان التكاثر",
+          "since": "2.4"
+        },
+        {
+          "code": "MT",
+          "en": "Meat",
+          "ar": "إنتاج اللحوم",
+          "since": "2.4"
+        },
+        {
+          "code": "OT",
+          "en": "Other",
+          "ar": "أخرى",
+          "since": "2.4"
+        },
+        {
+          "code": "PL",
+          "en": "Pleasure",
+          "ar": "للترفيه",
+          "since": "2.4"
+        },
+        {
+          "code": "RA",
+          "en": "Racing",
+          "ar": "للسباقات",
+          "since": "2.4"
+        },
+        {
+          "code": "SH",
+          "en": "Show",
+          "ar": "للعروض",
+          "since": "2.4"
+        },
+        {
+          "code": "NA",
+          "en": "Not Applicable",
+          "ar": "لا ينطبق",
+          "since": "2.4"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.4"
+        }
+      ]
+    },
+    "PID-39": {
+      "nameAr": "الانتماء القبلي",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "The tribe or tribes the patient is a member of.",
+        "ar": "القبيلة أو القبائل التي ينتمي إليها المريض."
+      },
+      "details": {
+        "en": "Repeatable, because a person can belong to more than one tribe. A national tribal list can be used; table 0171 is user-defined for local codes. Name the list in the coding system component.",
+        "ar": "حقل يتكرر، لأن الشخص قد ينتمي إلى أكثر من قبيلة. يمكن استخدام قائمة وطنية للقبائل، والجدول 0171 يحدده المستخدم للرموز المحلية. اذكر اسم القائمة في مكوّن نظام الترميز."
+      },
+      "table": "0171"
+    },
+    "PID-40": {
+      "nameAr": "بيانات الاتصال بالمريض",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "All the patient's phone numbers and email addresses, each marked with its use and device type.",
+        "ar": "كل أرقام هاتف المريض وعناوين بريده الإلكتروني، وكلٌّ منها موسوم بنوع استخدامه ونوع جهازه."
+      },
+      "details": {
+        "en": "Repeatable. Each repetition is described by component 2, the use (PRN home, WPN work, NET email), and component 3, the equipment (PH phone, CP mobile, Internet), not by its position.",
+        "ar": "حقل يتكرر. يُعرَّف كل تكرار بالمكوّن 2، وهو الاستخدام (PRN للمنزل، وWPN للعمل، وNET للبريد الإلكتروني)، وبالمكوّن 3، وهو نوع الجهاز (PH هاتف، وCP جوال، وInternet)، وليس بموقعه في الحقل."
+      },
+      "versionNote": {
+        "en": "Replaces PID-13 and PID-14, so messages in v2.6 and earlier carry phone numbers in those fields instead.",
+        "ar": "يحل محل PID-13 وPID-14، لذلك تحمل رسائل الإصدار v2.6 وما قبله أرقام الهاتف في هذين الحقلين بدلًا منه."
+      },
+      "tip": {
+        "en": "Most interfaces still use v2.5.1 or older, so expect PID-13 and PID-14 there. During a migration, keep old and new fields consistent.",
+        "ar": "معظم الواجهات ما زالت تستخدم الإصدار v2.5.1 أو أقدم، لذلك توقّع PID-13 وPID-14 فيها. أثناء الانتقال، احرص على أن تكون الحقول القديمة والجديدة متطابقة."
+      },
+      "example": "^PRN^PH^^^^5550100~^NET^Internet^test.patient@example.com"
+    }
+  }
+}

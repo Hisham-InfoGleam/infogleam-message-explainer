@@ -1,0 +1,2358 @@
+{
+  "about": "Segment field names, data types and repeat rules for HL7 Version 2, taken from the mapping tables of the HL7 Version 2 to FHIR project published by HL7 International. Reformatted to JSON; segment titles added.",
+  "source": "https://github.com/HL7/v2-to-fhir (mappings/segments), commit 5e30516993",
+  "license": "Apache-2.0",
+  "copyright": "HL7 International",
+  "segments": {
+    "MSH": {
+      "title": "Message Header",
+      "fields": [
+        {
+          "id": "MSH-1",
+          "name": "Field Separator",
+          "dataType": "ST",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSH-2",
+          "name": "Encoding Characters",
+          "dataType": "ST",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSH-3",
+          "name": "Sending Application",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-4",
+          "name": "Sending Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-5",
+          "name": "Receiving Application",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-6",
+          "name": "Receiving Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "MSH-7",
+          "name": "Date/Time of Message",
+          "dataType": "DTM",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSH-8",
+          "name": "Security",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-9",
+          "name": "Message Type",
+          "dataType": "MSG",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSH-10",
+          "name": "Message Control ID",
+          "dataType": "ST",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSH-11",
+          "name": "Processing ID",
+          "dataType": "PT",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSH-12",
+          "name": "Version ID",
+          "dataType": "VID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSH-13",
+          "name": "Sequence Number",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-14",
+          "name": "Continuation Pointer",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-15",
+          "name": "Accept Acknowledgment Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-16",
+          "name": "Application Acknowledgment Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-17",
+          "name": "Country Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-18",
+          "name": "Character Set",
+          "dataType": "ID",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "MSH-19",
+          "name": "Principal Language Of Message",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-20",
+          "name": "Alternate Character Set Handling Scheme",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-21",
+          "name": "Message Profile Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "MSH-22",
+          "name": "Sending Responsible Organization",
+          "dataType": "XON",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-23",
+          "name": "Receiving Responsible Organization",
+          "dataType": "XON",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-24",
+          "name": "Sending Network Address",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-25",
+          "name": "Receiving Network Address",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-26",
+          "name": "Security Classification Tag",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "MSH-27",
+          "name": "Security Handling Instructions",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "MSH-28",
+          "name": "Special Access Restriction Instructions",
+          "dataType": "ST",
+          "min": 0,
+          "max": "*"
+        }
+      ]
+    },
+    "EVN": {
+      "title": "Event Type",
+      "fields": [
+        {
+          "id": "EVN-1",
+          "name": "Event Type Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "EVN-2",
+          "name": "Recorded Date/Time",
+          "dataType": "DTM",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "EVN-3",
+          "name": "Date/Time Planned Event",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "EVN-4",
+          "name": "Event Reason Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "EVN-5",
+          "name": "Operator ID",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "EVN-6",
+          "name": "Event Occurred",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "EVN-7",
+          "name": "Event Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "PID": {
+      "title": "Patient Identification",
+      "fields": [
+        {
+          "id": "PID-1",
+          "name": "Set ID - PID",
+          "dataType": "SI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-2",
+          "name": "Patient ID",
+          "dataType": "CX",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-3",
+          "name": "Patient Identifier List",
+          "dataType": "CX",
+          "min": 1,
+          "max": "*"
+        },
+        {
+          "id": "PID-4",
+          "name": "Alternate Patient ID - PID",
+          "dataType": "CX",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-5",
+          "name": "Patient Name",
+          "dataType": "XPN",
+          "min": 1,
+          "max": "*"
+        },
+        {
+          "id": "PID-6",
+          "name": "Mother's Maiden Name",
+          "dataType": "XPN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-7",
+          "name": "Date/Time of Birth",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-8",
+          "name": "Administrative Sex",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-9",
+          "name": "Patient Alias",
+          "dataType": "XPN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-10",
+          "name": "Race",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-11",
+          "name": "Patient Address",
+          "dataType": "XAD",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-12",
+          "name": "County Code",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-13",
+          "name": "Phone Number - Home",
+          "dataType": "XTN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-14",
+          "name": "Phone Number - Business",
+          "dataType": "XTN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-15",
+          "name": "Primary Language",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-16",
+          "name": "Marital Status",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-17",
+          "name": "Religion",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-18",
+          "name": "Patient Account Number",
+          "dataType": "CX",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-19",
+          "name": "SSN Number - Patient",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-20",
+          "name": "Driver's License Number - Patient",
+          "dataType": "DLN",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-21",
+          "name": "Mother's Identifier",
+          "dataType": "CX",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-22",
+          "name": "Ethnic Group",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-23",
+          "name": "Birth Place",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-24",
+          "name": "Multiple Birth Indicator",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-25",
+          "name": "Birth Order",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-26",
+          "name": "Citizenship",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-27",
+          "name": "Veterans Military Status",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-28",
+          "name": "Nationality",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-29",
+          "name": "Patient Death Date and Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-30",
+          "name": "Patient Death Indicator",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-31",
+          "name": "Identity Unknown Indicator",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-32",
+          "name": "Identity Reliability Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-33",
+          "name": "Last Update Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-34",
+          "name": "Last Update Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-35",
+          "name": "Taxonomic Classification Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-36",
+          "name": "Breed Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-37",
+          "name": "Strain",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PID-38",
+          "name": "Production Class Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "id": "PID-39",
+          "name": "Tribal Citizenship",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PID-40",
+          "name": "Patient Telecommunication Information",
+          "dataType": "XTN",
+          "min": 0,
+          "max": "*"
+        }
+      ]
+    },
+    "PV1": {
+      "title": "Patient Visit",
+      "fields": [
+        {
+          "id": "PV1-1",
+          "name": "Set ID - PV1",
+          "dataType": "SI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-2",
+          "name": "Patient Class",
+          "dataType": "CWE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "PV1-3",
+          "name": "Assigned Patient Location",
+          "dataType": "PL",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-4",
+          "name": "Admission Type",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-5",
+          "name": "Preadmit Number",
+          "dataType": "CX",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-6",
+          "name": "Prior Patient Location",
+          "dataType": "PL",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-7",
+          "name": "Attending Doctor",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-8",
+          "name": "Referring Doctor",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-9",
+          "name": "Consulting Doctor",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-10",
+          "name": "Hospital Service",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-11",
+          "name": "Temporary Location",
+          "dataType": "PL",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-12",
+          "name": "Preadmit Test Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-13",
+          "name": "Re-admission Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-14",
+          "name": "Admit Source",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-15",
+          "name": "Ambulatory Status",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-16",
+          "name": "VIP Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-17",
+          "name": "Admitting Doctor",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-18",
+          "name": "Patient Type",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-19",
+          "name": "Visit Number",
+          "dataType": "CX",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-20",
+          "name": "Financial Class",
+          "dataType": "FC",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-21",
+          "name": "Charge Price Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-22",
+          "name": "Courtesy Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-23",
+          "name": "Credit Rating",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-24",
+          "name": "Contract Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-25",
+          "name": "Contract Effective Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-26",
+          "name": "Contract Amount",
+          "dataType": "NM",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-27",
+          "name": "Contract Period",
+          "dataType": "NM",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-28",
+          "name": "Interest Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-29",
+          "name": "Transfer to Bad Debt Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-30",
+          "name": "Transfer to Bad Debt Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-31",
+          "name": "Bad Debt Agency Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-32",
+          "name": "Bad Debt Transfer Amount",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-33",
+          "name": "Bad Debt Recovery Amount",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-34",
+          "name": "Delete Account Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-35",
+          "name": "Delete Account Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-36",
+          "name": "Discharge Disposition",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-37",
+          "name": "Discharged to Location",
+          "dataType": "DLD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-38",
+          "name": "Diet Type",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-39",
+          "name": "Servicing Facility",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-40",
+          "name": "Bed Status",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-41",
+          "name": "Account Status",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-42",
+          "name": "Pending Location",
+          "dataType": "PL",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-43",
+          "name": "Prior Temporary Location",
+          "dataType": "PL",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-44",
+          "name": "Admit Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-45",
+          "name": "Discharge Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-46",
+          "name": "Current Patient Balance",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-47",
+          "name": "Total Charges",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-48",
+          "name": "Total Adjustments",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-49",
+          "name": "Total Payments",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-50",
+          "name": "Alternate Visit ID",
+          "dataType": "CX",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-51",
+          "name": "Visit Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-52",
+          "name": "Other Healthcare Provider",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "PV1-53",
+          "name": "Service Episode Description",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PV1-54",
+          "name": "Service Episode Identifier",
+          "dataType": "CX",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "NK1": {
+      "title": "Next of Kin / Associated Parties",
+      "fields": [
+        {
+          "id": "NK1-1",
+          "name": "Set ID - NK1",
+          "dataType": "SI",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "NK1-2",
+          "name": "Name",
+          "dataType": "XPN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-3",
+          "name": "Relationship",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-4",
+          "name": "Address",
+          "dataType": "XAD",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-5",
+          "name": "Phone Number",
+          "dataType": "XTN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-6",
+          "name": "Business Phone Number",
+          "dataType": "XTN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-7",
+          "name": "Contact Role",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-8",
+          "name": "Start Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-9",
+          "name": "End Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-10",
+          "name": "Next of Kin / Associated Parties Job Title",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-11",
+          "name": "Next of Kin / Associated Parties Job Code/Class",
+          "dataType": "JCC",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-12",
+          "name": "Next of Kin / Associated Parties Employee Number",
+          "dataType": "CX",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-13",
+          "name": "Organization Name - NK1",
+          "dataType": "XON",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-14",
+          "name": "Marital Status",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-15",
+          "name": "Administrative Sex",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-16",
+          "name": "Date/Time of Birth",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-17",
+          "name": "Living Dependency",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-18",
+          "name": "Ambulatory Status",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-19",
+          "name": "Citizenship",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-20",
+          "name": "Primary Language",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-21",
+          "name": "Living Arrangement",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-22",
+          "name": "Publicity Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-23",
+          "name": "Protection Indicator",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-24",
+          "name": "Student Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-25",
+          "name": "Religion",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-26",
+          "name": "Mother's Maiden Name",
+          "dataType": "XPN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-27",
+          "name": "Nationality",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-28",
+          "name": "Ethnic Group",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-29",
+          "name": "Contact Reason",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-30",
+          "name": "Contact Person's Name",
+          "dataType": "XPN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-31",
+          "name": "Contact Person's Telephone Number",
+          "dataType": "XTN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-32",
+          "name": "Contact Person's Address",
+          "dataType": "XAD",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-33",
+          "name": "Next of Kin/Associated Party's Identifiers",
+          "dataType": "CX",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-34",
+          "name": "Job Status",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-35",
+          "name": "Race",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "NK1-36",
+          "name": "Handicap",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-37",
+          "name": "Contact Person Social Security Number",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-38",
+          "name": "Next of Kin Birth Place",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-39",
+          "name": "VIP Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-40",
+          "name": "Next of Kin Telecommunication Information",
+          "dataType": "XTN",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NK1-41",
+          "name": "Contact Person's Telecommunication Information",
+          "dataType": "XTN",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "ORC": {
+      "title": "Common Order",
+      "fields": [
+        {
+          "id": "ORC-1",
+          "name": "Order Control",
+          "dataType": "ID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "ORC-2",
+          "name": "Placer Order Number",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-3",
+          "name": "Filler Order Number",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-4",
+          "name": "Placer Order Group Number",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-5",
+          "name": "Order Status",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-6",
+          "name": "Response Flag",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-7",
+          "name": "Quantity/Timing",
+          "dataType": "TQ",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-8",
+          "name": "Parent Order",
+          "dataType": "EIP",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-9",
+          "name": "Date/Time of Order Event",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1,
+          "otherNames": [
+            "Date/Time of Transaction"
+          ]
+        },
+        {
+          "id": "ORC-10",
+          "name": "Entered By",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-11",
+          "name": "Verified By",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-12",
+          "name": "Ordering Provider",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-13",
+          "name": "Enterer's Location",
+          "dataType": "PL",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-14",
+          "name": "Call Back Phone Number",
+          "dataType": "XTN",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "id": "ORC-15",
+          "name": "Order Effective Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-16",
+          "name": "Order Control Code Reason",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-17",
+          "name": "Entering Organization",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-18",
+          "name": "Entering Device",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-19",
+          "name": "Action By",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-20",
+          "name": "Advanced Beneficiary Notice Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-21",
+          "name": "Ordering Facility Name",
+          "dataType": "XON",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-22",
+          "name": "Ordering Facility Address",
+          "dataType": "XAD",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-23",
+          "name": "Ordering Facility Phone Number",
+          "dataType": "XTN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-24",
+          "name": "Ordering Provider Address",
+          "dataType": "XAD",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-25",
+          "name": "Order Status Modifier",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-26",
+          "name": "Advanced Beneficiary Notice Override Reason",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-27",
+          "name": "Filler's Expected Availability Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-28",
+          "name": "Confidentiality Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-29",
+          "name": "Order Type",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-30",
+          "name": "Enterer Authorization Mode",
+          "dataType": "CNE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-31",
+          "name": "Parent Universal Service Identifier",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-32",
+          "name": "Advanced Beneficiary Notice Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-33",
+          "name": "Alternate Placer Order Number",
+          "dataType": "CX",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-34",
+          "name": "Order Workflow Profile",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "ORC-35",
+          "name": "Action Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-36",
+          "name": "Order Status Date Range",
+          "dataType": "DR",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-37",
+          "name": "Order Creation Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "ORC-38",
+          "name": "Filler Order Group Number",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "OBR": {
+      "title": "Observation Request",
+      "fields": [
+        {
+          "id": "OBR-1",
+          "name": "Set ID - OBR",
+          "dataType": "SI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-2",
+          "name": "Placer Order Number",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-3",
+          "name": "Filler Order Number",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-4",
+          "name": "Universal Service Identifier",
+          "dataType": "CWE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "OBR-5",
+          "name": "Priority",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-6",
+          "name": "Requested Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-7",
+          "name": "Observation Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-8",
+          "name": "Observation End Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-9",
+          "name": "Collection Volume",
+          "dataType": "CQ",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-10",
+          "name": "Collector Identifier",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-11",
+          "name": "Specimen Action Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-12",
+          "name": "Danger Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-13",
+          "name": "Relevant Clinical Information",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-14",
+          "name": "Specimen Received Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-15",
+          "name": "Specimen Source",
+          "dataType": "SPS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-16",
+          "name": "Ordering Provider",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-17",
+          "name": "Order Callback Phone Number",
+          "dataType": "XTN",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "id": "OBR-18",
+          "name": "Placer Field 1",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-19",
+          "name": "Placer Field 2",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-20",
+          "name": "Filler Field 1",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-21",
+          "name": "Filler Field 2",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-22",
+          "name": "Results Rpt/Status Chng - Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-23",
+          "name": "Charge to Practice",
+          "dataType": "MOC",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-24",
+          "name": "Diagnostic Serv Sect ID",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-25",
+          "name": "Result Status",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-26",
+          "name": "Parent Result",
+          "dataType": "PRL",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-27",
+          "name": "Quantity/Timing",
+          "dataType": "TQ",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-28",
+          "name": "Result Copies To",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-29",
+          "name": "Parent Results Observation Identifier",
+          "dataType": "EIP",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-30",
+          "name": "Transportation Mode",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-31",
+          "name": "Reason for Study",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-32",
+          "name": "Principal Result Interpreter",
+          "dataType": "NDL",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-33",
+          "name": "Assistant Result Interpreter",
+          "dataType": "NDL",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-34",
+          "name": "Technician",
+          "dataType": "NDL",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-35",
+          "name": "Transcriptionist",
+          "dataType": "NDL",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-36",
+          "name": "Scheduled Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-37",
+          "name": "Number of Sample Containers",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-38",
+          "name": "Transport Logistics of Collected Sample",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-39",
+          "name": "Collector's Comment",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-40",
+          "name": "Transport Arrangement Responsibility",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-41",
+          "name": "Transport Arranged",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-42",
+          "name": "Escort Required",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-43",
+          "name": "Planned Patient Transport Comment",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-44",
+          "name": "Procedure Code",
+          "dataType": "CNE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-45",
+          "name": "Procedure Code Modifier",
+          "dataType": "CNE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-46",
+          "name": "Placer Supplemental Service Information",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-47",
+          "name": "Filler Supplemental Service Information",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-48",
+          "name": "Medically Necessary Duplicate Procedure Reason",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-49",
+          "name": "Result Handling",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-50",
+          "name": "Parent Universal Service Identifier",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-51",
+          "name": "Observation Group ID",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-52",
+          "name": "Parent Observation Group ID",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBR-53",
+          "name": "Alternate Placer Order Number",
+          "dataType": "CX",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-54",
+          "name": "Parent Order",
+          "dataType": "EIP",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBR-55",
+          "name": "Action Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "OBX": {
+      "title": "Observation/Result",
+      "fields": [
+        {
+          "id": "OBX-1",
+          "name": "Set ID - OBX",
+          "dataType": "SI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-2",
+          "name": "Value Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-3",
+          "name": "Observation Identifier",
+          "dataType": "CWE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "OBX-4",
+          "name": "Observation Sub-ID",
+          "dataType": "OG",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-5",
+          "name": "Observation Value",
+          "dataType": "varies",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-6",
+          "name": "Units",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-7",
+          "name": "Reference Range",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-8",
+          "name": "Interpretation Codes",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-9",
+          "name": "Probability",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-10",
+          "name": "Nature of Abnormal Test",
+          "dataType": "ID",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-11",
+          "name": "Observation Result Status",
+          "dataType": "ID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "OBX-12",
+          "name": "Effective Date of Reference Range",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-13",
+          "name": "User Defined Access Checks",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-14",
+          "name": "Date/Time of the Observation",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-15",
+          "name": "Producer's ID",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-16",
+          "name": "Responsible Observer",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-17",
+          "name": "Observation Method",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-18",
+          "name": "Equipment Instance Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-19",
+          "name": "Date/Time of the Analysis",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-20",
+          "name": "Observation Site",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-21",
+          "name": "Observation Instance Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-22",
+          "name": "Mood Code",
+          "dataType": "CNE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-23",
+          "name": "Performing Organization Name",
+          "dataType": "XON",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-24",
+          "name": "Performing Organization Address",
+          "dataType": "XAD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-25",
+          "name": "Performing Organization Medical Director",
+          "dataType": "XCN",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-26",
+          "name": "Patient Results Release Category",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-27",
+          "name": "Root Cause",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-28",
+          "name": "Local Process Control",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-29",
+          "name": "Observation Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-30",
+          "name": "Observation Sub-Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-31",
+          "name": "Action Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OBX-32",
+          "name": "Observation Value Absent Reason",
+          "dataType": "CWE",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "OBX-33",
+          "name": "Observation Related Specimen Identifier",
+          "dataType": "EIP",
+          "min": 0,
+          "max": "*"
+        }
+      ]
+    },
+    "AL1": {
+      "title": "Patient Allergy Information",
+      "fields": [
+        {
+          "id": "AL1-1",
+          "name": "Set ID - AL1",
+          "dataType": "SI",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "AL1-2",
+          "name": "Allergen Type Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "AL1-3",
+          "name": "Allergen Code/Mnemonic/Description",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "AL1-4",
+          "name": "Allergy Severity Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "AL1-5",
+          "name": "Allergy Reaction Code",
+          "dataType": "ST",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "AL1-6",
+          "name": "Identification Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "DG1": {
+      "title": "Diagnosis",
+      "fields": [
+        {
+          "id": "DG1-1",
+          "name": "Set ID - DG1",
+          "dataType": "SI",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "DG1-2",
+          "name": "Diagnosis Coding Method",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-3",
+          "name": "Diagnosis Code - DG1",
+          "dataType": "CWE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "DG1-4",
+          "name": "Diagnosis Description",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-5",
+          "name": "Diagnosis Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-6",
+          "name": "Diagnosis Type",
+          "dataType": "CWE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "DG1-7",
+          "name": "Major Diagnostic Category",
+          "dataType": "CE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-8",
+          "name": "Diagnostic Related Group",
+          "dataType": "CE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-9",
+          "name": "DRG Approval Indicator",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-10",
+          "name": "DRG Grouper Review Code",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-11",
+          "name": "Outlier Type",
+          "dataType": "CE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-12",
+          "name": "Outlier Days",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-13",
+          "name": "Outlier Cost",
+          "dataType": "CP",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-14",
+          "name": "Grouper Version And Type",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-15",
+          "name": "Diagnosis Priority",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-16",
+          "name": "Diagnosing Clinician",
+          "dataType": "XCN",
+          "min": 0,
+          "max": "*"
+        },
+        {
+          "id": "DG1-17",
+          "name": "Diagnosis Classification",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-18",
+          "name": "Confidential Indicator",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-19",
+          "name": "Attestation Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-20",
+          "name": "Diagnosis Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-21",
+          "name": "Diagnosis Action Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-22",
+          "name": "Parent Diagnosis",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-23",
+          "name": "DRG CCL Value Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-24",
+          "name": "DRG Grouping Usage",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-25",
+          "name": "DRG Diagnosis Determination Status",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DG1-26",
+          "name": "Present On Admission (POA) Indicator",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    }
+  },
+  "corrections": "Checked against the HL7 v2.9 standard text (segment attribute tables) and corrected: ORC-8 and OBR-54 repeat; OBR-17 repeats up to 2 times (the source table had the text 0..2 in the minimum column); MSH-6 repeats; ORC-4 is Placer Order Group Number with data type EI, and ORC-9 is Date/Time of Order Event (the source had the v2.8 values; the older ORC-9 name is kept in otherNames); OBR-29 Parent Results Observation Identifier (a space was missing); OBX-7 Reference Range (the source had References Range, the name up to v2.8.2); DG1-1 Set ID - DG1 and DG1-3 Diagnosis Code - DG1 (the source had the names without the segment); AL1-3 is optional and AL1-6 and DG1-2 are withdrawn, so their minimum is 0; the names of OBR-14, OBR-20 to OBR-23, OBR-25, OBR-26 and OBR-32 to OBR-39 no longer end with the footnote marks * and + of the order chapter. Withdrawn fields keep the data type and repeat rule of the last version before they were withdrawn, as in the older HL7 tables: PID-4 repeats, PID-20 is DLN, OBR-6 and OBR-14 are DTM, OBR-15 is SPS. OBR-55 Action Code (data type ID, new in v2.9) was missing in the source and is added."
+}

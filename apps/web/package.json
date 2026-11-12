@@ -1,0 +1,31 @@
+{
+  "name": "@infogleam/message-explainer-web",
+  "version": "0.9.0",
+  "private": true,
+  "description": "InfoGleam Message Explainer web site. Runs fully in the browser.",
+  "license": "AGPL-3.0-only",
+  "author": "Hisham Alrashdan (InfoGleam)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/check-build.mjs",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json && tsc -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource/noto-sans-arabic": "^5.3.0",
+    "@infogleam/message-explainer-core": "*"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/node": "^24.0.0",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.8",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}

@@ -1,0 +1,949 @@
+{
+  "segment": "ORC",
+  "title": {
+    "en": "Common Order",
+    "ar": "بيانات الطلب العامة"
+  },
+  "summary": {
+    "en": "Holds the facts common to every order: the requested action, the order numbers, the order status, and who placed it.",
+    "ar": "يحمل المعلومات المشتركة بين جميع الطلبات: الإجراء المطلوب، وأرقام الطلب، وحالة الطلب، ومن قدّم الطلب."
+  },
+  "details": {
+    "en": "ORC is required in order messages such as ORM^O01 and OML^O21, with one ORC for each order. In result messages (ORU^R01) it is optional and comes before OBR. The details of the ordered test or drug follow in OBR, RXO or a similar segment. Some ORC fields repeat OBR fields and must then carry the same values.",
+    "ar": "مقطع ORC مطلوب في رسائل الطلبات مثل ORM^O01 وOML^O21، بمقطع ORC واحد لكل طلب. وفي رسائل النتائج (ORU^R01) يكون اختياريًا ويأتي قبل مقطع OBR. وتأتي تفاصيل الفحص أو الدواء المطلوب في مقطع OBR أو RXO أو مقطع مشابه. وبعض حقول ORC تكرر حقولًا في OBR، ويجب عندئذٍ أن تحمل القيم نفسها."
+  },
+  "keyFields": [
+    "ORC-1",
+    "ORC-2",
+    "ORC-3",
+    "ORC-5",
+    "ORC-9",
+    "ORC-12"
+  ],
+  "fields": {
+    "ORC-1": {
+      "nameAr": "رمز التحكم بالطلب",
+      "usage": "common",
+      "summary": {
+        "en": "A two-letter code that says what this message does to the order, such as new, cancel or change.",
+        "ar": "رمز من حرفين يبيّن ما تفعله هذه الرسالة بالطلب، مثل طلب جديد أو إلغاء أو تعديل."
+      },
+      "details": {
+        "en": "It is required and works like the trigger event for orders. Some codes ask for an action (NW, CA), some answer a request (OK, CR), and some report what happened (OC, SC). RE means results (OBX) follow the order.",
+        "ar": "هذا الحقل مطلوب، ويعمل كالحدث المُطلِق (Trigger Event) للطلبات. بعض الرموز تطلب إجراءً (NW وCA)، وبعضها يرد على طلب (OK وCR)، وبعضها يُبلغ بما حدث (OC وSC). والرمز RE يعني أن النتائج (OBX) تأتي بعد الطلب."
+      },
+      "tip": {
+        "en": "Most ORU^R01 results carry RE here. Receivers use this code to decide whether to create, change or cancel an order, so test NW, XO and CA separately.",
+        "ar": "تحمل معظم رسائل النتائج ORU^R01 الرمز RE هنا. وتستخدم الأنظمة المستقبِلة هذا الرمز لتقرر إنشاء الطلب أو تعديله أو إلغاءه، لذلك اختبر الرموز NW وXO وCA كلًّا على حدة."
+      },
+      "example": "NW",
+      "table": "0119",
+      "values": [
+        {
+          "code": "NW",
+          "en": "New order/service",
+          "ar": "طلب أو خدمة جديدة"
+        },
+        {
+          "code": "OK",
+          "en": "Order/service accepted & OK",
+          "ar": "قُبل الطلب أو الخدمة"
+        },
+        {
+          "code": "UA",
+          "en": "Unable to accept order/service",
+          "ar": "تعذّر قبول الطلب أو الخدمة"
+        },
+        {
+          "code": "CA",
+          "en": "Cancel order/service request",
+          "ar": "طلب إلغاء الطلب أو الخدمة"
+        },
+        {
+          "code": "CR",
+          "en": "Canceled as requested",
+          "ar": "أُلغي كما طُلب"
+        },
+        {
+          "code": "OC",
+          "en": "Order/service canceled",
+          "ar": "أُلغي الطلب أو الخدمة"
+        },
+        {
+          "code": "DC",
+          "en": "Discontinue order/service request",
+          "ar": "طلب إيقاف الطلب أو الخدمة"
+        },
+        {
+          "code": "OD",
+          "en": "Order/service discontinued",
+          "ar": "أُوقف الطلب أو الخدمة"
+        },
+        {
+          "code": "XO",
+          "en": "Change order/service request",
+          "ar": "طلب تعديل الطلب أو الخدمة"
+        },
+        {
+          "code": "XX",
+          "en": "Order/service changed, unsol.",
+          "ar": "عُدّل الطلب أو الخدمة دون طلب مسبق"
+        },
+        {
+          "code": "SC",
+          "en": "Status changed",
+          "ar": "تغيّرت الحالة"
+        },
+        {
+          "code": "RE",
+          "en": "Observations/Performed Service to follow",
+          "ar": "الملاحظات أو الخدمة المنفَّذة تأتي بعده"
+        }
+      ]
+    },
+    "ORC-2": {
+      "nameAr": "رقم الطلب لدى الجهة الطالبة",
+      "usage": "common",
+      "summary": {
+        "en": "The order number assigned by the placer, the system that created the order.",
+        "ar": "رقم الطلب الذي تعطيه الجهة الطالبة، أي النظام الذي أنشأ الطلب."
+      },
+      "details": {
+        "en": "Component 1 is the number and component 2 names the placer application. The number must be unique within that application. It is the same as OBR-2. If both are filled they must match, and if one is empty the other must be filled.",
+        "ar": "المكوّن 1 هو الرقم، والمكوّن 2 يحدد تطبيق الجهة الطالبة. ويجب أن يكون الرقم فريدًا داخل ذلك التطبيق. وهو الحقل نفسه OBR-2، فإذا مُلئ الحقلان فيجب أن يتطابقا، وإذا كان أحدهما فارغًا فيجب ملء الآخر."
+      },
+      "tip": {
+        "en": "Results are matched back to orders with this number. Store it when you send the order, and never reuse a number for a different order.",
+        "ar": "تُطابَق النتائج مع طلباتها بواسطة هذا الرقم. احفظه عند إرسال الطلب، ولا تُعِد استخدام الرقم نفسه لطلب آخر أبدًا."
+      },
+      "example": "PO1001^DEMO_APP"
+    },
+    "ORC-3": {
+      "nameAr": "رقم الطلب لدى الجهة المنفِّذة",
+      "usage": "common",
+      "summary": {
+        "en": "The order number assigned by the filler, the system that carries out the order, such as the laboratory system.",
+        "ar": "رقم الطلب الذي تعطيه الجهة المنفِّذة، أي النظام الذي ينفّذ الطلب، مثل نظام المختبر."
+      },
+      "details": {
+        "en": "Component 1 is the number and component 2 names the filler application. The number must stay unique over time. It is the same as OBR-3, and in results OBR must carry it when ORC is absent.",
+        "ar": "المكوّن 1 هو الرقم، والمكوّن 2 يحدد تطبيق الجهة المنفِّذة. ويجب أن يبقى الرقم فريدًا على مر الزمن. وهو الحقل نفسه OBR-3، وفي رسائل النتائج يجب أن يحمله OBR عند غياب مقطع ORC."
+      },
+      "tip": {
+        "en": "In a new order (NW) this is often empty. The filler returns its number in the acknowledgment (ACK) or in later status and result messages.",
+        "ar": "في الطلب الجديد (NW) يكون هذا الحقل فارغًا غالبًا. وتعيد الجهة المنفِّذة رقمها في رسالة الإقرار (ACK) أو في رسائل الحالة والنتائج اللاحقة."
+      },
+      "example": "FO2001^DEMO_LAB"
+    },
+    "ORC-4": {
+      "nameAr": "رقم مجموعة الطلبات لدى الجهة الطالبة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "A number that groups several orders placed together, such as all tests ordered in one session.",
+        "ar": "رقم يجمع عدة طلبات قُدّمت معًا، مثل كل الفحوص المطلوبة في جلسة واحدة."
+      },
+      "details": {
+        "en": "The placer assigns it. Component 1 is the group number and component 2 names the placer application, as in ORC-2. All orders with the same group number form one order group.",
+        "ar": "تُعيّنه الجهة الطالبة. المكوّن 1 هو رقم المجموعة، والمكوّن 2 يحدد تطبيق الجهة الطالبة، كما في ORC-2. وكل الطلبات التي تحمل رقم المجموعة نفسه تشكّل مجموعة طلبات واحدة."
+      },
+      "versionNote": {
+        "en": "In v2.8 to v2.8.2 it may carry both placer and filler group numbers (EIP). v2.9 keeps only the placer number here and adds ORC-38.",
+        "ar": "في الإصدارات من v2.8 إلى v2.8.2 قد يحمل رقمي مجموعة الجهة الطالبة والجهة المنفِّذة معًا (EIP). أما الإصدار v2.9 فيُبقي هنا رقم الجهة الطالبة فقط ويضيف الحقل ORC-38."
+      },
+      "example": "PG1001^DEMO_APP"
+    },
+    "ORC-5": {
+      "nameAr": "حالة الطلب",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The current status of the order as the filler knows it, such as scheduled, in process or completed.",
+        "ar": "الحالة الحالية للطلب كما تعرفها الجهة المنفِّذة، مثل مجدول أو قيد التنفيذ أو مكتمل."
+      },
+      "details": {
+        "en": "Only the filler sets this field. It reports the status and does not start any action. Codes come from HL7 table 0038. It is typically sent with ORC-1 = SC or SR.",
+        "ar": "الجهة المنفِّذة وحدها تضع قيمة هذا الحقل. وهو يُبلغ بالحالة ولا يطلق أي إجراء. وتأتي الرموز من جدول رموز HL7 رقم 0038. ويُرسل عادةً مع ORC-1 = SC أو SR."
+      },
+      "tip": {
+        "en": "Do not confuse it with OBR-25, the result status (F final, P preliminary, C corrected). ORC-5 is about the order, OBR-25 about the results.",
+        "ar": "لا تخلط بينه وبين OBR-25، وهو حالة النتيجة (F نهائية، P أولية، C مصحَّحة). فالحقل ORC-5 يخص الطلب، أما OBR-25 فيخص النتائج."
+      },
+      "example": "CM",
+      "table": "0038",
+      "values": [
+        {
+          "code": "A",
+          "en": "Some, but not all, results available",
+          "ar": "تتوفر بعض النتائج وليس كلها"
+        },
+        {
+          "code": "CA",
+          "en": "Order was canceled",
+          "ar": "أُلغي الطلب"
+        },
+        {
+          "code": "CM",
+          "en": "Order is completed",
+          "ar": "اكتمل الطلب"
+        },
+        {
+          "code": "DC",
+          "en": "Order was discontinued",
+          "ar": "أُوقف الطلب"
+        },
+        {
+          "code": "ER",
+          "en": "Error, order not found",
+          "ar": "خطأ، الطلب غير موجود"
+        },
+        {
+          "code": "HD",
+          "en": "Order is on hold",
+          "ar": "الطلب معلَّق"
+        },
+        {
+          "code": "IP",
+          "en": "In process, unspecified",
+          "ar": "قيد التنفيذ، دون تحديد"
+        },
+        {
+          "code": "RP",
+          "en": "Order has been replaced",
+          "ar": "استُبدل الطلب"
+        },
+        {
+          "code": "SC",
+          "en": "In process, scheduled",
+          "ar": "قيد التنفيذ، مجدول"
+        }
+      ]
+    },
+    "ORC-6": {
+      "nameAr": "مؤشر مستوى الرد",
+      "usage": "rare",
+      "summary": {
+        "en": "Tells the filler how much information the placer wants back in replies.",
+        "ar": "يخبر الجهة المنفِّذة بمقدار المعلومات التي تريدها الجهة الطالبة في الردود."
+      },
+      "details": {
+        "en": "Codes come from HL7 table 0121. When the field is empty, D is the default.",
+        "ar": "تأتي الرموز من جدول رموز HL7 رقم 0121. وعندما يكون الحقل فارغًا تكون القيمة الافتراضية D."
+      },
+      "example": "E",
+      "table": "0121",
+      "values": [
+        {
+          "code": "E",
+          "en": "Report exceptions only",
+          "ar": "الإبلاغ عن الاستثناءات فقط"
+        },
+        {
+          "code": "R",
+          "en": "Same as E, also Replacement and Parent-Child",
+          "ar": "مثل E، مع الاستبدال وعلاقات الطلب الأب والابن"
+        },
+        {
+          "code": "D",
+          "en": "Same as R, also other associated segments",
+          "ar": "مثل R، مع المقاطع المرتبطة الأخرى"
+        },
+        {
+          "code": "F",
+          "en": "Same as D, plus confirmations explicitly",
+          "ar": "مثل D، مع التأكيدات الصريحة"
+        },
+        {
+          "code": "N",
+          "en": "Only the MSA segment is returned",
+          "ar": "يُعاد مقطع MSA فقط"
+        }
+      ]
+    },
+    "ORC-7": {
+      "nameAr": "الكمية والتوقيت",
+      "usage": "sometimes",
+      "summary": {
+        "en": "How many times, how often, when, and with what priority the service should be done.",
+        "ar": "عدد مرات تنفيذ الخدمة، وتكرارها، وموعدها، وأولويتها."
+      },
+      "details": {
+        "en": "It uses the TQ data type: 1 quantity, 2 interval, 4 start date/time, 5 end date/time, 6 priority, such as S (stat) or R (routine). It must match OBR-27 when both are sent.",
+        "ar": "يستخدم نوع البيانات TQ: 1 الكمية، 2 الفاصل الزمني، 4 تاريخ ووقت البدء، 5 تاريخ ووقت الانتهاء، 6 الأولوية، مثل S (فوري) أو R (روتيني). ويجب أن يطابق OBR-27 عند إرسال الحقلين."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.5 and withdrawn in v2.7. Newer messages use the TQ1 and TQ2 segments.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.5، وسُحب في الإصدار v2.7. وتستخدم الرسائل الأحدث المقطعين TQ1 وTQ2."
+      },
+      "tip": {
+        "en": "Many v2.3 and v2.4 interfaces still send the priority and start time here. Check ORC-7 and OBR-27 when TQ1 is missing.",
+        "ar": "ما زالت واجهات ربط كثيرة بالإصدارين v2.3 وv2.4 ترسل الأولوية ووقت البدء هنا. تحقق من ORC-7 وOBR-27 عند غياب مقطع TQ1."
+      },
+      "example": "1^^^202603010900^^R"
+    },
+    "ORC-8": {
+      "nameAr": "الطلب الأب",
+      "usage": "rare",
+      "summary": {
+        "en": "Links a child order to the parent order it came from.",
+        "ar": "يربط الطلب الابن بالطلب الأب الذي نشأ منه."
+      },
+      "details": {
+        "en": "Component 1 holds the parent's placer number and component 2 the parent's filler number, each split into sub-components. Typical uses are an order split into several child orders, or extra tests such as sensitivity tests on a culture.",
+        "ar": "يحمل المكوّن 1 رقم الطلب الأب لدى الجهة الطالبة، ويحمل المكوّن 2 رقمه لدى الجهة المنفِّذة، وكل منهما مقسّم إلى مكوّنات فرعية. ومن استخداماته المعتادة تقسيم طلب إلى عدة طلبات أبناء، أو فحوص إضافية مثل اختبارات الحساسية على المزرعة."
+      },
+      "versionNote": {
+        "en": "Up to v2.7 it matches OBR-29. From v2.7.1 it matches the new OBR-54, and in v2.9 it may repeat.",
+        "ar": "حتى الإصدار v2.7 يطابق الحقل OBR-29. وابتداءً من الإصدار v2.7.1 يطابق الحقل الجديد OBR-54، وفي الإصدار v2.9 يجوز تكراره."
+      },
+      "example": "PO1000&DEMO_APP^FO2000&DEMO_LAB"
+    },
+    "ORC-9": {
+      "nameAr": "تاريخ ووقت العملية",
+      "usage": "common",
+      "summary": {
+        "en": "When the action in ORC-1 happened, such as when the order was placed or canceled.",
+        "ar": "وقت حدوث الإجراء المذكور في ORC-1، مثل وقت تقديم الطلب أو إلغائه."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMM[SS]. It is not the same as MSH-7, which is the time the message was created. For a new order (NW) it is normally the time the order was placed.",
+        "ar": "الصيغة YYYYMMDDHHMM[SS]. وهو يختلف عن MSH-7 الذي يمثل وقت إنشاء الرسالة. وفي الطلب الجديد (NW) يكون عادةً وقت تقديم الطلب."
+      },
+      "versionNote": {
+        "en": "Renamed Date/Time of Order Event in v2.9. The meaning stays the same.",
+        "ar": "أُعيدت تسميته إلى Date/Time of Order Event في الإصدار v2.9، ويبقى معناه كما هو."
+      },
+      "tip": {
+        "en": "Many receivers show this as the order date to clinicians. Send the real order time, not the time the interface processed the message.",
+        "ar": "تعرض أنظمة مستقبِلة كثيرة هذا الحقل للأطباء كتاريخ للطلب. أرسل الوقت الفعلي للطلب، وليس وقت معالجة الرسالة في واجهة الربط."
+      },
+      "example": "202603010915"
+    },
+    "ORC-10": {
+      "nameAr": "مُدخِل الطلب",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The person who entered this order action into the system.",
+        "ar": "الشخص الذي أدخل هذا الإجراء على الطلب في النظام."
+      },
+      "details": {
+        "en": "It gives an audit trail if the order was entered wrongly and needs to be checked. It uses the XCN data type (ID, family name, given name). The ID or the name may be left out by local agreement.",
+        "ar": "يوفّر سجلًا للتدقيق إذا أُدخل الطلب بشكل خاطئ واحتاج إلى مراجعة. ويستخدم نوع البيانات XCN (المعرّف، اسم العائلة، الاسم الأول). ويجوز حذف المعرّف أو الاسم بحسب الاتفاق المحلي."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "example": "U2001^USER^DEMO"
+    },
+    "ORC-11": {
+      "nameAr": "مدقِّق الطلب",
+      "usage": "legacy",
+      "summary": {
+        "en": "The person who checked that the entered order is correct, for example a nurse checking a technician's entry.",
+        "ar": "الشخص الذي تحقق من صحة الطلب المُدخَل، مثل ممرض يراجع ما أدخله فني."
+      },
+      "details": {
+        "en": "It refers to the action in ORC-1 and uses the same XCN structure as ORC-10.",
+        "ar": "يخص الإجراء المذكور في ORC-1، ويستخدم بنية XCN نفسها التي للحقل ORC-10."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "example": "N3001^NURSE^DEMO"
+    },
+    "ORC-12": {
+      "nameAr": "الطبيب الطالب",
+      "usage": "common",
+      "summary": {
+        "en": "The doctor or other provider who ordered the service and is responsible for the request.",
+        "ar": "الطبيب أو مقدّم الرعاية الذي طلب الخدمة ويتحمّل مسؤولية الطلب."
+      },
+      "details": {
+        "en": "Main components: 1 ID number, 2 family name, 3 given name. It is the same as OBR-16. If it is missing in ORC, OBR-16 must carry it.",
+        "ar": "المكوّنات الرئيسية: 1 رقم المعرّف، 2 اسم العائلة، 3 الاسم الأول. وهو الحقل نفسه OBR-16، وإذا غاب عن ORC فيجب أن يحمله OBR-16."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages send the ordering provider in a PRT segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وترسل الرسائل الأحدث الطبيب الطالب في مقطع PRT."
+      },
+      "tip": {
+        "en": "Results are often routed to the ordering doctor's inbox using this ID. An unknown or missing ID is a common reason for results that nobody sees.",
+        "ar": "تُوجَّه النتائج غالبًا إلى صندوق الطبيب الطالب باستخدام هذا المعرّف. والمعرّف غير المعروف أو المفقود سبب شائع لنتائج لا يراها أحد."
+      },
+      "example": "D1001^DOCTOR^DEMO"
+    },
+    "ORC-13": {
+      "nameAr": "موقع مُدخِل الطلب",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Where the person who entered the order was, such as a nursing unit, clinic or department.",
+        "ar": "المكان الذي كان فيه الشخص الذي أدخل الطلب، مثل وحدة تمريض أو عيادة أو قسم."
+      },
+      "details": {
+        "en": "It uses the location (PL) data type, like PV1-3. Usually only the unit, facility, building and floor are filled. The person is given in ORC-10.",
+        "ar": "يستخدم نوع بيانات الموقع (PL)، مثل PV1-3. وعادةً لا تُملأ إلا الوحدة والمنشأة الصحية والمبنى والطابق. ويُذكر الشخص نفسه في ORC-10."
+      },
+      "tip": {
+        "en": "Some receivers use it to decide where to send printed results or labels. Ask whether it drives routing in your project.",
+        "ar": "تستخدمه بعض الأنظمة المستقبِلة لتحديد المكان الذي تُرسل إليه النتائج المطبوعة أو الملصقات. اسأل إن كان يتحكم في التوجيه في مشروعك."
+      },
+      "example": "4WEST^^^DEMOHOSP"
+    },
+    "ORC-14": {
+      "nameAr": "رقم هاتف معاودة الاتصال",
+      "usage": "sometimes",
+      "summary": {
+        "en": "A phone number to call with questions about the order.",
+        "ar": "رقم هاتف للاتصال به عند وجود أسئلة حول الطلب."
+      },
+      "details": {
+        "en": "It uses the XTN data type and may repeat up to two times. It is the same as OBR-17.",
+        "ar": "يستخدم نوع البيانات XTN، ويجوز تكراره مرتين كحد أقصى. وهو الحقل نفسه OBR-17."
+      },
+      "example": "555-0100^WPN^PH"
+    },
+    "ORC-15": {
+      "nameAr": "تاريخ ووقت سريان الطلب",
+      "usage": "rare",
+      "summary": {
+        "en": "When the change in this message takes effect, or is planned to take effect.",
+        "ar": "الوقت الذي يسري فيه التغيير الوارد في هذه الرسالة، أو الوقت المخطَّط لسريانه."
+      },
+      "details": {
+        "en": "If it is empty, it is taken to equal ORC-9, or MSH-7 when ORC-9 is also empty. It takes priority over the timing in ORC-7 or TQ1, for example when a stop request should take effect later.",
+        "ar": "إذا كان فارغًا يُعدّ مساويًا لـ ORC-9، أو لـ MSH-7 عندما يكون ORC-9 فارغًا أيضًا. وتكون له الأولوية على التوقيت في ORC-7 أو TQ1، كما في طلب إيقاف يجب أن يسري في وقت لاحق."
+      },
+      "example": "202603020800"
+    },
+    "ORC-16": {
+      "nameAr": "سبب رمز التحكم بالطلب",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Why the action in ORC-1 was taken, for example why an order was canceled.",
+        "ar": "سبب اتخاذ الإجراء المذكور في ORC-1، مثل سبب إلغاء الطلب."
+      },
+      "details": {
+        "en": "It can be a code, text or both. It is usually empty for new orders. For comments on the order itself, use an NTE (notes) segment instead.",
+        "ar": "يمكن أن يكون رمزًا أو نصًا أو كليهما. ويكون عادةً فارغًا في الطلبات الجديدة. أما الملاحظات على الطلب نفسه فتُرسل في مقطع الملاحظات NTE."
+      },
+      "versionNote": {
+        "en": "v2.9 adds HL7 table 0949 with a few suggested reason codes. Older versions use local codes or text.",
+        "ar": "يضيف الإصدار v2.9 جدول رموز HL7 رقم 0949 الذي يضم بضعة رموز مقترحة للأسباب. وتستخدم الإصدارات الأقدم رموزًا محلية أو نصًا."
+      },
+      "tip": {
+        "en": "Agree on a short list of cancel reasons with the other side. Free text here is hard to report on later.",
+        "ar": "اتفق مع الطرف الآخر على قائمة قصيرة بأسباب الإلغاء، فالنص الحر هنا يصعب استخدامه في التقارير لاحقًا."
+      },
+      "example": "DUP^Duplicate order^L",
+      "table": "0949"
+    },
+    "ORC-17": {
+      "nameAr": "الجهة التي أدخلت الطلب",
+      "usage": "legacy",
+      "summary": {
+        "en": "The organization or department the person entering the order belonged to, such as a medical group.",
+        "ar": "الجهة أو القسم الذي كان ينتمي إليه مُدخِل الطلب، مثل مجموعة طبية."
+      },
+      "details": {
+        "en": "It is a coded value, usually from a local code list. The person is given in ORC-10.",
+        "ar": "قيمة مرمَّزة تأتي عادةً من قائمة رموز محلية. ويُذكر الشخص نفسه في ORC-10."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "example": "CARD^Cardiology clinic^L"
+    },
+    "ORC-18": {
+      "nameAr": "الجهاز المستخدم لإدخال الطلب",
+      "usage": "legacy",
+      "summary": {
+        "en": "The device, such as a terminal or PC, used to enter the order.",
+        "ar": "الجهاز المستخدم لإدخال الطلب، مثل طرفية أو حاسوب شخصي (PC)."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "example": "WS042^Workstation 42^L"
+    },
+    "ORC-19": {
+      "nameAr": "الشخص المبادر بالإجراء",
+      "usage": "legacy",
+      "summary": {
+        "en": "The person who started the action in ORC-1, for example who asked to cancel the order.",
+        "ar": "الشخص الذي بادر بالإجراء المذكور في ORC-1، مثل من طلب إلغاء الطلب."
+      },
+      "details": {
+        "en": "This person is often a care provider, but may differ from the ordering provider in ORC-12.",
+        "ar": "يكون هذا الشخص غالبًا من مقدّمي الرعاية، لكنه قد يختلف عن الطبيب الطالب في ORC-12."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "example": "D1001^DOCTOR^DEMO"
+    },
+    "ORC-20": {
+      "nameAr": "رمز إشعار المستفيد المسبق (ABN)",
+      "usage": "rare",
+      "since": "2.3.1",
+      "summary": {
+        "en": "Shows whether the patient was told that insurance may not pay for this service, and agreed to pay.",
+        "ar": "يبيّن ما إذا كان المريض قد أُبلغ بأن التأمين قد لا يغطي هذه الخدمة، وما إذا كان قد وافق على الدفع."
+      },
+      "details": {
+        "en": "ABN means Advanced Beneficiary Notice, a signed form that some payers require. HL7 suggests codes in table 0339, and sites may use their own.",
+        "ar": "ABN اختصار لعبارة Advanced Beneficiary Notice، وهو نموذج موقَّع تشترطه بعض جهات الدفع. ويقترح HL7 رموزًا في جدول الرموز 0339، ويجوز للمنشآت استخدام رموزها الخاصة."
+      },
+      "table": "0339",
+      "values": [
+        {
+          "code": "1",
+          "en": "Service is subject to medical necessity procedures",
+          "ar": "الخدمة خاضعة لإجراءات إثبات الضرورة الطبية",
+          "since": "2.3.1"
+        },
+        {
+          "code": "2",
+          "en": "Patient has been informed of responsibility, and agrees to pay for service",
+          "ar": "أُبلغ المريض بمسؤوليته، ويوافق على دفع تكلفة الخدمة",
+          "since": "2.3.1"
+        },
+        {
+          "code": "3",
+          "en": "Patient has been informed of responsibility, and asks that the payer be billed",
+          "ar": "أُبلغ المريض بمسؤوليته، ويطلب إرسال الفاتورة إلى جهة الدفع",
+          "since": "2.3.1"
+        },
+        {
+          "code": "4",
+          "en": "Advanced Beneficiary Notice has not been signed",
+          "ar": "لم يُوقَّع إشعار المستفيد المسبق",
+          "since": "2.3.1"
+        }
+      ]
+    },
+    "ORC-21": {
+      "nameAr": "اسم المنشأة الصحية الطالبة",
+      "usage": "sometimes",
+      "since": "2.3.1",
+      "summary": {
+        "en": "The name of the facility that placed the order.",
+        "ar": "اسم المنشأة الصحية التي قدّمت الطلب."
+      },
+      "details": {
+        "en": "It uses the XON data type: component 1 is the name, and later components can carry an organization ID. The field may repeat.",
+        "ar": "يستخدم نوع البيانات XON: المكوّن 1 هو الاسم، ويمكن أن تحمل المكوّنات اللاحقة معرّفًا للجهة. ويجوز تكرار الحقل."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "tip": {
+        "en": "Reference laboratories often need this field to know which client to bill and where to send results.",
+        "ar": "تحتاج المختبرات المرجعية غالبًا إلى هذا الحقل لمعرفة العميل الذي تُرسل إليه الفاتورة والنتائج."
+      },
+      "example": "DEMO HOSPITAL"
+    },
+    "ORC-22": {
+      "nameAr": "عنوان المنشأة الصحية الطالبة",
+      "usage": "sometimes",
+      "since": "2.3.1",
+      "summary": {
+        "en": "The address of the facility that placed the order.",
+        "ar": "عنوان المنشأة الصحية التي قدّمت الطلب."
+      },
+      "details": {
+        "en": "It uses the XAD data type: 1 street, 3 city, 4 state or province, 5 postal code, 6 country. The field may repeat.",
+        "ar": "يستخدم نوع البيانات XAD: 1 الشارع، 3 المدينة، 4 الولاية أو المحافظة، 5 الرمز البريدي، 6 الدولة. ويجوز تكرار الحقل."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "example": "1 EXAMPLE ST^^DEMO CITY^^00000"
+    },
+    "ORC-23": {
+      "nameAr": "رقم هاتف المنشأة الصحية الطالبة",
+      "usage": "sometimes",
+      "since": "2.3.1",
+      "summary": {
+        "en": "The phone number of the facility that placed the order.",
+        "ar": "رقم هاتف المنشأة الصحية التي قدّمت الطلب."
+      },
+      "details": {
+        "en": "It uses the XTN data type, like ORC-14. The field may repeat.",
+        "ar": "يستخدم نوع البيانات XTN، مثل ORC-14. ويجوز تكرار الحقل."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "example": "555-0100^WPN^PH"
+    },
+    "ORC-24": {
+      "nameAr": "عنوان الطبيب الطالب",
+      "usage": "sometimes",
+      "since": "2.3.1",
+      "summary": {
+        "en": "The address of the provider who ordered the service.",
+        "ar": "عنوان مقدّم الرعاية الذي طلب الخدمة."
+      },
+      "details": {
+        "en": "It uses the XAD data type, like ORC-22. The field may repeat.",
+        "ar": "يستخدم نوع البيانات XAD، مثل ORC-22. ويجوز تكرار الحقل."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9. Newer messages use the PRT (participation) segment.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9. وتستخدم الرسائل الأحدث مقطع المشاركة PRT."
+      },
+      "example": "1 EXAMPLE ST^^DEMO CITY^^00000"
+    },
+    "ORC-25": {
+      "nameAr": "تفصيل إضافي لحالة الطلب",
+      "usage": "rare",
+      "since": "2.4",
+      "summary": {
+        "en": "Extra detail that refines the order status in ORC-5.",
+        "ar": "تفصيل إضافي يوضّح حالة الطلب في ORC-5."
+      },
+      "details": {
+        "en": "It may be filled only when ORC-5 has a value. Examples are a lab order sent to an outside lab, or a prescription label that was printed.",
+        "ar": "لا يجوز ملؤه إلا عندما يحمل ORC-5 قيمة. ومن أمثلته طلب مختبر أُرسل إلى مختبر خارجي، أو ملصق وصفة طبية تمت طباعته."
+      },
+      "versionNote": {
+        "en": "Local codes in older versions. v2.9 adds HL7 table 0950 with suggested codes.",
+        "ar": "تُستخدم رموز محلية في الإصدارات الأقدم. ويضيف الإصدار v2.9 جدول رموز HL7 رقم 0950 الذي يضم رموزًا مقترحة."
+      },
+      "example": "SENTOUT^Sent to reference lab^L",
+      "table": "0950"
+    },
+    "ORC-26": {
+      "nameAr": "سبب عدم توقيع إشعار المستفيد المسبق",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "Why the patient did not sign the ABN (Advanced Beneficiary Notice) form.",
+        "ar": "سبب عدم توقيع المريض على نموذج إشعار المستفيد المسبق (ABN)."
+      },
+      "details": {
+        "en": "It is required when ORC-20 says the notice was not signed. It can be a code or free text. Table 0552 has no HL7 codes.",
+        "ar": "يكون مطلوبًا عندما يبيّن ORC-20 أن الإشعار لم يُوقَّع. ويمكن أن يكون رمزًا أو نصًا حرًا. ولا يحتوي جدول الرموز 0552 على رموز من HL7."
+      },
+      "table": "0552"
+    },
+    "ORC-27": {
+      "nameAr": "الوقت المتوقَّع لجاهزية الطلب",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "When the filler expects the result or service to be ready, such as a lab result or a prescription.",
+        "ar": "الوقت الذي تتوقع فيه الجهة المنفِّذة أن تكون النتيجة أو الخدمة جاهزة، مثل نتيجة مختبر أو وصفة طبية."
+      },
+      "details": {
+        "en": "The filler sets it, usually in acknowledgments or status updates to the placer. Format YYYYMMDDHHMM[SS].",
+        "ar": "تضع الجهة المنفِّذة قيمته، عادةً في رسائل الإقرار أو تحديثات الحالة المرسلة إلى الجهة الطالبة. والصيغة YYYYMMDDHHMM[SS]."
+      },
+      "example": "202603021200"
+    },
+    "ORC-28": {
+      "nameAr": "رمز السرّية",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "How sensitive the order is, and how strictly access to it should be limited.",
+        "ar": "درجة حساسية الطلب، ومدى التشدد المطلوب في تقييد الوصول إليه."
+      },
+      "details": {
+        "en": "Codes come from HL7 table 0177. How each level is handled is agreed locally between the systems.",
+        "ar": "تأتي الرموز من جدول رموز HL7 رقم 0177. ويُتفق محليًا بين الأنظمة على طريقة التعامل مع كل مستوى."
+      },
+      "example": "R",
+      "table": "0177",
+      "values": [
+        {
+          "code": "V",
+          "en": "Very restricted",
+          "ar": "مقيَّد جدًا"
+        },
+        {
+          "code": "R",
+          "en": "Restricted",
+          "ar": "مقيَّد"
+        },
+        {
+          "code": "U",
+          "en": "Usual control",
+          "ar": "ضوابط اعتيادية"
+        },
+        {
+          "code": "EMP",
+          "en": "Employee",
+          "ar": "موظف"
+        },
+        {
+          "code": "VIP",
+          "en": "Very important person or celebrity",
+          "ar": "شخصية مهمة أو مشهورة"
+        },
+        {
+          "code": "PSY",
+          "en": "Psychiatric patient",
+          "ar": "مريض نفسي"
+        },
+        {
+          "code": "HIV",
+          "en": "HIV(+) patient",
+          "ar": "مريض مصاب بفيروس HIV"
+        },
+        {
+          "code": "ETH",
+          "en": "Alcohol/drug treatment patient",
+          "ar": "مريض يتلقى علاجًا من الكحول أو المخدرات"
+        }
+      ]
+    },
+    "ORC-29": {
+      "nameAr": "نوع الطلب",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "Whether the order is to be done as an inpatient or an outpatient order.",
+        "ar": "ما إذا كان الطلب سيُنفَّذ كطلب لمريض منوَّم أو كطلب لمريض خارجي."
+      },
+      "details": {
+        "en": "It can differ from the patient class in PV1-2. For example, an inpatient about to go home may get an outpatient physiotherapy order. If empty, the system default applies.",
+        "ar": "قد يختلف عن فئة المريض في PV1-2. فمثلًا قد يحصل مريض منوَّم على وشك الخروج على طلب علاج طبيعي كمريض خارجي. وإذا كان الحقل فارغًا تُطبَّق القيمة الافتراضية للنظام."
+      },
+      "example": "O",
+      "table": "0482",
+      "values": [
+        {
+          "code": "I",
+          "en": "Inpatient Order",
+          "ar": "طلب لمريض منوَّم",
+          "since": "2.5"
+        },
+        {
+          "code": "O",
+          "en": "Outpatient Order",
+          "ar": "طلب لمريض خارجي",
+          "since": "2.5"
+        }
+      ]
+    },
+    "ORC-30": {
+      "nameAr": "طريقة تفويض مُدخِل الطلب",
+      "usage": "rare",
+      "since": "2.5",
+      "summary": {
+        "en": "How the person entering the order got permission from the responsible doctor, such as by phone or in person.",
+        "ar": "الطريقة التي حصل بها مُدخِل الطلب على إذن الطبيب المسؤول، مثل الهاتف أو الحضور الشخصي."
+      },
+      "details": {
+        "en": "Codes come from HL7 table 0483. It helps when, for example, a nurse enters a verbal or phone order for a doctor.",
+        "ar": "تأتي الرموز من جدول رموز HL7 رقم 0483. ويفيد مثلًا عندما يُدخل ممرض طلبًا شفهيًا أو هاتفيًا نيابةً عن الطبيب."
+      },
+      "example": "PH",
+      "table": "0483",
+      "values": [
+        {
+          "code": "EL",
+          "en": "Electronic",
+          "ar": "إلكتروني",
+          "since": "2.5"
+        },
+        {
+          "code": "EM",
+          "en": "E-mail",
+          "ar": "بريد إلكتروني",
+          "since": "2.5"
+        },
+        {
+          "code": "FX",
+          "en": "Fax",
+          "ar": "فاكس",
+          "since": "2.5"
+        },
+        {
+          "code": "IP",
+          "en": "In Person",
+          "ar": "حضوريًا",
+          "since": "2.5"
+        },
+        {
+          "code": "MA",
+          "en": "Mail",
+          "ar": "بريد",
+          "since": "2.5"
+        },
+        {
+          "code": "PA",
+          "en": "Paper",
+          "ar": "ورقي",
+          "since": "2.5"
+        },
+        {
+          "code": "PH",
+          "en": "Phone",
+          "ar": "هاتف",
+          "since": "2.5"
+        },
+        {
+          "code": "RE",
+          "en": "Reflexive (Automated system)",
+          "ar": "تلقائي (نظام آلي)",
+          "since": "2.5"
+        },
+        {
+          "code": "VC",
+          "en": "Video-conference",
+          "ar": "مؤتمر مرئي",
+          "since": "2.5"
+        },
+        {
+          "code": "VO",
+          "en": "Voice",
+          "ar": "صوتي (شفهي)",
+          "since": "2.5"
+        }
+      ]
+    },
+    "ORC-31": {
+      "nameAr": "معرّف الخدمة للطلب الأب",
+      "usage": "legacy",
+      "since": "2.5.1",
+      "summary": {
+        "en": "The service code of the parent order that caused this test to be done.",
+        "ar": "رمز الخدمة للطلب الأب الذي تسبب في إجراء هذا الفحص."
+      },
+      "details": {
+        "en": "It can be used even when ORC-8 is empty. It is the same as OBR-50, and both must match when filled.",
+        "ar": "يمكن استخدامه حتى عندما يكون ORC-8 فارغًا. وهو الحقل نفسه OBR-50، ويجب أن يتطابقا عند ملئهما."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility from v2.7 and withdrawn in v2.9.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.7، وسُحب في الإصدار v2.9."
+      },
+      "example": "CBC^Complete blood count^L"
+    },
+    "ORC-32": {
+      "nameAr": "تاريخ إشعار المستفيد المسبق",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "The date the patient agreed to pay for a possibly uncovered service, or the date the ORC-20 code was collected.",
+        "ar": "التاريخ الذي وافق فيه المريض على دفع تكلفة خدمة قد لا يغطيها التأمين، أو تاريخ جمع الرمز الوارد في ORC-20."
+      },
+      "example": "20260301"
+    },
+    "ORC-33": {
+      "nameAr": "رقم بديل للطلب لدى الجهة الطالبة",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "A shorter extra order number from the placer, unique among its other identifiers.",
+        "ar": "رقم إضافي أقصر للطلب من الجهة الطالبة، يكون فريدًا بين معرّفاتها الأخرى."
+      },
+      "details": {
+        "en": "It uses the CX data type and may repeat.",
+        "ar": "يستخدم نوع البيانات CX ويجوز تكراره."
+      },
+      "example": "1001^^^DEMO_APP"
+    },
+    "ORC-34": {
+      "nameAr": "ملف سير عمل الطلب",
+      "usage": "rare",
+      "since": "2.8",
+      "summary": {
+        "en": "Names the agreed workflow variant when ORC-1 and the message profile in MSH-21 are not enough.",
+        "ar": "يحدد نوع سير العمل المتفق عليه عندما لا يكفي ORC-1 وملف الرسالة في MSH-21."
+      },
+      "details": {
+        "en": "It lets systems apply rules agreed locally. Table 0934 is user-defined, so each site sets its own values. The field may repeat.",
+        "ar": "يتيح للأنظمة تطبيق قواعد متفق عليها محليًا. وجدول الرموز 0934 يحدده المستخدم، لذلك تضع كل منشأة قيمها الخاصة. ويجوز تكرار الحقل."
+      },
+      "table": "0934"
+    },
+    "ORC-35": {
+      "nameAr": "رمز الإجراء",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "Tells the receiver to add, update or delete this order record, or that nothing changed.",
+        "ar": "يخبر النظام المستقبِل بإضافة سجل الطلب هذا أو تحديثه أو حذفه، أو بأنه لم يتغير شيء."
+      },
+      "details": {
+        "en": "Codes come from HL7 table 0206. It may be used only when ORC-2 or ORC-3 holds a unique order number.",
+        "ar": "تأتي الرموز من جدول رموز HL7 رقم 0206. ولا يجوز استخدامه إلا عندما يحمل ORC-2 أو ORC-3 رقم طلب فريدًا."
+      },
+      "example": "U",
+      "table": "0206",
+      "values": [
+        {
+          "code": "A",
+          "en": "Add/Insert",
+          "ar": "إضافة أو إدراج"
+        },
+        {
+          "code": "D",
+          "en": "Delete",
+          "ar": "حذف"
+        },
+        {
+          "code": "U",
+          "en": "Update",
+          "ar": "تحديث"
+        },
+        {
+          "code": "X",
+          "en": "No Change",
+          "ar": "لا تغيير"
+        }
+      ]
+    },
+    "ORC-36": {
+      "nameAr": "الفترة الزمنية لحالة الطلب",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "The date range during which the order status in ORC-5 is meant to stay valid.",
+        "ar": "الفترة الزمنية التي يُفترض أن تبقى خلالها حالة الطلب في ORC-5 سارية."
+      },
+      "details": {
+        "en": "The filler sets it, for example how long an order will stay on hold. Outside the range, the status in ORC-5 may no longer be correct.",
+        "ar": "تضع الجهة المنفِّذة قيمته، مثل المدة التي سيبقى فيها الطلب معلَّقًا. وخارج هذه الفترة قد لا تكون الحالة في ORC-5 صحيحة بعد ذلك."
+      },
+      "example": "20260301^20260315"
+    },
+    "ORC-37": {
+      "nameAr": "تاريخ ووقت إنشاء الطلب",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "When the order was first created, on paper or electronically. It stays the same through the order's whole life.",
+        "ar": "وقت إنشاء الطلب لأول مرة، ورقيًا أو إلكترونيًا. ويبقى ثابتًا طوال عمر الطلب."
+      },
+      "details": {
+        "en": "For a new order it usually equals ORC-9. It differs when, for example, a doctor signed a paper order that was typed into the system later.",
+        "ar": "في الطلب الجديد يساوي عادةً ORC-9. ويختلف عنه مثلًا عندما يوقّع الطبيب طلبًا ورقيًا يُدخَل في النظام لاحقًا."
+      },
+      "example": "202603010830"
+    },
+    "ORC-38": {
+      "nameAr": "رقم مجموعة الطلبات لدى الجهة المنفِّذة",
+      "usage": "rare",
+      "since": "2.9",
+      "summary": {
+        "en": "The number the filler uses to identify a group of related orders.",
+        "ar": "الرقم الذي تستخدمه الجهة المنفِّذة لتعريف مجموعة من الطلبات المترابطة."
+      },
+      "details": {
+        "en": "Component 1 is the group number and component 2 names the filler application, as in ORC-3. It is the filler's partner of ORC-4.",
+        "ar": "المكوّن 1 هو رقم المجموعة، والمكوّن 2 يحدد تطبيق الجهة المنفِّذة، كما في ORC-3. وهو المقابل لدى الجهة المنفِّذة للحقل ORC-4."
+      },
+      "example": "FG1001^DEMO_LAB"
+    }
+  }
+}

@@ -1,0 +1,1838 @@
+{
+  "about": "Components of HL7 Version 2 data types (identifier, name, data type and repeat rule), taken from the data type mapping tables of the HL7 Version 2 to FHIR project published by HL7 International. Reformatted to JSON. Only the data types used by the fields in hl7-fields.json are included. Primitive data types (for example ST, NM and DTM) have no components and are not listed. \"missing\" lists the data types that the source does not have.",
+  "source": "https://github.com/HL7/v2-to-fhir (mappings/datatypes), commit 5e30516993",
+  "license": "Apache-2.0",
+  "copyright": "HL7 International",
+  "dataTypes": {
+    "CE": {
+      "components": [
+        {
+          "id": "CE.1",
+          "name": "Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CE.2",
+          "name": "Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CE.3",
+          "name": "Name of Coding System",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CE.4",
+          "name": "Alternate Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CE.5",
+          "name": "Alternate Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CE.6",
+          "name": "Name of Alternate Coding System",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "CNE": {
+      "components": [
+        {
+          "id": "CNE.1",
+          "name": "Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.2",
+          "name": "Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.3",
+          "name": "Name of Coding System",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.4",
+          "name": "Alternate Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.5",
+          "name": "Alternate Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.6",
+          "name": "Name of Alternate Coding System",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.7",
+          "name": "Coding System Version ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.8",
+          "name": "Alternate Coding System Version ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.9",
+          "name": "Original Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.10",
+          "name": "Second Alternate Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.11",
+          "name": "Second Alternate Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.12",
+          "name": "Name of Second Alternate Coding System",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.13",
+          "name": "Second Alternate Coding System Version ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.14",
+          "name": "Coding System OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.15",
+          "name": "Value Set OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.16",
+          "name": "Value Set Version ID",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.17",
+          "name": "Alternate Coding System OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.18",
+          "name": "Alternate Value Set OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.19",
+          "name": "Alternate Value Set Version ID",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.20",
+          "name": "Second Alternate Coding System OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.21",
+          "name": "Second Alternate Value Set OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNE.22",
+          "name": "Second Alternate Value Set Version ID",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "CNN": {
+      "components": [
+        {
+          "id": "CNN.1",
+          "name": "ID Number",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.2",
+          "name": "Family Name",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.3",
+          "name": "Given Name",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.4",
+          "name": "Second and Further Given Names or Initials Thereof",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.5",
+          "name": "Suffix (e.g., JR or III)",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.6",
+          "name": "Prefix (e.g., DR)",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.7",
+          "name": "Degree (e.g., MD)",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.8",
+          "name": "Source Table",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.9",
+          "name": "Assigning Authority - Namespace ID",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.10",
+          "name": "Assigning Authority - Universal ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CNN.11",
+          "name": "Assigning Authority - Universal ID Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "CQ": {
+      "components": [
+        {
+          "id": "CQ.1",
+          "name": "Quantity",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CQ.2",
+          "name": "Units",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "CWE": {
+      "components": [
+        {
+          "id": "CWE.1",
+          "name": "Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.2",
+          "name": "Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.3",
+          "name": "Name of Coding System",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.4",
+          "name": "Alternate Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.5",
+          "name": "Alternate Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.6",
+          "name": "Name of Alternate Coding System",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.7",
+          "name": "Coding System Version ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.8",
+          "name": "Alternate Coding System Version ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.9",
+          "name": "Original Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.10",
+          "name": "Second Alternate Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.11",
+          "name": "Second Alternate Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.12",
+          "name": "Name of Second Alternate Coding System",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.13",
+          "name": "Second Alternate Coding System Version ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.14",
+          "name": "Coding System OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.15",
+          "name": "Value Set OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.16",
+          "name": "Value Set Version ID",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.17",
+          "name": "Alternate Coding System OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.18",
+          "name": "Alternate Value Set OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.19",
+          "name": "Alternate Value Set Version ID",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.20",
+          "name": "Second Alternate Coding System OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.21",
+          "name": "Second Alternate Value Set OID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CWE.22",
+          "name": "Second Alternate Value Set Version ID",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "CX": {
+      "components": [
+        {
+          "id": "CX.1",
+          "name": "ID Number",
+          "dataType": "ST",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "CX.2",
+          "name": "Identifier Check Digit",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.3",
+          "name": "Check Digit Scheme",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.4",
+          "name": "Assigning Authority",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.5",
+          "name": "Identifier Type Code",
+          "dataType": "ID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "CX.6",
+          "name": "Assigning Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.7",
+          "name": "Effective Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.8",
+          "name": "Expiration Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.9",
+          "name": "Assigning Jurisdiction",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.10",
+          "name": "Assigning Agency or Department",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.11",
+          "name": "Security Check",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "CX.12",
+          "name": "Security Check Scheme",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "DLD": {
+      "components": [
+        {
+          "id": "DLD.1",
+          "name": "Discharge to Location",
+          "dataType": "CWE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "DLD.2",
+          "name": "Effective Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "DLN": {
+      "components": [
+        {
+          "id": "DLN.1",
+          "name": "Driver's License Number",
+          "dataType": "ST",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "DLN.2",
+          "name": "Issuing State, Province, Country",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DLN.3",
+          "name": "Expiration Date",
+          "dataType": "DT",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "DR": {
+      "components": [
+        {
+          "id": "DR.1",
+          "name": "Range Start Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "DR.2",
+          "name": "Range End Date/Time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "EI": {
+      "components": [
+        {
+          "id": "EI.1",
+          "name": "Entity Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "EI.2",
+          "name": "Namespace ID",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "EI.3",
+          "name": "Universal ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "EI.4",
+          "name": "Universal ID Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "EIP": {
+      "components": [
+        {
+          "id": "EIP.1",
+          "name": "Placer Assigned Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "EIP.2",
+          "name": "Filler Assigned Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "FN": {
+      "components": [
+        {
+          "id": "FN.1",
+          "name": "Surname",
+          "dataType": "ST",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "FN.2",
+          "name": "Own Surname Prefix",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "FN.3",
+          "name": "Own Surname",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "FN.4",
+          "name": "Surname Prefix from Partner/Spouse",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "FN.5",
+          "name": "Surname from Partner/Spouse",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "HD": {
+      "components": [
+        {
+          "id": "HD.1",
+          "name": "Namespace ID",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "HD.2",
+          "name": "Universal ID",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "HD.3",
+          "name": "Universal ID Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "MSG": {
+      "components": [
+        {
+          "id": "MSG.1",
+          "name": "Message Code",
+          "dataType": "ID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSG.2",
+          "name": "Trigger Event",
+          "dataType": "ID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "MSG.3",
+          "name": "Message Structure",
+          "dataType": "ID",
+          "min": 1,
+          "max": 1
+        }
+      ]
+    },
+    "NDL": {
+      "components": [
+        {
+          "id": "NDL.1",
+          "name": "Name",
+          "dataType": "CNN",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.2",
+          "name": "Start Date/time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.3",
+          "name": "End Date/time",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.4",
+          "name": "Point of Care",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.5",
+          "name": "Room",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.6",
+          "name": "Bed",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.7",
+          "name": "Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.8",
+          "name": "Location Status",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.9",
+          "name": "Patient Location Type",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.10",
+          "name": "Building",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "NDL.11",
+          "name": "Floor",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "OG": {
+      "components": [
+        {
+          "id": "OG.1",
+          "name": "Original Sub-Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OG.2",
+          "name": "Group",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OG.3",
+          "name": "Sequence",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "OG.4",
+          "name": "Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "PL": {
+      "components": [
+        {
+          "id": "PL.1",
+          "name": "Point of Care",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.2",
+          "name": "Room",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.3",
+          "name": "Bed",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.4",
+          "name": "Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.5",
+          "name": "Location Status",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.6",
+          "name": "Person Location Type",
+          "dataType": "IS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.7",
+          "name": "Building",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.8",
+          "name": "Floor",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.9",
+          "name": "Location Description",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.10",
+          "name": "Comprehensive Location Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "PL.11",
+          "name": "Assigning Authority for Location",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "PT": {
+      "components": [
+        {
+          "id": "PT.1",
+          "name": "Processing ID",
+          "dataType": "ID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "PT.2",
+          "name": "Processing Mode",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "RI": {
+      "components": [
+        {
+          "id": "RI.1",
+          "name": "Repeat Pattern",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "RI.2",
+          "name": "Explicit Time Interval",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "SAD": {
+      "components": [
+        {
+          "id": "SAD.1",
+          "name": "Street or Mailing Address",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "SAD.2",
+          "name": "Street Name",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "SAD.3",
+          "name": "Dwelling Number",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "SPS": {
+      "components": [
+        {
+          "id": "SPS.1",
+          "name": "Specimen Source Name or Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "SPS.2",
+          "name": "Additives",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "SPS.3",
+          "name": "Specimen Collection Method",
+          "dataType": "TX",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "SPS.4",
+          "name": "Body Site",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "SPS.5",
+          "name": "Site Modifier",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "SPS.6",
+          "name": "Collection Method Modifier Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "SPS.7",
+          "name": "Specimen Role",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "TQ": {
+      "components": [
+        {
+          "id": "TQ.1",
+          "name": "Quantity",
+          "dataType": "CQ",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.2",
+          "name": "Interval",
+          "dataType": "RI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.3",
+          "name": "Duration",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.4",
+          "name": "Start Date/Time",
+          "dataType": "TS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.5",
+          "name": "End Date/Time",
+          "dataType": "TS",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.6",
+          "name": "Priority",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.7",
+          "name": "Condition",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.8",
+          "name": "Text",
+          "dataType": "TX",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.9",
+          "name": "Conjunction",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.10",
+          "name": "Order Sequencing",
+          "dataType": "OSD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.11",
+          "name": "Occurrence Duration",
+          "dataType": "CE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "TQ.12",
+          "name": "Total Occurrences",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "TS": {
+      "components": [
+        {
+          "id": "TS.1",
+          "name": "Time",
+          "dataType": "DTM",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "TS.2",
+          "name": "Degree of Precision",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "XAD": {
+      "components": [
+        {
+          "id": "XAD.1",
+          "name": "Street Address",
+          "dataType": "SAD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.2",
+          "name": "Other Designation",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.3",
+          "name": "City",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.4",
+          "name": "State or Province",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.5",
+          "name": "Zip or Postal Code",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.6",
+          "name": "Country",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.7",
+          "name": "Address Type",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.8",
+          "name": "Other Geographic Designation",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.9",
+          "name": "County/Parish Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.10",
+          "name": "Census Tract",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.11",
+          "name": "Address Representation Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.12",
+          "name": "Address Validity Range",
+          "dataType": "DR",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.13",
+          "name": "Effective Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.14",
+          "name": "Expiration Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.15",
+          "name": "Expiration Reason",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.16",
+          "name": "Temporary Indicator",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.17",
+          "name": "Bad Address Indicator",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.18",
+          "name": "Address Usage",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.19",
+          "name": "Addressee",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.20",
+          "name": "Comment",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.21",
+          "name": "Preference Order",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.22",
+          "name": "Protection Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XAD.23",
+          "name": "Address Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "XCN": {
+      "components": [
+        {
+          "id": "XCN.1",
+          "name": "Person Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.2",
+          "name": "Family Name",
+          "dataType": "FN",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.3",
+          "name": "Given Name",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.4",
+          "name": "Second and Further Given Names or Initials Thereof",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.5",
+          "name": "Suffix (e.g., JR or III)",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.6",
+          "name": "Prefix (e.g., DR)",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.7",
+          "name": "Degree (e.g., MD)",
+          "dataType": "",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.8",
+          "name": "Source Table",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.9",
+          "name": "Assigning Authority",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.10",
+          "name": "Name Type Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.11",
+          "name": "Identifier Check Digit",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.12",
+          "name": "Check Digit Scheme",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.13",
+          "name": "Identifier Type Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.14",
+          "name": "Assigning Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.15",
+          "name": "Name Representation Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.16",
+          "name": "Name Context",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.17",
+          "name": "Name Validity Range",
+          "dataType": "",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.18",
+          "name": "Name Assembly Order",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.19",
+          "name": "Effective Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.20",
+          "name": "Expiration Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.21",
+          "name": "Professional Suffix",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.22",
+          "name": "Assigning Jurisdiction",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.23",
+          "name": "Assigning Agency or Department",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.24",
+          "name": "Security Check",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XCN.25",
+          "name": "Security Check Scheme",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "XON": {
+      "components": [
+        {
+          "id": "XON.1",
+          "name": "Organization Name",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.2",
+          "name": "Organization Name Type Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.3",
+          "name": "ID Number",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.4",
+          "name": "Identifier Check Digit",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.5",
+          "name": "Check Digit Scheme",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.6",
+          "name": "Assigning Authority",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.7",
+          "name": "Identifier Type Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.8",
+          "name": "Assigning Facility",
+          "dataType": "HD",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.9",
+          "name": "Name Representation Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XON.10",
+          "name": "Organization Identifier",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "XPN": {
+      "components": [
+        {
+          "id": "XPN.1",
+          "name": "Family Name",
+          "dataType": "FN",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.2",
+          "name": "Given Name",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.3",
+          "name": "Second and Further Given Names or Initials Thereof",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.4",
+          "name": "Suffix (e.g., JR or III)",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.5",
+          "name": "Prefix (e.g., DR)",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.6",
+          "name": "Degree (e.g., MD)",
+          "dataType": "",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.7",
+          "name": "Name Type Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.8",
+          "name": "Name Representation Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.9",
+          "name": "Name Context",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.10",
+          "name": "Name Validity Range",
+          "dataType": "DR",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.11",
+          "name": "Name Assembly Order",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.12",
+          "name": "Effective Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.13",
+          "name": "Expiration Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.14",
+          "name": "Professional Suffix",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XPN.15",
+          "name": "Called By",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "XTN": {
+      "components": [
+        {
+          "id": "XTN.1",
+          "name": "Telephone Number",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.2",
+          "name": "Telecommunication Use Code",
+          "dataType": "ID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.3",
+          "name": "Telecommunication Equipment Type",
+          "dataType": "ID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "XTN.4",
+          "name": "Communication Address",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.5",
+          "name": "Country Code",
+          "dataType": "SNM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.6",
+          "name": "Area/City Code",
+          "dataType": "SNM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.7",
+          "name": "Local Number",
+          "dataType": "SNM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.8",
+          "name": "Extension",
+          "dataType": "SNM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.9",
+          "name": "Any Text",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.10",
+          "name": "Extension Prefix",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.11",
+          "name": "Speed Dial Code",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.12",
+          "name": "Unformatted Telephone number",
+          "dataType": "ST",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.13",
+          "name": "Effective Start Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.14",
+          "name": "Expiration Date",
+          "dataType": "DTM",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.15",
+          "name": "Expiration Reason",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.16",
+          "name": "Protection Code",
+          "dataType": "CWE",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.17",
+          "name": "Shared Telecommunication Identifier",
+          "dataType": "EI",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "XTN.18",
+          "name": "Preference Order",
+          "dataType": "NM",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    }
+  },
+  "missing": [
+    "CP",
+    "FC",
+    "JCC",
+    "MOC",
+    "OSD",
+    "PRL",
+    "VID"
+  ],
+  "corrections": "Checked against the HL7 v2.9 standard text (chapter 2A, data types) and corrected: EIP.1 and EIP.2 have data type EI, RI.1 has data type CWE, the names of CNN.9 to CNN.11 have a space before the dash (Assigning Authority - Namespace ID), and DLN.1 is Driver's License Number. SPS is not in v2.9; checked against v2.5 and v2.6 and corrected: SPS.3 is Specimen Collection Method, and SPS.1 and SPS.4 to SPS.7 have data type CWE."
+}

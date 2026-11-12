@@ -1,0 +1,1039 @@
+{
+  "segment": "PV1",
+  "title": {
+    "en": "Patient Visit",
+    "ar": "بيانات زيارة المريض"
+  },
+  "summary": {
+    "en": "Holds the details of one patient visit or hospital stay: patient class, location, doctors, visit number, and admit and discharge times.",
+    "ar": "يحمل تفاصيل زيارة واحدة للمريض أو إقامة واحدة في المستشفى: فئة المريض، والموقع، والأطباء، ورقم الزيارة، وأوقات الدخول والخروج."
+  },
+  "details": {
+    "en": "PV1 is required in most ADT (admission, discharge, transfer) messages, such as ADT^A01 (admit), ADT^A03 (discharge) and ADT^A08 (update patient information). Order and result messages (ORM^O01, ORU^R01) may also carry it after PID. A message usually has one PV1, but some billing messages, like BAR^P01, carry one per visit. The optional PV2 segment adds more visit details.",
+    "ar": "مقطع PV1 مطلوب في معظم رسائل ADT (الدخول والخروج والنقل)، مثل ADT^A01 (الدخول)، وADT^A03 (الخروج)، وADT^A08 (تحديث بيانات المريض). وقد تحمله أيضًا رسائل الطلبات والنتائج (ORM^O01 وORU^R01) بعد مقطع PID. وتحتوي الرسالة عادةً على مقطع PV1 واحد، لكن بعض رسائل الفوترة، مثل BAR^P01، تحمل مقطعًا لكل زيارة. ويضيف مقطع PV2 الاختياري مزيدًا من تفاصيل الزيارة."
+  },
+  "keyFields": [
+    "PV1-2",
+    "PV1-3",
+    "PV1-7",
+    "PV1-10",
+    "PV1-19",
+    "PV1-44"
+  ],
+  "fields": {
+    "PV1-1": {
+      "nameAr": "رقم تسلسل المقطع",
+      "usage": "common",
+      "summary": {
+        "en": "A sequence number for this PV1 segment in the message, usually 1.",
+        "ar": "رقم تسلسلي لمقطع PV1 هذا داخل الرسالة، وغالبًا ما يكون 1."
+      },
+      "details": {
+        "en": "The first PV1 in a message gets 1, the second gets 2, and so on. Most messages carry only one PV1, so the value is 1 or the field is empty.",
+        "ar": "يأخذ أول مقطع PV1 في الرسالة الرقم 1، والثاني الرقم 2، وهكذا. ومعظم الرسائل تحمل مقطع PV1 واحدًا فقط، لذلك تكون القيمة 1 أو يكون الحقل فارغًا."
+      },
+      "tip": {
+        "en": "Receivers rarely check this value. Do not use it to identify a visit. Use PV1-19 for that.",
+        "ar": "نادرًا ما تتحقق الأنظمة المستقبِلة من هذه القيمة. لا تستخدمه لتعريف الزيارة، بل استخدم PV1-19 لذلك."
+      },
+      "example": "1"
+    },
+    "PV1-2": {
+      "nameAr": "فئة المريض",
+      "usage": "common",
+      "summary": {
+        "en": "The broad type of patient for this visit, such as inpatient, outpatient or emergency.",
+        "ar": "النوع العام للمريض في هذه الزيارة، مثل مريض منوَّم أو مريض خارجي أو طوارئ."
+      },
+      "details": {
+        "en": "This is the only required field in PV1. HL7 suggests the codes in table 0004, but each site may use its own. N (not applicable) is used when there is no real visit, for example in ADT^A28 or ADT^A31 person messages.",
+        "ar": "هذا هو الحقل الوحيد المطلوب في مقطع PV1. يقترح HL7 الرموز الموجودة في جدول الرموز 0004، لكن يجوز لكل منشأة استخدام رموزها الخاصة. ويُستخدم الرمز N (لا ينطبق) عندما لا توجد زيارة فعلية، كما في رسائل بيانات الشخص ADT^A28 أو ADT^A31."
+      },
+      "versionNote": {
+        "en": "From v2.7 the data type is CWE instead of IS, so newer messages may add text, such as I^Inpatient^HL70004.",
+        "ar": "ابتداءً من الإصدار v2.7 أصبح نوع البيانات CWE بدلًا من IS، لذلك قد تضيف الرسائل الأحدث نصًا، مثل I^Inpatient^HL70004."
+      },
+      "tip": {
+        "en": "Codes other than I, O and E differ a lot between systems. Agree on a mapping table with the other side early.",
+        "ar": "تختلف الرموز الأخرى غير I وO وE كثيرًا بين الأنظمة. اتفق مع الطرف الآخر مبكرًا على جدول تحويل (mapping) للرموز."
+      },
+      "example": "I",
+      "table": "0004",
+      "values": [
+        {
+          "code": "E",
+          "en": "Emergency",
+          "ar": "طوارئ"
+        },
+        {
+          "code": "I",
+          "en": "Inpatient",
+          "ar": "مريض منوَّم"
+        },
+        {
+          "code": "O",
+          "en": "Outpatient",
+          "ar": "مريض خارجي"
+        },
+        {
+          "code": "P",
+          "en": "Preadmit",
+          "ar": "ما قبل الدخول"
+        },
+        {
+          "code": "R",
+          "en": "Recurring patient",
+          "ar": "مريض متكرر الزيارات"
+        },
+        {
+          "code": "B",
+          "en": "Obstetrics",
+          "ar": "التوليد"
+        },
+        {
+          "code": "C",
+          "en": "Commercial Account",
+          "ar": "حساب تجاري",
+          "since": "2.4"
+        },
+        {
+          "code": "N",
+          "en": "Not Applicable",
+          "ar": "لا ينطبق",
+          "since": "2.4"
+        },
+        {
+          "code": "U",
+          "en": "Unknown",
+          "ar": "غير معروف",
+          "since": "2.4"
+        }
+      ]
+    },
+    "PV1-3": {
+      "nameAr": "الموقع المخصَّص للمريض",
+      "usage": "common",
+      "summary": {
+        "en": "Where the patient is now, or is going: unit, room, bed and facility.",
+        "ar": "المكان الذي يوجد فيه المريض الآن أو الذي سيُنقل إليه: الوحدة والغرفة والسرير والمنشأة الصحية."
+      },
+      "details": {
+        "en": "Main components: 1 point of care (ward, unit or clinic), 2 room, 3 bed, 4 facility, 5 location status. In a transfer it holds the new location. In a discharge it holds the location the patient is leaving.",
+        "ar": "المكوّنات الرئيسية: 1 نقطة الرعاية (الجناح أو الوحدة أو العيادة)، 2 الغرفة، 3 السرير، 4 المنشأة الصحية، 5 حالة الموقع. في النقل يحمل الحقل الموقع الجديد، وفي الخروج يحمل الموقع الذي يغادره المريض."
+      },
+      "tip": {
+        "en": "Unit, room and bed codes are local to each hospital. Many errors come from codes the receiver does not know, so share the location list early.",
+        "ar": "رموز الوحدة والغرفة والسرير محلية في كل مستشفى. وتنشأ أخطاء كثيرة من رموز لا يعرفها النظام المستقبِل، لذلك شارك قائمة المواقع مبكرًا."
+      },
+      "example": "4WEST^401^B^DEMOHOSP"
+    },
+    "PV1-4": {
+      "nameAr": "نوع الدخول",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The circumstances of the admission, such as emergency, urgent, elective or newborn.",
+        "ar": "ظروف الدخول (التنويم)، مثل الطوارئ أو الحالة العاجلة أو الدخول المخطَّط له أو المولود الجديد."
+      },
+      "details": {
+        "en": "It describes how the admission came about, not the patient class. HL7 suggests the codes in table 0007, but many sites use their own codes or a code set required for billing.",
+        "ar": "يصف هذا الحقل كيف حدث الدخول، وليس فئة المريض. يقترح HL7 الرموز الموجودة في جدول الرموز 0007، لكن منشآت كثيرة تستخدم رموزها الخاصة أو مجموعة رموز تفرضها متطلبات الفوترة."
+      },
+      "tip": {
+        "en": "Do not confuse E here (emergency admission) with E in PV1-2 (emergency patient class). They answer different questions.",
+        "ar": "لا تخلط بين الرمز E هنا (دخول طارئ) والرمز E في PV1-2 (فئة مريض الطوارئ)، فكل منهما يجيب عن سؤال مختلف."
+      },
+      "example": "E",
+      "table": "0007",
+      "values": [
+        {
+          "code": "A",
+          "en": "Accident",
+          "ar": "حادث"
+        },
+        {
+          "code": "E",
+          "en": "Emergency",
+          "ar": "طوارئ"
+        },
+        {
+          "code": "L",
+          "en": "Labor and Delivery",
+          "ar": "المخاض والولادة"
+        },
+        {
+          "code": "R",
+          "en": "Routine",
+          "ar": "روتيني"
+        },
+        {
+          "code": "N",
+          "en": "Newborn (Birth in healthcare facility)",
+          "ar": "مولود جديد (وُلد داخل المنشأة الصحية)",
+          "since": "2.4"
+        },
+        {
+          "code": "U",
+          "en": "Urgent",
+          "ar": "عاجل",
+          "since": "2.4"
+        },
+        {
+          "code": "C",
+          "en": "Elective",
+          "ar": "اختياري (مخطَّط له)",
+          "since": "2.4"
+        }
+      ]
+    },
+    "PV1-5": {
+      "nameAr": "رقم ما قبل الدخول",
+      "usage": "rare",
+      "summary": {
+        "en": "The number of the patient's pre-admission account, given before the actual admission.",
+        "ar": "رقم حساب ما قبل الدخول الخاص بالمريض، ويُعطى قبل الدخول الفعلي."
+      },
+      "details": {
+        "en": "It uses the CX data type (number plus assigning authority), like other account numbers. Some systems keep using it as the billing number after admission.",
+        "ar": "يستخدم نوع البيانات CX (الرقم مع الجهة المُصدِرة له)، مثل أرقام الحسابات الأخرى. وتستمر بعض الأنظمة في استخدامه كرقم للفوترة بعد الدخول."
+      },
+      "example": "P26001^^^DEMOHOSP"
+    },
+    "PV1-6": {
+      "nameAr": "الموقع السابق للمريض",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The location the patient is moving from, used when the patient is transferred.",
+        "ar": "الموقع الذي ينتقل منه المريض، ويُستخدم عند نقل المريض."
+      },
+      "details": {
+        "en": "It has the same structure as PV1-3 (unit, room, bed, facility). In a transfer such as ADT^A02, PV1-3 holds the new location and this field holds the old one. It is empty for a new patient.",
+        "ar": "له البنية نفسها التي للحقل PV1-3 (الوحدة، الغرفة، السرير، المنشأة الصحية). في رسالة نقل مثل ADT^A02 يحمل PV1-3 الموقع الجديد، ويحمل هذا الحقل الموقع القديم. ويكون فارغًا للمريض الجديد."
+      },
+      "tip": {
+        "en": "Bed management systems often need both PV1-3 and PV1-6 to free the old bed. Check that the sender fills it on every transfer.",
+        "ar": "تحتاج أنظمة إدارة الأسرّة غالبًا إلى PV1-3 وPV1-6 معًا لتحرير السرير القديم. تأكد من أن النظام المُرسِل يملأ هذا الحقل في كل عملية نقل."
+      },
+      "example": "ER^^^DEMOHOSP"
+    },
+    "PV1-7": {
+      "nameAr": "الطبيب المعالج",
+      "usage": "common",
+      "summary": {
+        "en": "The doctor responsible for the patient's care during this visit.",
+        "ar": "الطبيب المسؤول عن رعاية المريض خلال هذه الزيارة."
+      },
+      "details": {
+        "en": "Main components: 1 ID number, 2 family name, 3 given name. The field may repeat, but the repeats give other IDs or names for the same doctor, not more doctors. Doctor IDs are local (table 0010).",
+        "ar": "المكوّنات الرئيسية: 1 رقم المعرّف، 2 اسم العائلة، 3 الاسم الأول. يجوز تكرار الحقل، لكن التكرارات تعطي معرّفات أو أسماء أخرى للطبيب نفسه، وليست أطباء آخرين. ومعرّفات الأطباء محلية (جدول الرموز 0010)."
+      },
+      "tip": {
+        "en": "Match doctors by the ID in component 1, not by name. Agree which ID system is used, and check component 9 (assigning authority) when there are several.",
+        "ar": "طابِق الأطباء بالمعرّف الموجود في المكوّن 1، وليس بالاسم. اتفق على نظام المعرّفات المستخدم، وتحقق من المكوّن 9 (الجهة المُصدِرة للمعرّف) عند وجود أكثر من نظام."
+      },
+      "example": "D1001^DOCTOR^DEMO",
+      "table": "0010"
+    },
+    "PV1-8": {
+      "nameAr": "الطبيب المحيل",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The doctor who referred the patient to this facility or service.",
+        "ar": "الطبيب الذي أحال المريض إلى هذه المنشأة الصحية أو الخدمة."
+      },
+      "details": {
+        "en": "It has the same structure as PV1-7: ID number, family name, given name. Repeats give other IDs or names for the same doctor, not more doctors. Either the ID or the name may be missing, by local agreement.",
+        "ar": "له البنية نفسها التي للحقل PV1-7: رقم المعرّف، اسم العائلة، الاسم الأول. التكرارات تعطي معرّفات أو أسماء أخرى للطبيب نفسه، وليست أطباء آخرين. ويجوز غياب المعرّف أو الاسم بحسب الاتفاق المحلي."
+      },
+      "tip": {
+        "en": "Referring doctors are often outside the hospital, so their IDs may not exist in the receiver's doctor list. Plan what to do with unknown IDs.",
+        "ar": "يكون الطبيب المحيل غالبًا من خارج المستشفى، لذلك قد لا يوجد معرّفه في قائمة الأطباء لدى النظام المستقبِل. خطّط مسبقًا لطريقة التعامل مع المعرّفات غير المعروفة."
+      },
+      "example": "D2002^REFERRER^DEMO",
+      "table": "0010"
+    },
+    "PV1-9": {
+      "nameAr": "الطبيب الاستشاري",
+      "usage": "legacy",
+      "summary": {
+        "en": "Doctors asked to give an opinion on the patient's care during this visit.",
+        "ar": "الأطباء الذين طُلب رأيهم في رعاية المريض خلال هذه الزيارة."
+      },
+      "details": {
+        "en": "Unlike PV1-7, each repeat here can be a different consulting doctor. The structure is the same: ID number, family name, given name.",
+        "ar": "على عكس PV1-7، يمكن أن يمثل كل تكرار هنا طبيبًا استشاريًا مختلفًا. والبنية نفسها: رقم المعرّف، اسم العائلة، الاسم الأول."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility since v2.4. Send consulting doctors in a ROL segment instead (PRT in later versions).",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.4. أرسل الأطباء الاستشاريين في مقطع ROL بدلًا منه (أو PRT في الإصدارات اللاحقة)."
+      },
+      "tip": {
+        "en": "Some systems still send this field. Accept it if present, but do not rely on it being filled.",
+        "ar": "ما زالت بعض الأنظمة ترسل هذا الحقل. اقبله إن وُجد، لكن لا تعتمد على أنه سيكون مملوءًا."
+      },
+      "example": "D3003^CONSULTANT^DEMO",
+      "table": "0010"
+    },
+    "PV1-10": {
+      "nameAr": "الخدمة الطبية",
+      "usage": "common",
+      "summary": {
+        "en": "The medical service or specialty treating the patient, such as medicine, surgery or cardiology.",
+        "ar": "الخدمة الطبية أو التخصص الذي يعالج المريض، مثل الباطنية أو الجراحة أو أمراض القلب."
+      },
+      "details": {
+        "en": "HL7 lists it as required for ADT^A01 (admit), ADT^A02 (transfer), ADT^A14 (pending admit) and ADT^A15 (pending transfer). Table 0069 has only a few suggested codes, so most sites use their own service list.",
+        "ar": "يعدّه HL7 حقلًا مطلوبًا في ADT^A01 (الدخول)، وADT^A02 (النقل)، وADT^A14 (دخول منتظَر)، وADT^A15 (نقل منتظَر). ولا يضم جدول الرموز 0069 إلا بضعة رموز مقترحة، لذلك تستخدم معظم المنشآت قائمة خدماتها الخاصة."
+      },
+      "tip": {
+        "en": "Receivers often use this field to route the visit to the right department or ward list. Keep the codes stable and documented.",
+        "ar": "تستخدم الأنظمة المستقبِلة هذا الحقل غالبًا لتوجيه الزيارة إلى القسم أو قائمة الجناح الصحيحة. حافظ على ثبات الرموز وتوثيقها."
+      },
+      "example": "MED",
+      "table": "0069",
+      "values": [
+        {
+          "code": "MED",
+          "en": "Medical Service",
+          "ar": "الخدمة الطبية (الباطنية)",
+          "since": "2.4"
+        },
+        {
+          "code": "SUR",
+          "en": "Surgical Service",
+          "ar": "الخدمة الجراحية",
+          "since": "2.4"
+        },
+        {
+          "code": "URO",
+          "en": "Urology Service",
+          "ar": "خدمة المسالك البولية",
+          "since": "2.4"
+        },
+        {
+          "code": "PUL",
+          "en": "Pulmonary Service",
+          "ar": "خدمة الأمراض الصدرية",
+          "since": "2.4"
+        },
+        {
+          "code": "CAR",
+          "en": "Cardiac Service",
+          "ar": "خدمة أمراض القلب",
+          "since": "2.4"
+        }
+      ]
+    },
+    "PV1-11": {
+      "nameAr": "الموقع المؤقت",
+      "usage": "rare",
+      "summary": {
+        "en": "A place where the patient is for a short time, such as an operating room or X-ray.",
+        "ar": "مكان يوجد فيه المريض لفترة قصيرة، مثل غرفة العمليات أو قسم الأشعة."
+      },
+      "details": {
+        "en": "It uses the same location structure as PV1-3. The assigned location in PV1-3 stays the same while the patient is away.",
+        "ar": "يستخدم بنية الموقع نفسها التي للحقل PV1-3. ويبقى الموقع المخصَّص في PV1-3 كما هو أثناء غياب المريض عنه."
+      },
+      "example": "OR1^^^DEMOHOSP"
+    },
+    "PV1-12": {
+      "nameAr": "مؤشر فحوص ما قبل الدخول",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows whether the patient needs tests before the admission can go ahead.",
+        "ar": "يبيّن ما إذا كان المريض يحتاج إلى فحوص قبل إتمام الدخول."
+      },
+      "details": {
+        "en": "Table 0087 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0087 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "table": "0087"
+    },
+    "PV1-13": {
+      "nameAr": "مؤشر إعادة الدخول",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows that the patient is being admitted again to the same facility.",
+        "ar": "يبيّن أن المريض يُعاد إدخاله إلى المنشأة الصحية نفسها."
+      },
+      "details": {
+        "en": "HL7 suggests R for a re-admission and an empty field otherwise. Sites may add their own codes to describe the circumstances.",
+        "ar": "يقترح HL7 الرمز R لإعادة الدخول، وترك الحقل فارغًا في غير ذلك. ويجوز للمنشآت إضافة رموزها الخاصة لوصف ظروف إعادة الدخول."
+      },
+      "example": "R",
+      "table": "0092",
+      "values": [
+        {
+          "code": "R",
+          "en": "Re-admission",
+          "ar": "إعادة دخول"
+        }
+      ]
+    },
+    "PV1-14": {
+      "nameAr": "مصدر الدخول",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Where the patient came from at admission, such as a doctor referral, another hospital or the emergency room.",
+        "ar": "الجهة التي جاء منها المريض عند الدخول، مثل إحالة من طبيب أو مستشفى آخر أو قسم الطوارئ."
+      },
+      "details": {
+        "en": "Table 0023 is user-defined, so each site sets its own codes. Many sites use the code list that their billing rules require.",
+        "ar": "جدول الرموز 0023 يحدده المستخدم، أي أن كل منشأة تضع رموزها الخاصة. وتستخدم منشآت كثيرة قائمة الرموز التي تفرضها قواعد الفوترة لديها."
+      },
+      "tip": {
+        "en": "Do not mix this up with PV1-4. PV1-4 says what kind of admission it was. PV1-14 says where the patient came from.",
+        "ar": "لا تخلط بين هذا الحقل وPV1-4. فالحقل PV1-4 يبيّن نوع الدخول، أما PV1-14 فيبيّن الجهة التي جاء منها المريض."
+      },
+      "table": "0023"
+    },
+    "PV1-15": {
+      "nameAr": "الحالة الحركية والوظيفية",
+      "usage": "rare",
+      "summary": {
+        "en": "Physical limits or special conditions of the patient, such as needing a wheelchair, hearing loss or pregnancy.",
+        "ar": "القيود الجسدية أو الحالات الخاصة لدى المريض، مثل الحاجة إلى كرسي متحرك أو ضعف السمع أو الحمل."
+      },
+      "details": {
+        "en": "The field may repeat, with one code per condition. Conditions may be permanent or temporary. HL7 suggests codes in table 0009, and sites may add more.",
+        "ar": "يجوز تكرار الحقل، برمز واحد لكل حالة. وقد تكون الحالات دائمة أو مؤقتة. ويقترح HL7 رموزًا في جدول الرموز 0009، ويجوز للمنشآت إضافة رموز أخرى."
+      },
+      "example": "A2~B1",
+      "table": "0009",
+      "values": [
+        {
+          "code": "A0",
+          "en": "No functional limitations",
+          "ar": "لا توجد قيود وظيفية"
+        },
+        {
+          "code": "A1",
+          "en": "Ambulates with assistive device",
+          "ar": "يمشي بمساعدة أداة مساعِدة"
+        },
+        {
+          "code": "A2",
+          "en": "Wheelchair/stretcher bound",
+          "ar": "ملازم للكرسي المتحرك أو النقّالة"
+        },
+        {
+          "code": "A3",
+          "en": "Comatose; non-responsive",
+          "ar": "في غيبوبة، لا يستجيب"
+        },
+        {
+          "code": "A4",
+          "en": "Disoriented",
+          "ar": "فاقد للتوجّه (مشوَّش الإدراك)"
+        },
+        {
+          "code": "A5",
+          "en": "Vision impaired",
+          "ar": "ضعف في البصر"
+        },
+        {
+          "code": "A6",
+          "en": "Hearing impaired",
+          "ar": "ضعف في السمع"
+        },
+        {
+          "code": "A7",
+          "en": "Speech impaired",
+          "ar": "ضعف في النطق"
+        },
+        {
+          "code": "A9",
+          "en": "Functional level unknown",
+          "ar": "المستوى الوظيفي غير معروف"
+        },
+        {
+          "code": "B1",
+          "en": "Oxygen therapy",
+          "ar": "علاج بالأكسجين"
+        },
+        {
+          "code": "B2",
+          "en": "Special equipment (tubes, IVs, catheters)",
+          "ar": "أجهزة خاصة (أنابيب، محاليل وريدية، قساطر)"
+        },
+        {
+          "code": "B6",
+          "en": "Pregnant",
+          "ar": "حامل"
+        }
+      ]
+    },
+    "PV1-16": {
+      "nameAr": "مؤشر كبار الشخصيات (VIP)",
+      "usage": "rare",
+      "summary": {
+        "en": "Marks the patient as a VIP (very important person) and gives the VIP type.",
+        "ar": "يميّز المريض بأنه من كبار الشخصيات (VIP) ويبيّن نوع هذه الصفة."
+      },
+      "details": {
+        "en": "Table 0099 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0099 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "tip": {
+        "en": "Receivers may use this flag to restrict who can open the record. Map it carefully, because it affects privacy.",
+        "ar": "قد تستخدم الأنظمة المستقبِلة هذا المؤشر لتقييد من يستطيع فتح سجل المريض. تعامل معه بعناية عند ربط الرموز (mapping)، لأنه يؤثر في الخصوصية."
+      },
+      "table": "0099"
+    },
+    "PV1-17": {
+      "nameAr": "الطبيب المسؤول عن الدخول",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The doctor who admitted the patient to the facility.",
+        "ar": "الطبيب الذي أدخل المريض إلى المنشأة الصحية."
+      },
+      "details": {
+        "en": "It has the same structure and repeat rule as PV1-7: repeats give other IDs or names for the same doctor. The admitting doctor may differ from the attending doctor who manages the stay.",
+        "ar": "له البنية نفسها وقاعدة التكرار نفسها التي للحقل PV1-7: التكرارات تعطي معرّفات أو أسماء أخرى للطبيب نفسه. وقد يختلف الطبيب المسؤول عن الدخول عن الطبيب المعالج الذي يتابع الإقامة."
+      },
+      "example": "D1001^DOCTOR^DEMO",
+      "table": "0010"
+    },
+    "PV1-18": {
+      "nameAr": "نوع المريض",
+      "usage": "sometimes",
+      "summary": {
+        "en": "A site-defined code that tells the type of patient for this visit.",
+        "ar": "رمز تحدده المنشأة يبيّن نوع المريض في هذه الزيارة."
+      },
+      "details": {
+        "en": "Table 0018 has no HL7 codes. Each site defines its own patient types.",
+        "ar": "لا يحتوي جدول الرموز 0018 على رموز من HL7. وتحدد كل منشأة أنواع المرضى الخاصة بها."
+      },
+      "tip": {
+        "en": "Sites often use it for finer groups than PV1-2, such as day surgery or dialysis. Ask for the code list, because it differs between systems.",
+        "ar": "تستخدمه المنشآت غالبًا لتصنيف أدق من PV1-2، مثل جراحة اليوم الواحد أو غسيل الكلى. اطلب قائمة الرموز، لأنها تختلف من نظام إلى آخر."
+      },
+      "table": "0018"
+    },
+    "PV1-19": {
+      "nameAr": "رقم الزيارة",
+      "usage": "common",
+      "summary": {
+        "en": "The unique number of this visit or encounter, given by the registration system.",
+        "ar": "الرقم الفريد لهذه الزيارة، الذي يعطيه نظام التسجيل."
+      },
+      "details": {
+        "en": "It uses the CX data type: 1 ID number, 4 assigning authority, 5 identifier type (VN means visit number). HL7 strongly recommends filling components 4 and 5. Very old systems may send a plain number.",
+        "ar": "يستخدم نوع البيانات CX: 1 رقم المعرّف، 4 الجهة المُصدِرة للمعرّف، 5 نوع المعرّف (VN تعني رقم الزيارة). ويوصي HL7 بشدة بتعبئة المكوّنين 4 و5. وقد ترسل الأنظمة القديمة جدًا رقمًا مجردًا."
+      },
+      "tip": {
+        "en": "This is usually the key that links orders, results and charges to the right encounter. Some systems use the account number in PID-18 instead, so confirm which one.",
+        "ar": "هذا الحقل هو عادةً المفتاح الذي يربط الطلبات والنتائج والرسوم بالزيارة الصحيحة. وتستخدم بعض الأنظمة رقم الحساب في PID-18 بدلًا منه، لذلك تأكد من الحقل المعتمد."
+      },
+      "example": "V26000123^^^DEMOHOSP^VN"
+    },
+    "PV1-20": {
+      "nameAr": "الفئة المالية",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The patient's payment group for this visit, such as self-pay or insurance, with an optional start date.",
+        "ar": "فئة الدفع الخاصة بالمريض في هذه الزيارة، مثل الدفع الذاتي أو التأمين، مع تاريخ بدء اختياري."
+      },
+      "details": {
+        "en": "Component 1 is the class code and component 2 is the date it takes effect. Table 0064 has no HL7 codes, so each site defines its own. The field may repeat.",
+        "ar": "المكوّن 1 هو رمز الفئة، والمكوّن 2 هو تاريخ سريانها. ولا يحتوي جدول الرموز 0064 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة. ويجوز تكرار الحقل."
+      },
+      "example": "SELF^20260301",
+      "table": "0064"
+    },
+    "PV1-21": {
+      "nameAr": "مؤشر قائمة الأسعار",
+      "usage": "rare",
+      "summary": {
+        "en": "A code that tells which price list to use for room and bed charges.",
+        "ar": "رمز يبيّن قائمة الأسعار التي تُستخدم لرسوم الغرفة والسرير."
+      },
+      "details": {
+        "en": "Table 0032 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0032 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "table": "0032"
+    },
+    "PV1-22": {
+      "nameAr": "رمز المعاملة الخاصة",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows whether the patient receives special courtesies or benefits defined by the site.",
+        "ar": "يبيّن ما إذا كان المريض يحصل على مزايا أو معاملة خاصة تحددها المنشأة."
+      },
+      "details": {
+        "en": "Table 0045 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0045 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "table": "0045"
+    },
+    "PV1-23": {
+      "nameAr": "التصنيف الائتماني",
+      "usage": "rare",
+      "summary": {
+        "en": "A site code for the patient's past credit and payment history.",
+        "ar": "رمز تحدده المنشأة يصف السجل الائتماني وسجل السداد السابق للمريض."
+      },
+      "details": {
+        "en": "Table 0046 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0046 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "table": "0046"
+    },
+    "PV1-24": {
+      "nameAr": "رمز العقد",
+      "usage": "rare",
+      "summary": {
+        "en": "The type of payment contract between the facility and the guarantor for settling the account.",
+        "ar": "نوع عقد السداد بين المنشأة الصحية والضامن (المسؤول عن الدفع) لتسوية الحساب."
+      },
+      "details": {
+        "en": "Table 0044 has no HL7 codes, so each site defines its own. The field may repeat.",
+        "ar": "لا يحتوي جدول الرموز 0044 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة. ويجوز تكرار الحقل."
+      },
+      "table": "0044"
+    },
+    "PV1-25": {
+      "nameAr": "تاريخ بدء العقد",
+      "usage": "rare",
+      "summary": {
+        "en": "The date the payment contract in PV1-24 starts or started.",
+        "ar": "التاريخ الذي يبدأ فيه عقد السداد المذكور في PV1-24 أو الذي بدأ فيه."
+      },
+      "details": {
+        "en": "Date format YYYYMMDD. The field may repeat.",
+        "ar": "صيغة التاريخ YYYYMMDD. ويجوز تكرار الحقل."
+      },
+      "example": "20260301"
+    },
+    "PV1-26": {
+      "nameAr": "مبلغ العقد",
+      "usage": "rare",
+      "summary": {
+        "en": "The amount the guarantor must pay each period under the contract.",
+        "ar": "المبلغ الذي يجب على الضامن دفعه في كل فترة بموجب العقد."
+      },
+      "example": "250.00"
+    },
+    "PV1-27": {
+      "nameAr": "مدة العقد",
+      "usage": "rare",
+      "summary": {
+        "en": "How long the contract lasts, as a number of periods that the site defines.",
+        "ar": "مدة العقد، معبَّرًا عنها بعدد من الفترات التي تحددها المنشأة."
+      },
+      "example": "12"
+    },
+    "PV1-28": {
+      "nameAr": "رمز الفائدة",
+      "usage": "rare",
+      "summary": {
+        "en": "A code for the interest the guarantor will pay on unpaid amounts.",
+        "ar": "رمز لنسبة الفائدة التي سيدفعها الضامن على المبالغ غير المسددة."
+      },
+      "details": {
+        "en": "Table 0073 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0073 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "table": "0073"
+    },
+    "PV1-29": {
+      "nameAr": "رمز التحويل إلى الديون المعدومة",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows that the account was moved to bad debt, and why.",
+        "ar": "يبيّن أن الحساب نُقل إلى الديون المعدومة، وسبب ذلك."
+      },
+      "details": {
+        "en": "Table 0110 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0110 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "table": "0110"
+    },
+    "PV1-30": {
+      "nameAr": "تاريخ التحويل إلى الديون المعدومة",
+      "usage": "rare",
+      "summary": {
+        "en": "The date the account was moved to bad debt.",
+        "ar": "التاريخ الذي نُقل فيه الحساب إلى الديون المعدومة."
+      },
+      "example": "20260901"
+    },
+    "PV1-31": {
+      "nameAr": "رمز جهة تحصيل الديون المعدومة",
+      "usage": "rare",
+      "summary": {
+        "en": "The collection agency that received the bad debt account.",
+        "ar": "جهة التحصيل التي حُوِّل إليها حساب الدين المعدوم."
+      },
+      "details": {
+        "en": "The code is site-defined. Table 0021 can hold the list, but HL7 does not require it.",
+        "ar": "الرمز تحدده المنشأة. ويمكن حفظ القائمة في جدول الرموز 0021، لكن HL7 لا يشترط ذلك."
+      },
+      "table": "0021"
+    },
+    "PV1-32": {
+      "nameAr": "المبلغ المحوَّل إلى الديون المعدومة",
+      "usage": "rare",
+      "summary": {
+        "en": "The amount that was moved to bad debt.",
+        "ar": "المبلغ الذي نُقل إلى الديون المعدومة."
+      },
+      "example": "1200.00"
+    },
+    "PV1-33": {
+      "nameAr": "المبلغ المسترد من الديون المعدومة",
+      "usage": "rare",
+      "summary": {
+        "en": "The amount recovered from the guarantor on this account.",
+        "ar": "المبلغ الذي استُرد من الضامن على هذا الحساب."
+      },
+      "example": "300.00"
+    },
+    "PV1-34": {
+      "nameAr": "مؤشر حذف الحساب",
+      "usage": "rare",
+      "summary": {
+        "en": "Shows that the account was deleted from the file, and why.",
+        "ar": "يبيّن أن الحساب حُذف من الملف، وسبب ذلك."
+      },
+      "details": {
+        "en": "Table 0111 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0111 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "table": "0111"
+    },
+    "PV1-35": {
+      "nameAr": "تاريخ حذف الحساب",
+      "usage": "rare",
+      "summary": {
+        "en": "The date the account was deleted from the file.",
+        "ar": "التاريخ الذي حُذف فيه الحساب من الملف."
+      },
+      "example": "20261001"
+    },
+    "PV1-36": {
+      "nameAr": "حالة الخروج",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Where or how the patient left at discharge, such as home, transfer to another facility, or death.",
+        "ar": "المكان الذي ذهب إليه المريض أو الحالة التي غادر بها عند الخروج، مثل العودة إلى المنزل أو النقل إلى منشأة أخرى أو الوفاة."
+      },
+      "details": {
+        "en": "Table 0112 is user-defined, so each site sets its own codes. Many sites use a discharge code set that their billing rules require.",
+        "ar": "جدول الرموز 0112 يحدده المستخدم، لذلك تضع كل منشأة رموزها الخاصة. وتستخدم منشآت كثيرة مجموعة رموز للخروج تفرضها قواعد الفوترة لديها."
+      },
+      "tip": {
+        "en": "Expect it mainly in ADT^A03 (discharge). If the code means the patient died, also check PID-29 and PID-30 for the death date and flag.",
+        "ar": "توقّع وجوده غالبًا في ADT^A03 (الخروج). وإذا كان الرمز يعني وفاة المريض، فتحقق أيضًا من PID-29 وPID-30 لمعرفة تاريخ الوفاة ومؤشرها."
+      },
+      "table": "0112"
+    },
+    "PV1-37": {
+      "nameAr": "الجهة التي خرج إليها المريض",
+      "usage": "rare",
+      "summary": {
+        "en": "The facility or place the patient was discharged to, with the date.",
+        "ar": "المنشأة أو المكان الذي خرج إليه المريض، مع التاريخ."
+      },
+      "details": {
+        "en": "Component 1 is a site-defined location code (table 0113) and component 2 is the effective date.",
+        "ar": "المكوّن 1 هو رمز موقع تحدده المنشأة (جدول الرموز 0113)، والمكوّن 2 هو تاريخ السريان."
+      },
+      "example": "HOME^20260315",
+      "table": "0113"
+    },
+    "PV1-38": {
+      "nameAr": "نوع الحمية الغذائية",
+      "usage": "rare",
+      "summary": {
+        "en": "A special diet for the patient, such as diabetic or low-salt.",
+        "ar": "حمية غذائية خاصة بالمريض، مثل حمية مرضى السكري أو الحمية قليلة الملح."
+      },
+      "details": {
+        "en": "Table 0114 has no HL7 codes, so each site defines its own. Detailed diet orders are sent in order messages with the ODS segment.",
+        "ar": "لا يحتوي جدول الرموز 0114 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة. أما طلبات الحمية المفصّلة فتُرسل في رسائل الطلبات باستخدام مقطع ODS."
+      },
+      "example": "DIAB^Diabetic diet^L",
+      "table": "0114"
+    },
+    "PV1-39": {
+      "nameAr": "المنشأة الصحية المقدِّمة للخدمة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "The facility this visit belongs to, when one system serves several hospitals or sites.",
+        "ar": "المنشأة الصحية التي تتبع لها هذه الزيارة، عندما يخدم نظام واحد عدة مستشفيات أو مواقع."
+      },
+      "details": {
+        "en": "Table 0115 has no HL7 codes, so each site defines its own. The facility can also be sent in component 4 of each location field, such as PV1-3.",
+        "ar": "لا يحتوي جدول الرموز 0115 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة. ويمكن أيضًا إرسال المنشأة في المكوّن 4 من كل حقل موقع، مثل PV1-3."
+      },
+      "tip": {
+        "en": "In multi-hospital setups, receivers often route messages by facility. Check whether the sender uses this field or component 4 of PV1-3, and keep both consistent.",
+        "ar": "في البيئات متعددة المستشفيات، توجّه الأنظمة المستقبِلة الرسائل غالبًا بحسب المنشأة. تحقق مما إذا كان النظام المُرسِل يستخدم هذا الحقل أو المكوّن 4 من PV1-3، وحافظ على اتساقهما."
+      },
+      "example": "DEMOHOSP",
+      "table": "0115"
+    },
+    "PV1-40": {
+      "nameAr": "حالة السرير",
+      "usage": "legacy",
+      "summary": {
+        "en": "The status of the patient's bed, such as occupied, unoccupied or closed.",
+        "ar": "حالة سرير المريض، مثل مشغول أو غير مشغول أو مغلق."
+      },
+      "details": {
+        "en": "HL7 suggests codes in table 0116. The location fields, such as PV1-3, carry this status in component 5, and that value takes priority if both are sent.",
+        "ar": "يقترح HL7 رموزًا في جدول الرموز 0116. وتحمل حقول الموقع، مثل PV1-3، هذه الحالة في المكوّن 5، وتكون لقيمتها الأولوية إذا أُرسلت القيمتان."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility since v2.3 and withdrawn in v2.7. Use component 5 of PV1-3 instead.",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.3، وسُحب في الإصدار v2.7. استخدم المكوّن 5 من PV1-3 بدلًا منه."
+      },
+      "example": "O",
+      "table": "0116",
+      "values": [
+        {
+          "code": "C",
+          "en": "Closed",
+          "ar": "مغلق"
+        },
+        {
+          "code": "H",
+          "en": "Housekeeping",
+          "ar": "قيد التنظيف"
+        },
+        {
+          "code": "O",
+          "en": "Occupied",
+          "ar": "مشغول"
+        },
+        {
+          "code": "U",
+          "en": "Unoccupied",
+          "ar": "غير مشغول"
+        },
+        {
+          "code": "K",
+          "en": "Contaminated",
+          "ar": "ملوَّث"
+        },
+        {
+          "code": "I",
+          "en": "Isolated",
+          "ar": "معزول"
+        }
+      ]
+    },
+    "PV1-41": {
+      "nameAr": "حالة الحساب",
+      "usage": "rare",
+      "summary": {
+        "en": "The status of the patient's account for this visit, using site-defined codes.",
+        "ar": "حالة حساب المريض الخاص بهذه الزيارة، باستخدام رموز تحددها المنشأة."
+      },
+      "details": {
+        "en": "Table 0117 has no HL7 codes, so each site defines its own.",
+        "ar": "لا يحتوي جدول الرموز 0117 على رموز من HL7، لذلك تحدد كل منشأة رموزها الخاصة."
+      },
+      "table": "0117"
+    },
+    "PV1-42": {
+      "nameAr": "الموقع المنتظَر",
+      "usage": "rare",
+      "summary": {
+        "en": "The location the patient may be moved to, before the move is confirmed.",
+        "ar": "الموقع الذي قد يُنقل إليه المريض، قبل تأكيد النقل."
+      },
+      "details": {
+        "en": "It uses the same structure as PV1-3. The move is planned but has not happened yet.",
+        "ar": "يستخدم البنية نفسها التي للحقل PV1-3. ويكون النقل مخطَّطًا له لكنه لم يحدث بعد."
+      },
+      "tip": {
+        "en": "Expect it mainly with planned events, such as ADT^A14 (pending admit) and ADT^A15 (pending transfer).",
+        "ar": "توقّع وجوده غالبًا مع الأحداث المخطَّط لها، مثل ADT^A14 (دخول منتظَر) وADT^A15 (نقل منتظَر)."
+      },
+      "example": "5EAST^502^A^DEMOHOSP"
+    },
+    "PV1-43": {
+      "nameAr": "الموقع المؤقت السابق",
+      "usage": "rare",
+      "summary": {
+        "en": "The temporary place the patient is leaving, such as the operating room, during a move.",
+        "ar": "المكان المؤقت الذي يغادره المريض، مثل غرفة العمليات، أثناء الانتقال."
+      },
+      "details": {
+        "en": "It is used when the patient moves from a temporary location to the assigned location, or to another temporary location. It uses the same structure as PV1-3.",
+        "ar": "يُستخدم عندما ينتقل المريض من موقع مؤقت إلى موقعه المخصَّص، أو إلى موقع مؤقت آخر. ويستخدم البنية نفسها التي للحقل PV1-3."
+      },
+      "example": "XRAY^^^DEMOHOSP"
+    },
+    "PV1-44": {
+      "nameAr": "تاريخ ووقت الدخول",
+      "usage": "common",
+      "summary": {
+        "en": "When the patient was admitted, or when an outpatient or emergency visit was registered.",
+        "ar": "وقت دخول المريض (تنويمه)، أو وقت تسجيل زيارة المريض الخارجي أو زيارة الطوارئ."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMM[SS], with an optional time zone offset at the end. It can differ from the event time in EVN when the admission is recorded late.",
+        "ar": "الصيغة YYYYMMDDHHMM[SS]، مع فرق توقيت اختياري في النهاية. وقد يختلف عن وقت الحدث في مقطع EVN عندما يُسجَّل الدخول متأخرًا."
+      },
+      "tip": {
+        "en": "Use this field, not MSH-7 or EVN-2, as the real admit time. Those show when the message was built or the event was recorded.",
+        "ar": "اعتمد على هذا الحقل، وليس MSH-7 أو EVN-2، كوقت الدخول الفعلي. فهذان الحقلان يبيّنان وقت إنشاء الرسالة أو وقت تسجيل الحدث."
+      },
+      "example": "202603010930"
+    },
+    "PV1-45": {
+      "nameAr": "تاريخ ووقت الخروج",
+      "usage": "sometimes",
+      "summary": {
+        "en": "When the patient was discharged, or when an outpatient or emergency visit ended.",
+        "ar": "وقت خروج المريض، أو وقت انتهاء زيارة المريض الخارجي أو زيارة الطوارئ."
+      },
+      "details": {
+        "en": "Format YYYYMMDDHHMM[SS]. It is filled in discharge messages such as ADT^A03 and stays empty while the patient is still in the facility.",
+        "ar": "الصيغة YYYYMMDDHHMM[SS]. ويُملأ في رسائل الخروج مثل ADT^A03، ويبقى فارغًا ما دام المريض داخل المنشأة الصحية."
+      },
+      "versionNote": {
+        "en": "In v2.4 to v2.5.1 the field may repeat. From v2.6 it holds a single value.",
+        "ar": "في الإصدارات من v2.4 إلى v2.5.1 يجوز تكرار الحقل. وابتداءً من الإصدار v2.6 يحمل قيمة واحدة."
+      },
+      "tip": {
+        "en": "If a discharge is canceled with ADT^A13, receivers should clear this value. Test that path, because it is often missed.",
+        "ar": "إذا أُلغي الخروج برسالة ADT^A13، فيجب على النظام المستقبِل مسح هذه القيمة. اختبر هذا المسار، لأنه يُغفَل كثيرًا."
+      },
+      "example": "202603051400"
+    },
+    "PV1-46": {
+      "nameAr": "الرصيد الحالي المستحق على المريض",
+      "usage": "rare",
+      "summary": {
+        "en": "The amount still due on this visit.",
+        "ar": "المبلغ الذي ما زال مستحقًا على هذه الزيارة."
+      },
+      "example": "150.00"
+    },
+    "PV1-47": {
+      "nameAr": "إجمالي الرسوم",
+      "usage": "rare",
+      "summary": {
+        "en": "The total of all charges for this visit.",
+        "ar": "مجموع كل الرسوم الخاصة بهذه الزيارة."
+      },
+      "example": "1850.00"
+    },
+    "PV1-48": {
+      "nameAr": "إجمالي التسويات",
+      "usage": "rare",
+      "summary": {
+        "en": "The total of all adjustments to the charges for this visit, such as discounts.",
+        "ar": "مجموع كل التسويات على رسوم هذه الزيارة، مثل الخصومات."
+      }
+    },
+    "PV1-49": {
+      "nameAr": "إجمالي المدفوعات",
+      "usage": "rare",
+      "summary": {
+        "en": "The total of all payments received for this visit.",
+        "ar": "مجموع كل المدفوعات المستلمة عن هذه الزيارة."
+      }
+    },
+    "PV1-50": {
+      "nameAr": "معرّف بديل للزيارة",
+      "usage": "sometimes",
+      "summary": {
+        "en": "Another number for the same visit, such as a temporary or pending visit number.",
+        "ar": "رقم آخر للزيارة نفسها، مثل رقم زيارة مؤقت أو منتظَر."
+      },
+      "details": {
+        "en": "It uses the CX data type, like PV1-19. Component 5 gives the identifier type from table 0203, and HL7 strongly recommends the assigning authority in component 4.",
+        "ar": "يستخدم نوع البيانات CX، مثل PV1-19. ويعطي المكوّن 5 نوع المعرّف من جدول الرموز 0203، ويوصي HL7 بشدة بذكر الجهة المُصدِرة للمعرّف في المكوّن 4."
+      },
+      "versionNote": {
+        "en": "A single value up to v2.7.1. From v2.8 it may repeat to carry several alternate IDs.",
+        "ar": "قيمة واحدة حتى الإصدار v2.7.1. وابتداءً من الإصدار v2.8 يجوز تكراره لحمل عدة معرّفات بديلة."
+      },
+      "tip": {
+        "en": "Systems use it in different ways, for example for an external or old visit number. Ask the sender what it means before using it.",
+        "ar": "تستخدمه الأنظمة بطرق مختلفة، مثل رقم زيارة خارجي أو قديم. اسأل الجهة المُرسِلة عن معناه قبل استخدامه."
+      },
+      "example": "T26000045^^^DEMOHOSP^VN",
+      "table": "0203"
+    },
+    "PV1-51": {
+      "nameAr": "مؤشر الزيارة",
+      "usage": "rare",
+      "summary": {
+        "en": "Tells whether the data in PV1 is at account level or visit level.",
+        "ar": "يبيّن ما إذا كانت البيانات في PV1 على مستوى الحساب أو على مستوى الزيارة."
+      },
+      "details": {
+        "en": "HL7 recommends A or an empty field for account level, and V for visit level. The choice also affects segments that belong to the visit, such as PV2, DG1 and AL1.",
+        "ar": "يوصي HL7 بالرمز A أو ترك الحقل فارغًا لمستوى الحساب، وبالرمز V لمستوى الزيارة. ويؤثر هذا الاختيار أيضًا في المقاطع التابعة للزيارة، مثل PV2 وDG1 وAL1."
+      },
+      "example": "V",
+      "table": "0326",
+      "values": [
+        {
+          "code": "A",
+          "en": "Account level",
+          "ar": "مستوى الحساب"
+        },
+        {
+          "code": "V",
+          "en": "Visit level",
+          "ar": "مستوى الزيارة"
+        }
+      ]
+    },
+    "PV1-52": {
+      "nameAr": "مقدّم رعاية صحية آخر",
+      "usage": "legacy",
+      "summary": {
+        "en": "Other care providers for this visit, such as a nurse practitioner, midwife or physician assistant.",
+        "ar": "مقدّمو رعاية آخرون في هذه الزيارة، مثل ممرض ممارس أو قابلة أو مساعد طبيب."
+      },
+      "details": {
+        "en": "Several providers can be sent as repeats. Either the ID or the name may be missing, by local agreement.",
+        "ar": "يمكن إرسال عدة مقدّمي رعاية على شكل تكرارات. ويجوز غياب المعرّف أو الاسم بحسب الاتفاق المحلي."
+      },
+      "versionNote": {
+        "en": "Kept only for backward compatibility since v2.4 and withdrawn in v2.7. Use a ROL segment instead (PRT in newer versions).",
+        "ar": "يُبقى عليه للتوافق مع الأنظمة القديمة فقط منذ الإصدار v2.4، وسُحب في الإصدار v2.7. استخدم مقطع ROL بدلًا منه (أو PRT في الإصدارات الأحدث)."
+      },
+      "example": "N5001^NURSE^DEMO",
+      "table": "0010"
+    },
+    "PV1-53": {
+      "nameAr": "وصف حلقة الرعاية",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "A short text naming the longer episode of care that this visit is part of.",
+        "ar": "نص قصير يسمّي حلقة الرعاية الأطول التي تُعد هذه الزيارة جزءًا منها."
+      },
+      "details": {
+        "en": "An episode can be one visit, one hospital stay, or a long period such as a pregnancy or a cancer treatment plan. Each site decides how episodes start and end.",
+        "ar": "قد تكون حلقة الرعاية زيارة واحدة، أو إقامة واحدة في المستشفى، أو فترة طويلة مثل فترة الحمل أو خطة علاج للسرطان. وتقرر كل منشأة كيف تبدأ الحلقات وكيف تنتهي."
+      },
+      "example": "Pregnancy care 2026"
+    },
+    "PV1-54": {
+      "nameAr": "معرّف حلقة الرعاية",
+      "usage": "rare",
+      "since": "2.7",
+      "summary": {
+        "en": "The ID of the episode of care that this visit belongs to.",
+        "ar": "معرّف حلقة الرعاية التي تتبع لها هذه الزيارة."
+      },
+      "details": {
+        "en": "It uses the CX data type: ID number, then the assigning authority in component 4. PV1-53 can give a short description of the same episode.",
+        "ar": "يستخدم نوع البيانات CX: رقم المعرّف، ثم الجهة المُصدِرة للمعرّف في المكوّن 4. ويمكن أن يعطي PV1-53 وصفًا قصيرًا لحلقة الرعاية نفسها."
+      },
+      "example": "EP2026001^^^DEMOHOSP"
+    }
+  }
+}
