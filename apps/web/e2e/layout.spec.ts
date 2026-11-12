@@ -82,7 +82,7 @@ for (const size of SIZES) {
         expect(errors).toEqual([]);
       });
 
-      test('the first screen, the samples line and the question fit, in English and Arabic', async ({ page }) => {
+      test('the first screen, the header links, the samples line and the question fit, in English and Arabic', async ({ page }) => {
         const errors = watchErrors(page);
         await page.goto('./');
         for (const dir of ['ltr', 'rtl']) {
@@ -90,6 +90,12 @@ for (const size of SIZES) {
           await expect(page.locator('html')).toHaveAttribute('dir', dir);
           await expect(page.locator('#sample-pick')).toBeVisible();
           expect(await scrollsSideways(page), dir).toBe(false);
+          // The links in the header are on the screen.
+          for (const selector of ['a.brand-logo', 'h1 a', 'a.site-link', '.lang-btn']) {
+            const box = (await page.locator(selector).boundingBox())!;
+            expect(box.x, `${selector} ${dir}`).toBeGreaterThanOrEqual(0);
+            expect(box.x + box.width, `${selector} ${dir}`).toBeLessThanOrEqual(size.width);
+          }
           // The question before replacing own text.
           await page.locator('#message').fill(messageWithVersion('2.5'));
           await page.locator('#sample-pick').selectOption('v29-adt-a04');
@@ -108,6 +114,7 @@ for (const size of SIZES) {
         await expect(page.locator('.sample-confirm')).toBeVisible();
         const selectors = [
           'p.intro',
+          'a.site-link',
           'label[for="sample-pick"]',
           '#sample-pick',
           '#sample-confirm-text',

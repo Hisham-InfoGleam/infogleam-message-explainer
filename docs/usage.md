@@ -346,6 +346,20 @@ Privacy and Credits pages are in English only.
 
 The page follows the light or dark setting of your device.
 
+## The InfoGleam website
+
+The top of the page has two ways to the InfoGleam website
+(https://infogleam.com/):
+
+- the InfoGleam symbol, left of the tool's name (right of it in Arabic);
+- the **InfoGleam website** link, next to the language button.
+
+Both open the website in a new tab. The tool stays open in its own tab,
+with your message still in the box.
+
+The tool's name takes you to the main page of the tool, for example from
+the Terms page.
+
 ## Credits and source code
 
 The footer links to the Terms, Privacy and Credits pages, and to the source

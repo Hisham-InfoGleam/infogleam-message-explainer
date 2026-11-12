@@ -2,6 +2,13 @@
 
 All notable changes to this project are listed here.
 
+## 0.9.1 - 2026-11-12
+
+- Header: the InfoGleam symbol and a new "InfoGleam website" link next to
+  the language button go to https://infogleam.com/ in a new tab, so the
+  message stays in the tool. The tool's name still goes to the main page
+  of the tool.
+
 ## 0.9.0 - 2026-11-12
 
 First public release.

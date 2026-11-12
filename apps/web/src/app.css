@@ -147,7 +147,8 @@ h3 {
   color: var(--muted);
 }
 
-/* Header: symbol, name, language button */
+/* Header: symbol (a link to the InfoGleam website), name (a link to the
+   start of the tool), then the website link and the language button. */
 
 .title-row {
   display: flex;
@@ -167,8 +168,13 @@ h1 {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: inherit;
-  text-decoration: none;
+  min-width: 0;
+}
+
+a.brand-logo {
+  flex: none;
+  display: block;
+  border-radius: 50%;
 }
 
 .brand-symbol {
@@ -193,6 +199,8 @@ h1 {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  color: inherit;
+  text-decoration: none;
 }
 
 .tagline {
@@ -203,6 +211,29 @@ h1 {
 
 .intro {
   margin: 8px 0 0;
+}
+
+/* Next to each other, also on a phone, so the header keeps its height. */
+.header-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+/* A plain text link (not a button): only Explain is a main button. */
+a.site-link {
+  white-space: nowrap;
+}
+
+a.site-link .icon {
+  margin-inline-start: 4px;
+  vertical-align: -2px;
+}
+
+/* The arrow points to the end of the line: to the left in Arabic. */
+[dir='rtl'] a.site-link .icon {
+  transform: scaleX(-1);
 }
 
 button.lang-btn {

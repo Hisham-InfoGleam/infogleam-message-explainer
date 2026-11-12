@@ -11,9 +11,12 @@ import {
   boxText,
   en,
   explain,
+  fakeWebsite,
   loadSample,
   messageWithVersion,
   sampleText,
+  scrollsSideways,
+  SITE_HOME,
   templatePattern,
   watchErrors,
 } from './helpers';
@@ -274,6 +277,141 @@ test.describe('first screen', () => {
       // The list fits the screen.
       const pickBox = await page.locator('#sample-pick').boundingBox();
       expect(pickBox!.x + pickBox!.width).toBeLessThanOrEqual(375);
+    });
+  });
+});
+
+test.describe('links to the InfoGleam website', () => {
+  // The accessible names: the visible text (or the symbol's name) and a
+  // note for screen readers that a new tab opens.
+  const names = (t: typeof en) => ({ logo: `${t.siteLogo} ${t.newTab}`, link: `${t.siteLink} ${t.newTab}` });
+
+  test('the symbol and the text link go to the website in a new tab, in English and Arabic', async ({ page }) => {
+    await page.goto('./');
+    for (const [t, dir] of [
+      [en, 'ltr'],
+      [ar, 'rtl'],
+    ] as const) {
+      if (dir === 'rtl') await page.locator('.lang-btn').click();
+      await expect(page.locator('html')).toHaveAttribute('dir', dir);
+      const logo = page.getByRole('link', { name: names(t).logo, exact: true });
+      const link = page.getByRole('link', { name: names(t).link, exact: true });
+      for (const l of [logo, link]) {
+        await expect(l).toBeVisible();
+        await expect(l).toHaveAttribute('href', SITE_HOME);
+        await expect(l).toHaveAttribute('target', '_blank');
+        await expect(l).toHaveAttribute('rel', 'noopener');
+      }
+      // The symbol is the only thing in its link; the visible text says where it goes.
+      await expect(logo.locator('.brand-symbol svg')).toBeVisible();
+      await expect(link).toHaveText(`${t.siteLink} ${t.newTab}`);
+      await expect(link.locator('.sr-only')).toHaveText(t.newTab);
+    }
+  });
+
+  test('the name and tagline still go to the start of the tool', async ({ page }) => {
+    await page.goto('./#/terms');
+    const home = page.locator('h1 a');
+    await expect(home).toHaveAttribute('href', '#/');
+    await expect(home).toContainText(en.appName);
+    await expect(home).toContainText(en.tagline);
+    // The heading holds only the name and the tagline; the symbol's link is outside it.
+    await expect(page.locator('h1 a')).toHaveCount(1);
+    await expect(page.locator('h1 .brand-logo')).toHaveCount(0);
+    await expect(page.getByRole('heading', { level: 1 })).not.toHaveAccessibleName(/website/i);
+    await home.click();
+    await expect(page.locator('#message')).toBeVisible();
+  });
+
+  test('the text link looks like a link, and Explain stays the only main button', async ({ page }) => {
+    await page.goto('./');
+    const style = await page.locator('a.site-link').evaluate((el) => {
+      const s = getComputedStyle(el);
+      return { underline: s.textDecorationLine, background: s.backgroundColor, border: s.borderStyle };
+    });
+    expect(style.underline).toContain('underline');
+    expect(style.background).toBe('rgba(0, 0, 0, 0)');
+    expect(style.border).toBe('none');
+    await expect(page.locator('.primary')).toHaveCount(1);
+    await expect(page.locator('.primary')).toHaveText(en.explain);
+  });
+
+  test('a click opens the website in a new tab, and the message stays in the tool, explained', async ({ page, context }) => {
+    await fakeWebsite(context);
+    await page.goto('./');
+    await explain(page, sampleText('adt-a01'));
+    for (const which of ['logo', 'link'] as const) {
+      const opened = context.waitForEvent('page');
+      await page.getByRole('link', { name: names(en)[which], exact: true }).click();
+      const site = await opened;
+      await site.waitForLoadState();
+      expect(site.url(), which).toBe(SITE_HOME);
+      // rel="noopener": the website cannot reach back into the tool.
+      expect(await site.evaluate(() => window.opener), which).toBeNull();
+      await site.close();
+      // The tool did not leave its page.
+      await expect(page).toHaveURL(/\/tools\/message-explainer\/$/);
+      await expect(page.locator('#message')).toHaveValue(boxText(sampleText('adt-a01')));
+      await expect(page.locator('.mv-row')).toHaveCount(5);
+    }
+  });
+
+  test('the arrow and the order follow the reading direction', async ({ page }) => {
+    await page.goto('./');
+    const parts = () =>
+      page.evaluate(() => {
+        const mid = (sel: string) => {
+          const r = document.querySelector(sel)!.getBoundingClientRect();
+          return r.left + r.width / 2;
+        };
+        return {
+          link: mid('a.site-link'),
+          arrow: mid('a.site-link .icon'),
+          lang: mid('.lang-btn'),
+          transform: getComputedStyle(document.querySelector('a.site-link .icon')!).transform,
+        };
+      });
+    // English: the arrow after the text, pointing right; the language button at the far right.
+    const ltr = await parts();
+    expect(ltr.arrow).toBeGreaterThan(ltr.link);
+    expect(ltr.lang).toBeGreaterThan(ltr.link);
+    expect(ltr.transform).toBe('none');
+    // Arabic: all mirrored, and the arrow points left.
+    await page.locator('.lang-btn').click();
+    await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+    const rtl = await parts();
+    expect(rtl.arrow).toBeLessThan(rtl.link);
+    expect(rtl.lang).toBeLessThan(rtl.link);
+    expect(rtl.transform).toBe('matrix(-1, 0, 0, 1, 0, 0)');
+  });
+
+  test.describe('on a phone', () => {
+    test.use({ viewport: { width: 375, height: 812 } });
+
+    test('the text link sits next to the language button, so the header does not grow', async ({ page }) => {
+      await page.goto('./');
+      for (const dir of ['ltr', 'rtl']) {
+        if (dir === 'rtl') await page.locator('.lang-btn').click();
+        await expect(page.locator('html')).toHaveAttribute('dir', dir);
+        const link = page.locator('a.site-link');
+        const linkBox = (await link.boundingBox())!;
+        const langBox = (await page.locator('.lang-btn').boundingBox())!;
+        // One row: the middles are at the same height.
+        expect(Math.abs(linkBox.y + linkBox.height / 2 - (langBox.y + langBox.height / 2)), dir).toBeLessThanOrEqual(2);
+        // Both fit on the screen.
+        for (const box of [linkBox, langBox]) {
+          expect(box.x, dir).toBeGreaterThanOrEqual(0);
+          expect(box.x + box.width, dir).toBeLessThanOrEqual(375);
+        }
+        // The header is as tall as without the link.
+        const height = () => page.locator('header').evaluate((el) => el.getBoundingClientRect().height);
+        const withLink = await height();
+        await link.evaluate((el) => (el.style.display = 'none'));
+        const withoutLink = await height();
+        await link.evaluate((el) => (el.style.display = ''));
+        expect(withLink - withoutLink, dir).toBeLessThanOrEqual(2);
+        expect(await scrollsSideways(page), dir).toBe(false);
+      }
     });
   });
 });

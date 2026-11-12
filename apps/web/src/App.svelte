@@ -26,7 +26,7 @@
   import { filterGroups, maskKey, segmentGroups } from './lib/rows';
   import { isOwnText, isSampleId, SAMPLE_GROUPS, SAMPLES, type SampleId } from './lib/samples';
   import { fieldKeyOf, partInfo, partKey, type Selection } from './lib/selection';
-  import { HL7_NOTICE, SITE_URL, SOURCE_URL } from './lib/site';
+  import { HL7_NOTICE, SITE_LINK, SITE_URL, SOURCE_URL } from './lib/site';
   import { AUTO, versionView } from './lib/versions';
 
   // Two columns (message and explanation side by side) from this width.
@@ -349,18 +349,33 @@
 <div class="page" class:sheet-open={sheetOpen}>
   <header>
     <div class="title-row">
-      <h1>
-        <a class="brand" href="#/">
+      <!-- The symbol links to the InfoGleam website; the name and tagline
+           link to the start of the tool. -->
+      <div class="brand">
+        <a
+          class="brand-logo"
+          href={SITE_LINK.href}
+          target={SITE_LINK.target}
+          rel={SITE_LINK.rel}
+          aria-label={`${t.siteLogo} ${t.newTab}`}
+        >
           <span class="brand-symbol" aria-hidden="true">{@html SYMBOL}</span>
-          <span class="brand-text">
+        </a>
+        <h1>
+          <a class="brand-text" href="#/">
             <span dir="ltr">{t.appName}</span>
             <span class="tagline">{t.tagline}</span>
-          </span>
+          </a>
+        </h1>
+      </div>
+      <div class="header-links">
+        <a class="site-link" href={SITE_LINK.href} target={SITE_LINK.target} rel={SITE_LINK.rel}>
+          {t.siteLink}<Icon name="arrow" size={14} /><span class="sr-only">{` ${t.newTab}`}</span>
         </a>
-      </h1>
-      <button type="button" class="lang-btn" onclick={toggleLang} lang={lang === 'en' ? 'ar' : 'en'}>
-        {t.language}
-      </button>
+        <button type="button" class="lang-btn" onclick={toggleLang} lang={lang === 'en' ? 'ar' : 'en'}>
+          {t.language}
+        </button>
+      </div>
     </div>
     <p class="intro">{t.intro}</p>
   </header>

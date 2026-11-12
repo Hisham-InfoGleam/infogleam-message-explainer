@@ -3,7 +3,18 @@
 <script lang="ts">
   // Small line icons. They are decoration only: the button or text next to
   // them carries the meaning, so they are hidden from screen readers.
-  type IconName = 'copy' | 'check' | 'lock' | 'file' | 'close' | 'chevron' | 'search' | 'problem' | 'differs' | 'note';
+  type IconName =
+    | 'copy'
+    | 'check'
+    | 'lock'
+    | 'file'
+    | 'close'
+    | 'chevron'
+    | 'arrow'
+    | 'search'
+    | 'problem'
+    | 'differs'
+    | 'note';
 
   interface Props {
     name: IconName;
@@ -41,6 +52,8 @@
     <path d="M6 6l12 12M18 6L6 18" />
   {:else if name === 'chevron'}
     <path d="M9 6l6 6-6 6" />
+  {:else if name === 'arrow'}
+    <path d="M5 12h14M13 6l6 6-6 6" />
   {:else if name === 'search'}
     <circle cx="11" cy="11" r="6" />
     <path d="M20 20l-4.5-4.5" />

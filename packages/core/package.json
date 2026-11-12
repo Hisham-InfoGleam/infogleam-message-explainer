@@ -1,6 +1,6 @@
 {
   "name": "@infogleam/message-explainer-core",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "description": "Parse, rebuild and mask HL7 v2 messages, and look up field explanations. No UI and no network code.",
   "license": "MPL-2.0",

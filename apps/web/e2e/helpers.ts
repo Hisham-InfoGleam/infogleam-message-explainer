@@ -2,7 +2,7 @@
 // Copyright 2026 Hisham Alrashdan (InfoGleam)
 
 import { readFileSync } from 'node:fs';
-import { expect, type Page } from '@playwright/test';
+import { expect, type BrowserContext, type Page } from '@playwright/test';
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8')) as T;
@@ -78,4 +78,21 @@ export function templatePattern(template: string): RegExp {
 /** True when the page can scroll sideways. */
 export async function scrollsSideways(page: Page): Promise<boolean> {
   return page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
+}
+
+/** The address of the InfoGleam website, as the header links to it. */
+export const SITE_HOME = 'https://infogleam.com/';
+
+/**
+ * Answer requests to the InfoGleam website with a small made-up page, so
+ * the tests never reach the real website.
+ */
+export async function fakeWebsite(context: BrowserContext): Promise<void> {
+  await context.route('https://infogleam.com/**', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><meta charset="utf-8"><title>Made-up page</title><p>A made-up page for a test.</p>',
+    }),
+  );
 }

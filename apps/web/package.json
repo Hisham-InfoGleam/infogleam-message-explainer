@@ -1,6 +1,6 @@
 {
   "name": "@infogleam/message-explainer-web",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "description": "InfoGleam Message Explainer web site. Runs fully in the browser.",
   "license": "AGPL-3.0-only",

@@ -3,6 +3,18 @@
 
 export const SITE_URL = 'https://infogleam.com';
 
+/**
+ * The header links to the InfoGleam website (the symbol and the text link).
+ * They open a new tab, so the user's message stays in the tool: the Back
+ * button brings the message back only when the browser kept the page in its
+ * back/forward cache, and that is not always the case.
+ */
+export const SITE_LINK = {
+  href: `${SITE_URL}/`,
+  target: '_blank',
+  rel: 'noopener',
+} as const;
+
 /** Public source code of this web page (required by the AGPL). */
 export const SOURCE_URL = 'https://github.com/Hisham-InfoGleam/infogleam-message-explainer';
 

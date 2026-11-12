@@ -23,6 +23,26 @@ async function showsFocus(page: Page): Promise<boolean> {
   });
 }
 
+test('Tab reaches the header links in order, with a visible focus, in English and Arabic', async ({ page }) => {
+  await page.goto('./');
+  // The symbol (website), the name (start of the tool), the website link, the language button.
+  const order = ['a.brand-logo', 'h1 a', 'a.site-link', 'button.lang-btn'];
+  const focused = (sel: string) => page.evaluate((s) => document.activeElement?.matches(s) ?? false, sel);
+  for (const sel of order) {
+    await page.keyboard.press('Tab');
+    expect(await focused(sel), sel).toBe(true);
+    expect(await showsFocus(page), sel).toBe(true);
+  }
+  // Arabic: Enter on the language button, then back through the same links.
+  await page.keyboard.press('Enter');
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+  for (const sel of [...order].reverse().slice(1)) {
+    await page.keyboard.press('Shift+Tab');
+    expect(await focused(sel), sel).toBe(true);
+    expect(await showsFocus(page), sel).toBe(true);
+  }
+});
+
 test('a sample can be chosen with the keyboard', async ({ page }) => {
   await page.goto('./');
   expect(await tabTo(page, '#sample-pick')).toBe(true);

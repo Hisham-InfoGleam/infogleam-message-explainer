@@ -217,6 +217,24 @@ describe('the first screen', () => {
   });
 });
 
+describe('the header links to the InfoGleam website', () => {
+  it('have their texts in both languages', () => {
+    expect(en.siteLogo).toBe('Go to the InfoGleam website');
+    expect(en.siteLink).toBe('InfoGleam website');
+    expect(en.newTab).toBe('(opens in a new tab)');
+    expect(ar.siteLogo).toBe('الانتقال إلى موقع InfoGleam');
+    expect(ar.siteLink).toBe('موقع InfoGleam');
+    expect(ar.newTab).toBe('(يُفتح في علامة تبويب جديدة)');
+  });
+
+  it('keep the name InfoGleam in Latin letters', () => {
+    for (const t of [en, ar]) {
+      expect(t.siteLogo).toContain('InfoGleam');
+      expect(t.siteLink).toContain('InfoGleam');
+    }
+  });
+});
+
 describe('format, dirFor and messagesFor', () => {
   it('replace placeholders and leave unknown ones', () => {
     expect(format('{a} and {b}', { a: 1, b: 'two' })).toBe('1 and two');
