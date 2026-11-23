@@ -97,7 +97,9 @@ purpose, by agreement. So the list says "differs from HL7", never "wrong".
   batch file), the encoding characters in `MSH-2` (the number allowed
   changes by version), segment names, segment ends (HL7 uses CR; LF is a
   note), escape sequences such as `\F\` (the codes the version defines),
-  and more than one message in the text.
+  more than one message in the text, and lines that start with spaces or
+  tabs (a note for each such line: Mirth skips the spaces, but other
+  systems may not read the line).
 - The version in `MSH-12`: empty, unknown, older than 2.3, or a message
   that uses fields of a later version than it says.
 - The fields of `MSH`, `EVN`, `PID`, `PV1`, `NK1`, `ORC`, `OBR`, `OBX`,
@@ -261,6 +263,8 @@ Type in **Find a field** to filter the list. You can type:
 - a name in English (the HL7 v2.9 name) or Arabic, for example
   `Patient Name` or `اسم المريض`.
 
+Arabic-Indic digits work too: `PID-٣` finds `PID-3`.
+
 The tool shows the number of matches. Press **Esc** to clear the search.
 
 ### Notes on numbering
@@ -319,13 +323,28 @@ Click **Mask patient data** to replace common patient identifiers with fixed
 fake values. Masked fields are highlighted in the message view and in the
 list.
 
-The tool masks these fields: `PID-3` (ID number only), `PID-5`, `PID-7`,
-`PID-11`, `PID-13`, `PID-14`, `PID-19`, `PID-40` (phone and email, v2.7 and
-later), `NK1-2`, `NK1-4`, `NK1-5`.
+The tool masks these fields:
 
-**Masking is not complete.** Free text such as `OBX-5` and `NTE` is not
-masked. Patient data can also be in other segments. Always check the result
-yourself.
+| What | Fields |
+| --- | --- |
+| IDs and numbers. Only the ID number (component 1) is replaced. The other parts stay, for example the assigning authority. | `PID-2`, `PID-3`, `PID-4`, `PID-18` (account number), `PID-20` (driver's license), `PID-21`, `NK1-12`, `NK1-33`, `PV1-19` (visit number), `PV1-50`, `MRG-1` to `MRG-6` |
+| Names | `PID-5`, `PID-6` (mother's maiden name), `PID-9` (alias), `NK1-2`, `NK1-26`, `NK1-30` (contact person), `MRG-7` |
+| Dates | `PID-7` (birth), `PID-29` (death), `NK1-16` (birth) |
+| Addresses | `PID-11`, `NK1-4`, `NK1-32` |
+| Phones and email | `PID-13`, `PID-14`, `PID-40`, `NK1-5`, `NK1-6`, `NK1-31`, `NK1-40`, `NK1-41` (`PID-40`, `NK1-40` and `NK1-41` are from v2.7) |
+| Social security numbers | `PID-19`, `NK1-37` |
+| Birth places | `PID-23`, `NK1-38` |
+
+Empty fields and fields with only `""` stay as they are.
+
+**Masking is not complete.** Only fields in `PID`, `NK1`, `PV1` and `MRG`
+are masked. Free text such as `OBX-5` and `NTE` is not masked. Other
+segments, for example `PD1`, `GT1`, `IN1` and Z-segments, are not masked
+either. Always check the result yourself.
+
+When you click **Mask patient data** again and there is nothing new to
+mask, the status says "Already masked." and the masked fields stay
+highlighted.
 
 Click **Copy masked message** to copy the masked message to your clipboard.
 
@@ -334,6 +353,31 @@ Click **Copy masked message** to copy the masked message to your clipboard.
 The HL7 standard ends each segment with a single carriage return (CR).
 Text boxes in web browsers change line endings to line feed (LF). The tool
 accepts CR, LF and CRLF. The message checks show LF and CRLF as a note.
+
+## Messages from emails, logs and JSON
+
+Messages copied from other places often have extra characters. The tool
+reads the message anyway. It never changes your text on its own.
+
+- **A byte order mark (BOM)** at the start of a file, and **MLLP frame
+  characters** around the message (a vertical tab before it, and the
+  character U+001C after it): the tool skips them. The summary line above
+  the message view says so.
+- **Several MLLP-framed messages in one text**, for example from a log: the
+  tool skips the frame characters between the messages too, so each `MSH`
+  is read as `MSH`. The message checks note that the text holds more than
+  one message.
+- **Lines that start with spaces or tabs**, for example from an email: the
+  tool reads the segment without them. The message checks show a note for
+  each such line, because some receiving systems may not read such a
+  line (Mirth skips the spaces). Remove the spaces before you send the message.
+- **Segment ends written as text**: in JSON and in database logs, a message
+  is often one line, with the text `\r` or `\n` where each segment ends.
+  The tool shows a hint under the summary line, with the button **Fix the
+  segment ends**. The button changes these texts into real segment ends in
+  the text box, then explains the message again. It changes only a `\r` or
+  `\n` that comes right before a segment name (for example `\rPID|`) or at
+  the end of the text.
 
 ## Language
 

@@ -577,6 +577,76 @@ test.describe('explain as version', () => {
   });
 });
 
+test.describe('messages copied from emails and logs', () => {
+  const lines = () => sampleText('adt-a01').split('\r').filter((line) => line !== '');
+
+  test('segment ends written as the text \\r: a hint, and a button that fixes them', async ({ page }) => {
+    const errors = watchErrors(page);
+    await page.goto('./');
+    const all = lines();
+    const oneLine = all.join('\\r') + '\\r';
+    await explain(page, oneLine);
+    await expect(page.locator('.mv-row')).toHaveCount(1);
+    const hint = page.locator('.text-ends');
+    await expect(hint.locator('#text-ends-note')).toHaveText(en.textEndsNote.replace('{code}', '\\r'));
+    await expect(hint.locator('code')).toHaveText('\\r');
+    await expect(page.getByRole('group', { name: en.textEndsNote.replace('{code}', '\\r') })).toBeVisible();
+    // The page does not change the text on its own.
+    await expect(page.locator('#message')).toHaveValue(oneLine);
+    // In Arabic, the code stays left to right.
+    await page.locator('.lang-btn').click();
+    await expect(hint.locator('#text-ends-note')).toHaveText(ar.textEndsNote.replace('{code}', '\\r'));
+    await expect(hint.locator('code')).toHaveAttribute('dir', 'ltr');
+    await expect(hint.getByRole('button')).toHaveText(ar.textEndsFix);
+    await page.locator('.lang-btn').click();
+
+    await hint.getByRole('button', { name: en.textEndsFix, exact: true }).click();
+    await expect(page.locator('.mv-row')).toHaveCount(all.length);
+    await expect(page.locator('.mv-row [role="rowheader"]')).toHaveText(all.map((line) => line.slice(0, 3)));
+    // The text box shows real line ends now (a text box shows CR as LF).
+    await expect(page.locator('#message')).toHaveValue(all.join('\n') + '\n');
+    await expect(hint).toHaveCount(0);
+    await expect(page.locator('p.status')).toHaveText(en.textEndsDone.replace('{count}', String(all.length)));
+    expect(errors).toEqual([]);
+  });
+
+  test('no hint for a message with real segment ends', async ({ page }) => {
+    await page.goto('./');
+    await loadSample(page, 'adt-a01');
+    await expect(page.locator('.text-ends')).toHaveCount(0);
+  });
+
+  test('lines that start with spaces are read, with a note for each such line', async ({ page }) => {
+    await page.goto('./');
+    const all = lines();
+    // MSH and PID start with spaces, as in a message copied from an email.
+    await explain(page, all.map((line, i) => (i === 0 || i === 2 ? '    ' + line : line)).join('\n'));
+    await expect(page.locator('.mv-row')).toHaveCount(all.length);
+    await expect(page.locator('.mv-row [role="rowheader"]')).toHaveText(all.map((line) => line.slice(0, 3)));
+    await expect(page.locator('.mv-row').first()).toHaveText(all[0]!);
+    // Only notes: no problem with MSH, and the list starts folded.
+    await expect(page.locator('#checks-summary')).toHaveClass(/chk-sum-note/);
+    await page.locator('#checks-summary').click();
+    const notes = page.locator('.checks-items .chk-item').filter({ hasText: en.checks.sentences.S8 });
+    await expect(notes).toHaveCount(2);
+    await expect(notes.locator('.chk-line')).toHaveText([en.checks.line.replace('{line}', '1'), en.checks.line.replace('{line}', '3')]);
+    await expect(notes.locator('.chk-pos')).toHaveText(['MSH', 'PID']);
+    await expect(page.locator('.mv-row').nth(2).locator('[role="rowheader"]')).toHaveClass(/chk-note/);
+  });
+
+  test('several MLLP-framed messages: each MSH is read, with the note about more than one message', async ({ page }) => {
+    await page.goto('./');
+    const one = sampleText('adt-a01');
+    await explain(page, '\u000B' + one + '\u001C\r\u000B' + one + '\u001C\r');
+    const names = lines().map((line) => line.slice(0, 3));
+    await expect(page.locator('.mv-row [role="rowheader"]')).toHaveText([...names, ...names]);
+    await expect(page.locator('p.summary')).toContainText(en.mllpNote);
+    await page.locator('#checks-summary').click();
+    await expect(page.locator('.checks-items .chk-sentence').filter({ hasText: en.checks.sentences.S7.replace('{count}', '2') })).toHaveCount(1);
+    await expect(page.locator('.checks-items .chk-tag.chk-problem')).toHaveCount(0);
+  });
+});
+
 test.describe('search', () => {
   const rows = (page: import('@playwright/test').Page) => page.locator('table.fields tbody td.pos');
 
@@ -597,6 +667,11 @@ test.describe('search', () => {
     await expect(rows(page).first()).toHaveText(/PID-5/);
 
     await search.fill('PID-3.1');
+    await expect(rows(page).filter({ hasText: 'PID-3.1' })).toHaveCount(1);
+    await expect(page.locator('#search-count')).toHaveText(en.matchesOne);
+
+    // Arabic-Indic digits work too.
+    await search.fill('PID-٣.١');
     await expect(rows(page).filter({ hasText: 'PID-3.1' })).toHaveCount(1);
     await expect(page.locator('#search-count')).toHaveText(en.matchesOne);
 
@@ -652,10 +727,32 @@ test.describe('mask and copy', () => {
     await expect(page.locator('p.status')).toHaveText(templatePattern(en.maskedSummary));
     expect(await page.locator('.mv .f.masked').count()).toBeGreaterThan(3);
     await expect(page.locator('table.fields .badge').first()).toHaveText(en.maskedBadge);
-    // Masking again changes nothing.
+    const marks = await page.locator('.mv .f.masked').count();
+    const badges = await page.locator('table.fields .badge').count();
+    // Masking again changes nothing. The page says so, and the marks stay.
+    await page.getByRole('button', { name: en.mask, exact: true }).click();
+    await expect(page.locator('p.status')).toHaveText(en.maskedAlready);
+    expect(await page.locator('#message').inputValue()).toBe(text);
+    await expect(page.locator('.mv .f.masked')).toHaveCount(marks);
+    await expect(page.locator('table.fields .badge')).toHaveCount(badges);
+    // Also after Explain, which clears the marks: the masked fields get them back.
+    await page.getByRole('button', { name: en.explain, exact: true }).click();
+    await expect(page.locator('.mv .f.masked')).toHaveCount(0);
+    await page.getByRole('button', { name: en.mask, exact: true }).click();
+    await expect(page.locator('p.status')).toHaveText(en.maskedAlready);
+    await expect(page.locator('.mv .f.masked')).toHaveCount(marks);
+    // In Arabic.
+    await page.locator('.lang-btn').click();
+    await page.getByRole('button', { name: ar.mask, exact: true }).click();
+    await expect(page.locator('p.status')).toHaveText(ar.maskedAlready);
+  });
+
+  test('says when a message has no field to mask', async ({ page }) => {
+    await page.goto('./');
+    await explain(page, 'MSH|^~\\&|DEMO_APP|DEMO HOSPITAL|||20261108093000||ORU^R01|MSG90003|P|2.5.1\rOBX|1|ST|TEST-1^Made-up test^L||Made-up text');
     await page.getByRole('button', { name: en.mask, exact: true }).click();
     await expect(page.locator('p.status')).toHaveText(en.maskedNone);
-    expect(await page.locator('#message').inputValue()).toBe(text);
+    await expect(page.locator('.mv .f.masked')).toHaveCount(0);
   });
 
   test('copies the masked message and leaves the text box alone', async ({ page }) => {

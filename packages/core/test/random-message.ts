@@ -72,7 +72,9 @@ export interface RandomSegment {
   fields: FieldTree[];
   /** True for MSH, BHS and FHS lines (they hold their own delimiters). */
   header: boolean;
-  /** The segment text without its ending. */
+  /** Spaces or tabs before the segment name on its line. The parser skips them. */
+  before: string;
+  /** The segment text without its ending (and without `before`). */
   raw: string;
   /** The text after the segment: its ending and any blank lines. */
   after: string;
@@ -141,12 +143,23 @@ const WORDS = [
   '""',
 ];
 
-const SEGMENT_NAMES = ['EVN', 'PID', 'PV1', 'NK1', 'ORC', 'OBR', 'OBX', 'NTE', 'AL1', 'DG1', 'PD1', 'ZZ1', 'Z01', 'ZPI', 'IN1', 'GT1'];
+const SEGMENT_NAMES = ['EVN', 'PID', 'PV1', 'NK1', 'MRG', 'ORC', 'OBR', 'OBX', 'NTE', 'AL1', 'DG1', 'PD1', 'ZZ1', 'Z01', 'ZPI', 'IN1', 'GT1'];
 
 // Fields that maskMessage() replaces. Keep in sync with MASK_RULES in mask.ts.
 export const MASKED_POSITIONS: Readonly<Record<string, readonly number[]>> = {
-  PID: [3, 5, 7, 11, 13, 14, 19, 40],
-  NK1: [2, 4, 5],
+  PID: [2, 3, 4, 5, 6, 7, 9, 11, 13, 14, 18, 19, 20, 21, 23, 29, 40],
+  NK1: [2, 4, 5, 6, 12, 16, 26, 30, 31, 32, 33, 37, 38, 40, 41],
+  PV1: [19, 50],
+  MRG: [1, 2, 3, 4, 5, 6, 7],
+};
+
+// The masked fields that hold an ID (CX, or the number of a driver's
+// license). The mask replaces only component 1, the ID number, of them.
+const ID_POSITIONS: Readonly<Record<string, readonly number[]>> = {
+  PID: [2, 3, 4, 18, 20, 21],
+  NK1: [12, 33],
+  PV1: [19, 50],
+  MRG: [1, 2, 3, 4, 5, 6],
 };
 
 function pickDelimiters(rng: Rng, standard: boolean): RandomDelimiters {
@@ -219,18 +232,20 @@ function secret(rng: Rng): string {
 }
 
 /**
- * A field of a masked position, filled with secret values. For PID-3 only
- * component 1 (the ID number) is masked, so only that part is secret.
+ * A field of a masked position, filled with secret values. In an ID field
+ * (for example PID-3) only component 1 (the ID number) is masked, so only
+ * that part is secret.
  */
 function maskedTree(rng: Rng, d: RandomDelimiters, seg: string, field: number, secrets: string[]): FieldTree {
   const reps = rng.chance(0.3) ? rng.int(2, 3) : 1;
+  const id = (ID_POSITIONS[seg] ?? []).includes(field);
   return Array.from({ length: reps }, () => {
     if (rng.chance(0.1)) return [['']]; // An empty repetition stays empty.
     const comps = rng.int(1, 6);
     return Array.from({ length: comps }, (_, c) => {
       const subs = rng.chance(0.15) ? rng.int(2, 3) : 1;
       return Array.from({ length: subs }, () => {
-        if (seg === 'PID' && field === 3 && c > 0) return text(rng, d);
+        if (id && c > 0) return text(rng, d);
         const s = secret(rng);
         secrets.push(s);
         return s;
@@ -306,12 +321,14 @@ export function randomMessage(seed: number, options: BuildOptions = {}): RandomM
   const counts = new Map<string, number>();
   const segments: RandomSegment[] = specs.map((s, i) => {
     const last = i === specs.length - 1;
+    // Now and then a line starts with spaces or tabs, as in a message copied from an email.
+    const before = rng.chance(0.04) ? rng.pick([' ', '  ', '\t', ' \t ']) : '';
     const after = last ? (finalEnding ? ending(rng, mode) : '') : ending(rng, mode) + blankLines(rng, mode);
     const occurrence = (counts.get(s.name) ?? 0) + 1;
     counts.set(s.name, occurrence);
-    return { ...s, raw: segmentLine(s.name, s.fields, s.header, d), after, occurrence };
+    return { ...s, before, raw: segmentLine(s.name, s.fields, s.header, d), after, occurrence };
   });
 
-  const textOut = leading + segments.map((s) => s.raw + s.after).join('');
+  const textOut = leading + segments.map((s) => s.before + s.raw + s.after).join('');
   return { text: textOut, delimiters: d, encoding, leading, segments, secrets };
 }

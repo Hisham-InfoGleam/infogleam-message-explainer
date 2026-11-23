@@ -42,6 +42,23 @@ describe('parsePositionQuery', () => {
     expect(parsePositionQuery('PID-3-4-5-6')).toBeUndefined();
     expect(parsePositionQuery('اسم')).toBeUndefined();
   });
+
+  it('reads Arabic-Indic digits as 0 to 9', () => {
+    // ٠١٢٣٤٥٦٧٨٩ (U+0660 to U+0669) and ۰۱۲۳۴۵۶۷۸۹ (U+06F0 to U+06F9).
+    expect(parsePositionQuery('PID-٣')).toBe('PID-3');
+    expect(parsePositionQuery('pid ٣')).toBe('PID-3');
+    expect(parsePositionQuery('PID-٥.١')).toBe('PID-5.1');
+    expect(parsePositionQuery('PID-٣[٢].١')).toBe('PID-3.1');
+    expect(parsePositionQuery('OBX-١٤')).toBe('OBX-14');
+    expect(parsePositionQuery('PV١-٣')).toBe('PV1-3');
+    expect(parsePositionQuery('PID-۳')).toBe('PID-3');
+    expect(parsePositionQuery('PID-۱۳')).toBe('PID-13');
+    expect(parsePositionQuery('PID-٠٣')).toBe('PID-3');
+    // Every digit.
+    expect(parsePositionQuery('ZZ1-١٢٣٤٥٦٧٨٩٠')).toBe('ZZ1-1234567890');
+    expect(parsePositionQuery('ZZ1-۱۲۳۴۵۶۷۸۹۰')).toBe('ZZ1-1234567890');
+    expect(parsePositionQuery('٣')).toBeUndefined();
+  });
 });
 
 describe('normalizeSearchText', () => {
@@ -52,6 +69,13 @@ describe('normalizeSearchText', () => {
     expect(normalizeSearchText('إدخال')).toBe('ادخال');
     expect(normalizeSearchText('مستشفى')).toBe(normalizeSearchText('مستشفي'));
     expect(normalizeSearchText('حالة')).toBe(normalizeSearchText('حاله'));
+  });
+
+  it('turns Arabic-Indic digits into 0 to 9', () => {
+    expect(normalizeSearchText('العنوان ٢')).toBe('العنوان 2');
+    expect(normalizeSearchText('٠١٢٣٤٥٦٧٨٩')).toBe('0123456789');
+    expect(normalizeSearchText('۰۱۲۳۴۵۶۷۸۹')).toBe('0123456789');
+    expect(normalizeSearchText('Line ٣')).toBe(normalizeSearchText('Line 3'));
   });
 });
 
@@ -65,6 +89,21 @@ describe('matchesSearch', () => {
 
   it('finds a field by position, in any form', () => {
     for (const q of ['PID-3', 'pid 3', 'PID.3', 'pid3']) expect(filter(q, items), q).toEqual(['PID-3']);
+  });
+
+  it('finds a field by position written with Arabic-Indic digits', () => {
+    for (const q of ['PID-٣', 'pid ٣', 'PID.٣', 'PID-۳']) expect(filter(q, items), q).toEqual(['PID-3']);
+    expect(filter('PID-١٣', items)).toEqual(['PID-13']);
+    expect(filter('MSH-٧', items)).toEqual(['MSH-7']);
+    // The same as with 0 to 9: PID-3 does not find PID-30.
+    expect(filter('PID-٣', [pid3, pid30])).toEqual(['PID-3']);
+  });
+
+  it('finds names with digits, whichever digits the query uses', () => {
+    const line2 = { label: 'XAD-2', names: ['Other Designation 2', 'السطر 2 من العنوان'] };
+    expect(filter('designation ٢', [line2])).toEqual(['XAD-2']);
+    expect(filter('السطر ٢', [line2])).toEqual(['XAD-2']);
+    expect(filter('السطر ۲', [line2])).toEqual(['XAD-2']);
   });
 
   it('finds the parts of a field, but not other numbers', () => {

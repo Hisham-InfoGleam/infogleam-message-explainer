@@ -31,6 +31,7 @@ export const CHECK_IDS = [
   'S5',
   'S6',
   'S7',
+  'S8',
   'V1',
   'V2',
   'V3',
@@ -500,7 +501,7 @@ function obxValueType(seg: HL7Segment): string | undefined {
  * Check a parsed message against the HL7 rules of a version (one of
  * HISTORY_VERSIONS, 2.3 to 2.9). Without a version (or with a version the
  * tool does not explain), only the checks that do not need a version run:
- * S1 to S7, V1, V2, G1 and G2. S2 and S6 then run only their parts that are
+ * S1 to S8, V1, V2, G1 and G2. S2 and S6 then run only their parts that are
  * the same in every version. The result lists the checks that were skipped.
  *
  * The field checks (F, D and the formatting part of S6) run only when the
@@ -558,6 +559,12 @@ export function checkMessage(message: ParsedMessage, version?: string): CheckRes
   const mshLines = segments.filter((s) => s.name === 'MSH');
   const second = mshLines[1];
   if (second) add('S7', 'note', second.index + 1, { count: mshLines.length }, { segment: 'MSH', segmentIndex: second.index });
+
+  // S8: a line that starts with spaces or tabs. The parser skips them, and
+  // so does Mirth, but other receiving systems may not read such a line.
+  for (const seg of segments) {
+    if (seg.before !== undefined && /[ \t]/.test(seg.before)) add('S8', 'note', seg.index + 1, {}, segmentPosition(seg));
+  }
 
   // V1 and V2: the version in MSH-12.
   const mshVersion = msh ? messageVersion(message) : undefined;

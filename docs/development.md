@@ -62,7 +62,10 @@ The core tests check:
   seed, so each run checks the same messages. A failing check names its
   seed.
 - `parse-edge.test.ts`: odd input, such as an empty message, a BOM or MLLP
-  characters.
+  characters, several MLLP-framed messages in one text, and lines that
+  start with spaces or tabs.
+- `mask.test.ts`: every masked field with its fake value, the fields that
+  stay, and the samples after masking.
 - `sample-rules.test.ts`: each sample follows the rules of its HL7 version,
   and its data is clearly made up.
 - `checks.test.ts`: the message checks (`checkMessage()`). For each check, a
@@ -86,6 +89,8 @@ in English and Arabic, the folding rule, the marks and the copied list.
 `samples.test.ts` checks the sample list: every sample in one of the two
 groups, the order by version, the sample names, and the rule for when the
 page asks before a sample replaces the text in the box (`isOwnText()`).
+`segment-ends.test.ts` checks how the page finds segment ends written as
+the text `\r` or `\n`, and how it changes them into real ones.
 `npm run check` also type checks these tests.
 
 **Build check** (part of `npm run build`). After `vite build`,

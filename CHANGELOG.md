@@ -18,6 +18,40 @@ All notable changes to this project are listed here.
 - Position labels such as `PID-3[2].4.1` stay on one line.
 - Core: `fieldPath()` takes the new options `segmentCount`,
   `repetitionCount` and `singleValue`. Parsed segments have `count`.
+- Masking covers more patient fields: `PID-2`, `PID-4`, `PID-6`, `PID-9`,
+  `PID-18`, `PID-20`, `PID-21`, `PID-23` and `PID-29`; `NK1-6`, `NK1-12`,
+  `NK1-16`, `NK1-26`, `NK1-30` to `NK1-33`, `NK1-37`, `NK1-38`, `NK1-40`
+  and `NK1-41`; `PV1-19` and `PV1-50` (visit numbers); and `MRG-1` to
+  `MRG-7` (the earlier IDs and name in a merge message). For an ID, only
+  the ID number (component 1) is replaced. A birth place becomes `MASKED`.
+- The message after masking now says that only fields in `PID`, `NK1`,
+  `PV1` and `MRG` are masked, and that free text (for example `OBX-5` and
+  `NTE`) and other segments (for example `PD1`, `GT1`, `IN1` and
+  Z-segments) are not.
+- A second click on **Mask patient data** keeps the marks on the masked
+  fields and says "Already masked." Before, it removed the marks and said
+  "No fields were masked."
+- Lines that start with spaces or tabs, for example in a message copied
+  from an email, are now read as their segment. Before, the spaces were
+  part of the segment name, and an `MSH` line with spaces lost its
+  delimiters. A new note in the message checks (S8) names each such line,
+  because some receiving systems may not read it. (Mirth 4.5.2 skips
+  the spaces too.)
+- Several MLLP-framed messages in one text: frame characters at the start
+  or the end of a line are skipped too. So each `MSH` is read as `MSH`,
+  and the note about more than one message (S7) shows.
+- A message on one line, with its segment ends written as the text `\r` or
+  `\n` (as in JSON or database logs), gets a hint under the summary line
+  with a **Fix the segment ends** button. The button changes them into
+  real segment ends in the text box and explains the message again. The
+  page never changes the text on its own.
+- Find a field: Arabic-Indic digits work too, for example `PID-٣` finds
+  `PID-3`.
+- Parse then rebuild still gives back the exact text, with the spaces and
+  frame characters. Core: parsed segments have `before` (the skipped text
+  at the start of the line), `frame.mllp` is also true for MLLP characters
+  at the start or the end of a line, the new check `S8`, and `MASK_RULES`
+  has `PV1` and `MRG`.
 
 ## 0.9.1 - 2026-11-12
 

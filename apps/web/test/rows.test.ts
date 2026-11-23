@@ -3,9 +3,17 @@
 
 // The field list under each segment, and the search box that filters it.
 
-import { getComponentDoc, getFieldDoc, HAS_FIELD_HISTORY, parseMessage, type ParsedMessage } from '@infogleam/message-explainer-core';
+import {
+  getComponentDoc,
+  getFieldDoc,
+  HAS_FIELD_HISTORY,
+  maskMessage,
+  parseMessage,
+  serializeMessage,
+  type ParsedMessage,
+} from '@infogleam/message-explainer-core';
 import { describe, expect, it } from 'vitest';
-import { filterGroups, hasParts, maskKey, segmentGroups, type FieldGroup } from '../src/lib/rows';
+import { filterGroups, hasParts, maskedFieldKeys, maskKey, segmentGroups, type FieldGroup } from '../src/lib/rows';
 import { parsedSamples, randomMessage, SOME_VERSIONS } from './helpers';
 
 function groupsOf(m: ParsedMessage, version: string): FieldGroup[][] {
@@ -148,5 +156,46 @@ describe('filterGroups', () => {
     expect(labels('zzqqxx')).toEqual([]);
     expect(total('zzqqxx')).toBe(0);
     expect(labels('PID-99')).toEqual([]);
+  });
+
+  it('finds a field by a position with Arabic-Indic digits', () => {
+    expect(labels('PID-٣.١')).toEqual(labels('PID-3.1'));
+    expect(labels('PID-١٨')).toEqual(['PID-18']);
+  });
+});
+
+describe('maskedFieldKeys (the marks after a mask that changed nothing)', () => {
+  const keys = (changes: { segmentIndex: number; field: number }[]) => new Set(changes.map((c) => maskKey(c.segmentIndex, c.field)));
+
+  it('are the fields the first mask changed, for every sample and 300 random messages', () => {
+    const texts = [...parsedSamples().map((s) => s.text), ...Array.from({ length: 300 }, (_, i) => randomMessage(i + 1).text)];
+    for (const text of texts) {
+      const once = maskMessage(parseMessage(text));
+      const twice = maskMessage(parseMessage(serializeMessage(once.message)));
+      expect(twice.changes).toEqual([]);
+      // Masking again finds nothing new; the marks stay on the masked fields.
+      const marks = maskedFieldKeys(twice.message);
+      for (const k of keys(once.changes)) expect(marks.has(k), k).toBe(true);
+      // Every mark is a masked field that holds a value.
+      for (const k of marks) {
+        const [s, f] = k.split(':').map(Number);
+        const value = twice.message.segments[s!]?.fields.find((x) => x.position === f)?.value ?? '';
+        expect(value, k).not.toBe('');
+      }
+    }
+  });
+
+  it('leave out empty fields, empty repetitions, "" and fields that are not masked', () => {
+    const m = parseMessage(
+      ['MSH|^~\\&|DEMO_APP|DEMO HOSPITAL|||20261108093000||ADT^A01|MSG90001|P|2.5.1', 'PID|1|~|MASK0001||MASKED^PATIENT|""|19000101|F', 'OBX|1|ST|TEST^Test^L||TEST^PATIENT'].join('\r'),
+    );
+    expect([...maskedFieldKeys(m)]).toEqual(['1:3', '1:5', '1:7']);
+    expect(maskedFieldKeys(parseMessage(''))).toEqual(new Set());
+  });
+
+  it('are empty for a message without masked fields', () => {
+    const m = parseMessage('MSH|^~\\&|DEMO_APP\rOBX|1|ST|TEST^Test^L||Made-up text\r');
+    expect(maskedFieldKeys(m).size).toBe(0);
+    expect(maskMessage(m).changes).toEqual([]);
   });
 });

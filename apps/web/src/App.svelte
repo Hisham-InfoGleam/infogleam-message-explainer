@@ -23,10 +23,12 @@
   import { dirFor, format, messagesFor, type Lang } from './i18n';
   import { checkItems, checkVersion, fieldMarks, viewMarks, withoutTextBoxEnds } from './lib/checks';
   import { LEGAL, LEGAL_PAGES, type LegalPage } from './lib/legal';
-  import { filterGroups, maskKey, segmentGroups } from './lib/rows';
+  import { filterGroups, maskedFieldKeys, maskKey, segmentGroups } from './lib/rows';
   import { isOwnText, isSampleId, SAMPLE_GROUPS, SAMPLES, type SampleId } from './lib/samples';
+  import { textSegmentEnd, withRealSegmentEnds } from './lib/segmentEnds';
   import { fieldKeyOf, partInfo, partKey, type Selection } from './lib/selection';
   import { HL7_NOTICE, SITE_LINK, SITE_URL, SOURCE_URL } from './lib/site';
+  import { splitTemplate } from './lib/text';
   import { AUTO, versionView } from './lib/versions';
 
   // Two columns (message and explanation side by side) from this width.
@@ -103,6 +105,10 @@
   const listMarks = $derived(fieldMarks(items, t));
   // On narrow screens the panel is a sheet at the bottom of the screen.
   const sheetOpen = $derived(selection !== null && !wide && page === null);
+  // A one-line message whose segment ends are written as text, for example
+  // "\r" (see lib/segmentEnds.ts): the text, or '' when there is none.
+  const textEnd = $derived(parsed ? textSegmentEnd(parsed) : '');
+  const textEndsNote = $derived(splitTemplate(t.textEndsNote, 'code'));
 
   $effect(() => {
     document.documentElement.lang = lang;
@@ -271,13 +277,35 @@
     input = serializeMessage(result.message);
     // The masked text is no longer the sample as it was loaded.
     if (input !== (loadedSample ? SAMPLES[loadedSample] : '')) forgetSample();
-    maskedKeys = new Set(result.changes.map((c) => maskKey(c.segmentIndex, c.field)));
     // Masking can remove components, so the selected part may be gone.
     if (selection && !partInfo(result.message, selection, ver.effective)) selection = null;
-    status =
-      result.changes.length > 0
-        ? format(t.maskedSummary, { count: result.changes.length })
-        : t.maskedNone;
+    if (result.changes.length > 0) {
+      maskedKeys = new Set(result.changes.map((c) => maskKey(c.segmentIndex, c.field)));
+      status = format(t.maskedSummary, { count: result.changes.length });
+      return;
+    }
+    // Nothing new to mask. The filled fields at the masked positions already
+    // hold the fake values, for example after a first click: they keep
+    // their marks.
+    maskedKeys = maskedFieldKeys(result.message);
+    status = maskedKeys.size > 0 ? t.maskedAlready : t.maskedNone;
+  }
+
+  /**
+   * Change the segment ends that are written as text (for example "\r") into
+   * real ones in the text box, then explain the message again. Only when the
+   * user clicks the button: the page never changes the text on its own.
+   */
+  function fixTextEnds() {
+    if (!hasInput()) return;
+    const fixed = withRealSegmentEnds(input, parseMessage(input).delimiters.field);
+    const changed = fixed !== input;
+    if (changed) {
+      input = fixed;
+      forgetSample();
+    }
+    explain();
+    if (changed && parsed) status = format(t.textEndsDone, { count: parsed.segments.length });
   }
 
   async function copyText(text: string): Promise<boolean> {
@@ -541,6 +569,13 @@
               <span class="hint">{t.mllpNote}</span>
             {/if}
           </p>
+          {#if textEnd}
+            <!-- The segment ends are written as text: offer to fix them. -->
+            <div class="text-ends" role="group" aria-labelledby="text-ends-note">
+              <p id="text-ends-note">{textEndsNote[0]}<code dir="ltr">{textEnd}</code>{textEndsNote[1]}</p>
+              <button type="button" onclick={fixTextEnds}>{t.textEndsFix}</button>
+            </div>
+          {/if}
 
           <div class="workspace">
             <div class="work-main">

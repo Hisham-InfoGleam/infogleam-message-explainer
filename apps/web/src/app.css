@@ -472,8 +472,10 @@ button.with-icon {
   background: var(--bg);
 }
 
-/* The question before a sample replaces the user's own text. */
-.sample-confirm {
+/* The question before a sample replaces the user's own text, and the hint
+   about segment ends written as text (\r or \n), with its button. */
+.sample-confirm,
+.text-ends {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -485,7 +487,8 @@ button.with-icon {
   border-radius: 6px;
 }
 
-.sample-confirm p {
+.sample-confirm p,
+.text-ends p {
   margin: 0;
 }
 

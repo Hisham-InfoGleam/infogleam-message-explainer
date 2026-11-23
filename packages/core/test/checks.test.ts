@@ -346,6 +346,44 @@ describe('S7: more than one message', () => {
   it('does not fire for one message', () => {
     expect(only(check(messageOf('2.5', PID('2.5'))), 'S7')).toEqual([]);
   });
+
+  it('notes the second MSH of several MLLP-framed messages in one text', () => {
+    const one = messageOf('2.5', PID('2.5')) + '\r';
+    const r = check('\u000B' + one + '\u001C\r\u000B' + one + '\u001C\r', '2.5');
+    expect(only(r, 'S7')).toEqual([{ id: 'S7', level: 'note', line: 3, position: { segment: 'MSH', segmentIndex: 2 }, facts: { count: 2 } }]);
+    expect(ids(r)).toEqual(['S7']);
+  });
+});
+
+describe('S8: a line that starts with spaces or tabs', () => {
+  it('notes each such line, in every version and without one', () => {
+    const text = [cleanSegment('MSH', '2.5'), '  ' + PID('2.5'), '\t' + cleanSegment('PV1', '2.5'), ' \t NTE|1'].join('\r');
+    for (const v of [...HISTORY_VERSIONS, undefined]) {
+      const r = check(text, v);
+      expect(only(r, 'S8'), String(v)).toEqual([
+        { id: 'S8', level: 'note', line: 2, position: { segment: 'PID', segmentIndex: 1 }, facts: {} },
+        { id: 'S8', level: 'note', line: 3, position: { segment: 'PV1', segmentIndex: 2 }, facts: {} },
+        { id: 'S8', level: 'note', line: 4, position: { segment: 'NTE', segmentIndex: 3 }, facts: {} },
+      ]);
+    }
+  });
+
+  it('reads an MSH line that starts with spaces: no S1, no S2 and no S6', () => {
+    const r = check(['   ' + cleanSegment('MSH', '2.5'), PID('2.5')].join('\r'), '2.5');
+    expect(ids(r)).toEqual(['S8']);
+    expect(only(r, 'S8')[0]?.line).toBe(1);
+  });
+
+  it('leaves out a segment name that breaks the naming rule', () => {
+    const r = check(messageOf('2.5', '  pid|1'), '2.5');
+    expect(only(r, 'S8').map((f) => f.position)).toEqual([{ segmentIndex: 1 }]);
+  });
+
+  it('does not fire for MLLP characters alone, for blank lines with spaces, or for spaces at the end of a line', () => {
+    const one = messageOf('2.5', PID('2.5')) + '\r';
+    expect(only(check('\u000B' + one + '\u001C\r\u000B' + one + '\u001C\r', '2.5'), 'S8')).toEqual([]);
+    expect(only(check(messageOf('2.5', '   ', PID('2.5') + '  '), '2.5'), 'S8')).toEqual([]);
+  });
 });
 
 describe('V1 and V2: the version in MSH-12', () => {

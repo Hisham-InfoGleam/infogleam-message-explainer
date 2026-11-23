@@ -57,9 +57,23 @@ export interface HL7Segment {
    * Set by parseMessage(); unknown for a segment parsed alone.
    */
   count?: number;
-  /** Original segment text, without the terminator. */
+  /**
+   * Original segment text, without the terminator. It starts with the
+   * segment name: the text in `before` is not part of it.
+   */
   raw: string;
-  /** Text that followed this segment: its terminator plus any blank lines. */
+  /**
+   * Text before the segment name on its line, that parseMessage() skipped:
+   * spaces and tabs (for example from a message copied from an email), and
+   * the BOM and MLLP characters (when one text holds several messages).
+   * Kept for an exact rebuild. Set only when the line has such text.
+   */
+  before?: string;
+  /**
+   * Text that followed this segment: BOM or MLLP characters at the end of
+   * its line, its terminator, and any blank lines. A line with only white
+   * space, BOM or MLLP characters counts as a blank line.
+   */
   after: string;
   fields: HL7Field[];
 }
@@ -82,6 +96,10 @@ export type ParseWarning = 'no-msh' | 'short-encoding' | 'mixed-terminators' | '
  * - The MLLP frame. MLLP is how HL7 network connections send messages: a
  *   start character (U+000B, vertical tab) before the message, and an end
  *   character (U+001C, file separator) after it, usually followed by CR.
+ *
+ * When one text holds several framed messages, the frame characters
+ * between them are at the start or the end of a line. The parser skips
+ * those too, and keeps them in the segment (`before` and `after`).
  */
 export interface MessageFrame {
   /** Skipped text before the message: BOM and MLLP start characters. */
@@ -90,7 +108,10 @@ export interface MessageFrame {
   after: string;
   /** True when a BOM was found at the start. */
   bom: boolean;
-  /** True when an MLLP start or end character was found. */
+  /**
+   * True when an MLLP start or end character was found: around the message,
+   * or at the start or the end of a line.
+   */
   mllp: boolean;
 }
 
@@ -101,7 +122,10 @@ export interface ParsedMessage {
   terminator: Terminator | null;
   /** True when more than one kind of terminator was found. */
   mixedTerminators: boolean;
-  /** Blank lines before the first segment, kept for an exact rebuild. */
+  /**
+   * Blank lines before the first segment, kept for an exact rebuild. A line
+   * with only white space, BOM or MLLP characters counts as blank.
+   */
   leading: string;
   /** BOM and MLLP characters around the message, kept for an exact rebuild. */
   frame: MessageFrame;

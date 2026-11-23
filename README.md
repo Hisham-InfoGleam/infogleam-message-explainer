@@ -23,6 +23,10 @@ The tool is not a medical device and is not for clinical decisions. See
 Working now:
 
 - Read HL7 v2 messages with CR, LF or CRLF segment endings
+- Read messages copied from emails and logs: lines that start with spaces
+  or tabs (with a note in the message checks), and several MLLP-framed
+  messages in one text. A one-line message with its segment ends written
+  as `\r` or `\n` (as in JSON) gets a hint and a button that fixes them
 - Paste a message, open a file or drop it on the text box. Pasting a
   message or pressing Ctrl+Enter explains it right away
 - Message view: the message in colour, exactly as it is. Point at any part
@@ -54,11 +58,13 @@ Working now:
   version. The field checks (required fields, repeats, fields past the end,
   dates, times and numbers) are for HL7 v2.9. The list never holds values
   from the message, so it is safe to copy into a ticket
-- Find a field by position (`PID-3`, `pid 3`), by English name (the HL7
-  v2.9 name) or by Arabic name
+- Find a field by position (`PID-3`, `pid 3`, also with Arabic-Indic
+  digits), by English name (the HL7 v2.9 name) or by Arabic name
 - Components folded under their field, and a card layout on phones
-- Mask common patient fields (name, IDs, birth date, address, phones, email,
-  SSN)
+- Mask common patient fields in `PID`, `NK1`, `PV1` and `MRG` (names, IDs,
+  account and visit numbers, birth and death dates, birth places,
+  addresses, phones, email, SSN, driver's license). Free text (for example
+  `OBX-5` and `NTE`) and other segments are not masked
 - Copy the masked message or a Mirth path to the clipboard
 - English and Arabic page text, with the Noto Sans Arabic font bundled into
   the page

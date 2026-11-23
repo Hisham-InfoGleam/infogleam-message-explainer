@@ -84,6 +84,8 @@ const MESSAGES: { text: string; version?: string }[] = [
   { text: [MSH('2.8'), 'PID|1||QX1||QX^QX||||||||||||||||||||.5', seg('PV1', { 1: '1', 2: 'I', 45: '2026110825' })].join('\r'), version: '2.8' },
   { text: [MSH('2.5'), 'PID|10000||QX1||QX^QX', 'AL1|-1||QX'].join('\r'), version: '2.5' },
   { text: [MSH('2.3'), 'MSH|^~\\&|QX|||20261308||ADT^A01|QX|P|2.3'].join('\r'), version: '2.3' },
+  // Lines that start with spaces or tabs (S8), also one with a name that breaks the naming rule.
+  { text: ['  ' + MSH('2.5'), '\tPID|1||QX1||QX^QX', ' \t qx1|QX'].join('\r'), version: '2.5' },
   // v2.9: the field checks run with and without the field history.
   { text: [MSH29, seg('PID', { 1: '10000', 5: 'QX^QX\\.br\\', 8: 'F~M', 25: '.5' }), 'AL1|-1||QX|||20261340|QX'].join('\r'), version: '2.9' },
   { text: [MSH29, seg('PV1', { 1: '1', 2: 'I', 45: '2026110825' }), 'OBX|1|TX|QX||QX\\.br\\QX'].join('\r'), version: '2.9' },
@@ -205,6 +207,24 @@ describe('sentences', () => {
     expect(/[؀-ۿ]/.test(f6.fieldName)).toBe(true);
     expect(f6.label).toBe('PID-3');
     expect(f6.sentence).toBe('مطلوب في معيار HL7 v2.9، لكنه فارغ.');
+  });
+
+  it('say what to do about a line that starts with spaces (S8), and point to its segment', () => {
+    for (const lang of LANGS) {
+      const t = messagesFor(lang);
+      const { m, r } = run([MSH('2.5'), '  PID|1||QX1||QX^QX'].join('\r'), '2.5');
+      const s8 = checkItems(r, m, t, lang).filter((i) => i.finding.id === 'S8');
+      expect(s8.map((i) => [i.level, i.lineText, i.label, i.sentence, i.segmentIndex, i.sel])).toEqual([
+        ['note', format(t.checks.line, { line: 2 }), 'PID', t.checks.sentences.S8, 1, undefined],
+      ]);
+      expect(s8[0]!.rule).toBe(t.checks.rules.S8);
+      expect(s8[0]!.source).toBe(format(t.checks.sourceText, { version: '2.5', chapter: '2', topic: t.checks.topics.S8 }));
+      // The mark is on the segment name in the message view.
+      expect(viewMarks(s8, m, t).get('row:1')?.level).toBe('note');
+    }
+    expect(messagesFor('en').checks.sentences.S8).toBe(
+      'This line starts with spaces or tabs. Some systems skip them, for example Mirth, but others may not read the line. Remove them before you send the message.',
+    );
   });
 
   it('tell how to run the field checks when there is no version', () => {

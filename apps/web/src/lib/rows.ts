@@ -5,12 +5,14 @@ import {
   getComponentDoc,
   getFieldDoc,
   HEADER_SEGMENTS,
+  MASK_RULES,
   matchesSearch,
   parsePositionQuery,
   type ComponentDoc,
   type FieldDoc,
   type HL7Field,
   type HL7Segment,
+  type ParsedMessage,
 } from '@infogleam/message-explainer-core';
 import { fieldCodes, safePath, type Selection } from './selection';
 
@@ -48,6 +50,26 @@ export interface FieldGroup {
 
 export function maskKey(segmentIndex: number, field: number): string {
   return `${segmentIndex}:${field}`;
+}
+
+/**
+ * The fields that the mask replaces and that hold a value, by maskKey():
+ * the fields at the positions in MASK_RULES (core), but not empty fields,
+ * fields with only empty repetitions, or fields that hold only "". When
+ * masking finds nothing new, these fields already hold the fake values.
+ */
+export function maskedFieldKeys(message: ParsedMessage): Set<string> {
+  const keys = new Set<string>();
+  for (const seg of message.segments) {
+    const rules = MASK_RULES[seg.name];
+    if (!rules) continue;
+    for (const f of seg.fields) {
+      if (rules[f.position] === undefined || f.value === '' || f.value === '""') continue;
+      if (f.repetitions.every((r) => r.value === '')) continue;
+      keys.add(maskKey(seg.index, f.position));
+    }
+  }
+  return keys;
 }
 
 /** True when the field has repetitions, components or sub-components to show. */

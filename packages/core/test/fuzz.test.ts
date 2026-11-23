@@ -45,6 +45,7 @@ function structureProblem(parsed: ParsedMessage, m: RandomMessage): string | und
     if (got.index !== i) return `${where}: index ${got.index}`;
     if (got.occurrence !== want.occurrence) return `${where}: occurrence ${got.occurrence}`;
     if (got.raw !== want.raw) return `${where}: raw text differs`;
+    if ((got.before ?? '') !== want.before) return `${where}: text before the segment differs`;
     if (got.after !== want.after) return `${where}: text after the segment differs`;
     if (got.fields.length !== want.fields.length) {
       return `${where}: ${got.fields.length} fields, expected ${want.fields.length}`;
@@ -93,6 +94,8 @@ describe('the random message builder', () => {
       'no final ending': count((m) => !/[\r\n]$/.test(m.text)),
       'blank lines before MSH': count((m) => m.leading !== ''),
       'blank lines between segments': count((m) => m.segments.some((s) => /[\r\n][ \t]*[\r\n]/.test(s.after))),
+      'lines that start with spaces or tabs': count((m) => m.segments.some((s) => s.before !== '')),
+      'PV1 and MRG segments': count((m) => m.segments.some((s) => s.name === 'PV1') && m.segments.some((s) => s.name === 'MRG')),
       'escape sequences': count((m) => fieldTexts(m).some((t) => t.includes(m.delimiters.escape + 'F' + m.delimiters.escape))),
       'Arabic text': count((m) => /[؀-ۿ]/.test(m.text)),
       'characters outside the BMP': count((m) => /[\uD800-\uDBFF]/.test(m.text)),
@@ -196,8 +199,8 @@ describe('random messages: mask', () => {
       const changed = new Set(changes.map((c) => `${c.segmentIndex}:${c.field}`));
       parsed.segments.forEach((before, i) => {
         const after = again.segments[i]!;
-        if (after.name !== before.name || after.after !== before.after) {
-          problems.push(`seed ${seed} segment ${i}: name or ending changed`);
+        if (after.name !== before.name || after.after !== before.after || after.before !== before.before) {
+          problems.push(`seed ${seed} segment ${i}: name, indent or ending changed`);
           return;
         }
         if (after.fields.length !== before.fields.length) {

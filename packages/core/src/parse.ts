@@ -124,6 +124,47 @@ function splitFrame(raw: string): { body: string; frame: MessageFrame } {
   };
 }
 
+// Characters that the parser skips at the start of a line: spaces and tabs
+// (a message copied from an email can have them), and the BOM and MLLP
+// characters (when one text holds several framed messages).
+const LINE_START = /^[ \t\uFEFF\u000B\u001C]+/;
+// The BOM and MLLP characters, which the parser also skips at the end of a line.
+const FRAME_CHARS: ReadonlySet<string> = new Set(['\uFEFF', '\u000B', '\u001C']);
+const MLLP_CHAR = /[\u000B\u001C]/;
+// A line with only white space, BOM or MLLP characters is a blank line.
+const BLANK = /^[\s\u001C]*$/;
+
+function isBlank(text: string): boolean {
+  return BLANK.test(text);
+}
+
+function isFrameOrSpace(char: string): boolean {
+  return FRAME_CHARS.has(char) || char === ' ' || char === '\t';
+}
+
+interface LineParts {
+  /** Skipped text at the start: spaces, tabs, BOM and MLLP characters. */
+  before: string;
+  /** The segment text. */
+  text: string;
+  /** Skipped text at the end: a BOM or MLLP character, then only these, spaces or tabs. */
+  end: string;
+}
+
+/** Split a line into the segment text and the skipped text around it. */
+function lineParts(line: string): LineParts {
+  const before = LINE_START.exec(line)?.[0] ?? '';
+  const rest = line.slice(before.length);
+  // The end part starts at the first BOM or MLLP character of the last run
+  // of these characters, spaces and tabs. Spaces and tabs before it stay in
+  // the segment: they can be part of the last field. This is a loop, not a
+  // regular expression, so a long run of such characters stays fast.
+  let start = rest.length;
+  while (start > 0 && isFrameOrSpace(rest.charAt(start - 1))) start--;
+  while (start < rest.length && !FRAME_CHARS.has(rest.charAt(start))) start++;
+  return { before, text: rest.slice(0, start), end: rest.slice(start) };
+}
+
 interface Line {
   text: string;
   sep: string;
@@ -147,6 +188,12 @@ function splitLines(raw: string): Line[] {
  * any blank lines are kept, so serializeMessage() gives back the exact input.
  * A BOM or MLLP frame characters around the message are skipped, and kept
  * in `frame` (see MessageFrame).
+ *
+ * Spaces and tabs at the start of a line, and BOM or MLLP characters at the
+ * start or the end of a line, are skipped too: the segment is read without
+ * them. They are kept in the segment (`before` and `after`), so the rebuild
+ * is still exact. So a line "  PID|1" is the segment PID, and a text with
+ * several MLLP-framed messages shows each MSH as MSH.
  */
 export function parseMessage(raw: string): ParsedMessage {
   const warnings: ParseWarning[] = [];
@@ -157,7 +204,8 @@ export function parseMessage(raw: string): ParsedMessage {
   const firstSep = lines.find((l) => l.sep !== '')?.sep;
   const terminator = (firstSep ?? null) as Terminator | null;
 
-  const firstText = lines.find((l) => l.text.trim() !== '')?.text ?? '';
+  const firstLine = lines.find((l) => !isBlank(l.text));
+  const firstText = firstLine ? lineParts(firstLine.text).text : '';
   let delimiters: Delimiters;
   if (HEADER_SEGMENTS.has(firstText.slice(0, 3)) && firstText.length >= 4) {
     delimiters = readDelimiters(firstText);
@@ -173,15 +221,21 @@ export function parseMessage(raw: string): ParsedMessage {
   const segments: HL7Segment[] = [];
   const counts = new Map<string, number>();
   let leading = '';
+  // MLLP characters inside the text, at the start or the end of a line.
+  let mllpInside = false;
 
   for (const line of lines) {
-    if (line.text.trim() === '') {
+    if (isBlank(line.text)) {
+      if (MLLP_CHAR.test(line.text)) mllpInside = true;
       const prev = segments[segments.length - 1];
       if (prev) prev.after += line.text + line.sep;
       else leading += line.text + line.sep;
       continue;
     }
-    const seg = parseSegment(line.text, delimiters, segments.length, 1, line.sep);
+    const part = lineParts(line.text);
+    if (MLLP_CHAR.test(part.before) || MLLP_CHAR.test(part.end)) mllpInside = true;
+    const seg = parseSegment(part.text, delimiters, segments.length, 1, part.end + line.sep);
+    if (part.before !== '') seg.before = part.before;
     const occurrence = (counts.get(seg.name) ?? 0) + 1;
     counts.set(seg.name, occurrence);
     seg.occurrence = occurrence;
@@ -195,7 +249,7 @@ export function parseMessage(raw: string): ParsedMessage {
     terminator,
     mixedTerminators: seps.size > 1,
     leading,
-    frame,
+    frame: mllpInside ? { ...frame, mllp: true } : frame,
     warnings,
   };
 }

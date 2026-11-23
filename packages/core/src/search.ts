@@ -15,12 +15,24 @@ const POSITION =
   /^([A-Z][A-Z0-9]{2})(?:\s*[-._\s]?\s*(\d+)(?:\s*[-._\s]\s*(\d+))?(?:\s*[-._\s]\s*(\d+))?)?$/;
 
 /**
+ * Arabic-Indic digits (٠ to ٩, U+0660 to U+0669) and Eastern Arabic-Indic
+ * digits (۰ to ۹, U+06F0 to U+06F9) as 0 to 9. An Arabic keyboard can type
+ * them, so "PID-٣" finds PID-3.
+ */
+function westernDigits(text: string): string {
+  return text
+    .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06f0));
+}
+
+/**
  * Read a position, for example "pid 3", "PID.3", "pid-5.1" or "OBX".
  * Returns it in label form ("PID-3", "PID-5.1", "OBX"), or undefined when
  * the text is not a position. Repetitions such as "[2]" are ignored.
+ * Arabic-Indic digits count as 0 to 9.
  */
 export function parsePositionQuery(query: string): string | undefined {
-  const text = query
+  const text = westernDigits(query)
     .toUpperCase()
     .replace(/\[\d*\]?/g, '')
     .replace(/[-._\s]+$/, '')
@@ -37,11 +49,12 @@ export function parsePositionQuery(query: string): string | undefined {
 
 /**
  * Text for comparing names: lower case, no accents or Arabic diacritics,
- * one form of alef, ya and ta marbuta, and single spaces instead of
- * punctuation. "Date/Time" becomes "date time".
+ * one form of alef, ya and ta marbuta, digits 0 to 9 for Arabic-Indic
+ * digits, and single spaces instead of punctuation. "Date/Time" becomes
+ * "date time".
  */
 export function normalizeSearchText(text: string): string {
-  return text
+  return westernDigits(text)
     .normalize('NFKD')
     .replace(/[̀-ًͯ-ٰٟـ]/g, '')
     .replace(/ى/g, 'ي')

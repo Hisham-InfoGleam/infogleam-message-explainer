@@ -6,7 +6,7 @@ import type { Delimiters, ParsedMessage } from './types.js';
 
 /** Rebuild the message text. For an unchanged parse result this is the exact input. */
 export function serializeMessage(message: ParsedMessage): string {
-  const body = message.leading + message.segments.map((s) => s.raw + s.after).join('');
+  const body = message.leading + message.segments.map((s) => (s.before ?? '') + s.raw + s.after).join('');
   return message.frame.before + body + message.frame.after;
 }
 

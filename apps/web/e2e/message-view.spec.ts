@@ -107,7 +107,13 @@ test.describe('message view', () => {
     await page.goto('./');
     await loadSample(page, 'adt-a01');
     await page.getByRole('button', { name: en.mask, exact: true }).click();
-    const masked = await page.locator('.mv .f.masked').evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.k));
-    expect(masked).toEqual(['2:3', '2:5', '2:7', '2:11', '2:13', '2:14', '2:19', '3:2', '3:4', '3:5']);
+    const masked = () => page.locator('.mv .f.masked').evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.k));
+    // PID-3, 5, 7, 11, 13, 14, 18 and 19; NK1-2, 4 and 5; PV1-19.
+    const all = ['2:3', '2:5', '2:7', '2:11', '2:13', '2:14', '2:18', '2:19', '3:2', '3:4', '3:5', '4:19'];
+    expect(await masked()).toEqual(all);
+    // A second click finds nothing new: the marks stay.
+    await page.getByRole('button', { name: en.mask, exact: true }).click();
+    await expect(page.locator('p.status')).toHaveText(en.maskedAlready);
+    expect(await masked()).toEqual(all);
   });
 });

@@ -217,6 +217,25 @@ describe('the first screen', () => {
   });
 });
 
+describe('the mask texts and the hint about segment ends written as text', () => {
+  it('say which segments are masked, and which text is not', () => {
+    for (const t of [en, ar]) {
+      for (const name of ['PID', 'NK1', 'PV1', 'MRG', 'OBX-5', 'NTE', 'PD1', 'GT1', 'IN1']) expect(t.maskedSummary, name).toContain(name);
+      expect(placeholders(t.maskedSummary)).toEqual(['count']);
+      expect(t.maskedAlready).not.toBe(t.maskedNone);
+    }
+    expect(en.maskedAlready).toBe('Already masked. The text did not change.');
+  });
+
+  it('show the segment end that was found, and the count after the fix', () => {
+    for (const t of [en, ar]) {
+      expect(placeholders(t.textEndsNote)).toEqual(['code']);
+      expect(placeholders(t.textEndsDone)).toEqual(['count']);
+      expect(placeholders(t.textEndsFix)).toEqual([]);
+    }
+  });
+});
+
 describe('the header links to the InfoGleam website', () => {
   it('have their texts in both languages', () => {
     expect(en.siteLogo).toBe('Go to the InfoGleam website');

@@ -13,6 +13,7 @@ import {
   maskMessage,
   messageVersion,
   parseMessage,
+  parseSegment,
   readDelimiters,
   serializeMessage,
   terminatorName,
@@ -53,6 +54,11 @@ describe('odd input', () => {
     'many empty fields': MSH + '\rPID' + '|'.repeat(5000) + '\r',
     'old Mac endings with blank lines': '\r\r' + MSH + '\r\r\r' + PID,
     'Windows endings with spaces on blank lines': MSH + '\r\n   \r\n' + PID + '\r\n',
+    'lines that start with spaces or tabs': '  ' + MSH + '\r\t' + PID + '\r \t NTE|1\r',
+    'a line with only spaces before the segment name': MSH + '\r' + ' '.repeat(10_000) + PID + '\r',
+    'several MLLP-framed messages': '\x0b' + MSH + '\r' + PID + '\r\x1c\r\x0b' + MSH + '\r' + PID + '\r\x1c\r',
+    'MLLP characters with no line end between them': '\x0b' + MSH + '\r' + PID + '\x1c\x0b' + MSH + '\r\x1c',
+    'a long run of MLLP characters and spaces': MSH + '\rNTE|1||a' + '\x1c \t'.repeat(10_000) + 'b\x1c' + ' '.repeat(10_000) + '\r',
   };
 
   for (const [name, text] of Object.entries(inputs)) {
@@ -232,7 +238,7 @@ describe('a byte order mark (BOM) and MLLP frame characters', () => {
   });
 
   it('keeps the characters inside the message as they are', () => {
-    // Only the start and the end of the text count as the frame.
+    // Only the start and the end of the text, or of a line, count as the frame.
     const text = MSH + '\rNTE|1||a' + END + 'b' + START + 'c' + BOM + 'd\r';
     const m = parseMessage(text);
     expect(m.frame).toEqual({ before: '', after: '', bom: false, mllp: false });
@@ -251,6 +257,153 @@ describe('a byte order mark (BOM) and MLLP frame characters', () => {
       expect(m.warnings, JSON.stringify(text)).not.toContain('no-msh');
       roundTrip(text);
     }
+  });
+});
+
+describe('lines that start with spaces or tabs', () => {
+  // A message copied from an email or a web page can have spaces or tabs at
+  // the start of its lines. The parser reads the segment without them and
+  // keeps them in `before`, so the rebuild is still exact.
+  const plain = MSH + '\r' + PID + '\r';
+
+  it('reads the segment without the spaces, and rebuilds the exact text', () => {
+    for (const indent of [' ', '  ', '\t', ' \t ']) {
+      const text = MSH + '\r' + indent + PID + '\r';
+      const m = parseMessage(text);
+      expect(serializeMessage(m), JSON.stringify(indent)).toBe(text);
+      expect(m.segments.map((s) => s.name)).toEqual(['MSH', 'PID']);
+      expect(m.segments[0]?.before).toBeUndefined();
+      expect(m.segments[1]?.before).toBe(indent);
+      expect(m.segments[1]?.raw).toBe(PID);
+      expect(m.segments[1]?.after).toBe('\r');
+      expect(m.segments[1]?.fields).toEqual(parseMessage(plain).segments[1]?.fields);
+    }
+  });
+
+  it('reads the delimiters from an MSH line that starts with spaces', () => {
+    for (const indent of ['   ', '\t']) {
+      const text = indent + MSH + '\r' + indent + PID + '\r';
+      const m = parseMessage(text);
+      expect(serializeMessage(m)).toBe(text);
+      expect(m.warnings).toEqual([]);
+      expect(m.delimiters).toEqual(parseMessage(plain).delimiters);
+      expect(m.leading).toBe('');
+      expect(m.segments.map((s) => s.name)).toEqual(['MSH', 'PID']);
+      expect(m.segments[0]?.fields.slice(0, 3).map((f) => f.value)).toEqual(['|', '^~\\&', 'DEMO_APP']);
+      expect(messageVersion(m)).toBe('2.5.1');
+      // The checks of the plain message, and one note (S8) for each line.
+      const checks = checkMessage(m, '2.5.1');
+      const same = checkMessage(parseMessage(plain), '2.5.1');
+      expect(checks.findings.filter((f) => f.id !== 'S8')).toEqual(same.findings);
+      expect(checks.findings.filter((f) => f.id === 'S8').map((f) => f.line)).toEqual([1, 2]);
+    }
+  });
+
+  it('reads other delimiters from such an MSH line too', () => {
+    const text = '  MSH*:!/$*APP*FAC\r  PID*1**ID1:X!ID2:Y\r';
+    const m = parseMessage(text);
+    expect(m.delimiters.field).toBe('*');
+    expect(m.segments[1]?.fields[2]?.repetitions.map((r) => r.components[0]?.value)).toEqual(['ID1', 'ID2']);
+    expect(serializeMessage(m)).toBe(text);
+  });
+
+  it('keeps spaces at the end of a line in the last field', () => {
+    const m = parseMessage(MSH + '\r  NTE|1||text \t\r');
+    expect(m.segments[1]?.fields[2]?.value).toBe('text \t');
+    expect(m.segments[1]?.after).toBe('\r');
+  });
+
+  it('keeps a line with only spaces as a blank line', () => {
+    const text = MSH + '\r   \r  ' + PID + '\r';
+    const m = parseMessage(text);
+    expect(m.segments.map((s) => [s.name, s.before, s.after])).toEqual([
+      ['MSH', undefined, '\r   \r'],
+      ['PID', '  ', '\r'],
+    ]);
+    expect(serializeMessage(m)).toBe(text);
+  });
+
+  it('masks and keeps the spaces', () => {
+    const text = MSH + '\r  ' + PID + '\r';
+    const { message } = maskMessage(parseMessage(text));
+    expect(message.segments[1]?.before).toBe('  ');
+    expect(serializeMessage(message)).toBe(MSH + '\r  PID|1||MASK0001^^^DEMOHOSP^MR||MASKED^PATIENT||19000101|F\r');
+  });
+
+  it('parseSegment() alone still reads the line as it is', () => {
+    // Only parseMessage() skips the spaces.
+    expect(parseMessage(MSH + '\r' + '  ' + PID).segments[1]?.name).toBe('PID');
+    expect(parseSegment('  ' + PID, DEFAULT_DELIMITERS).name).toBe('  PID');
+  });
+});
+
+describe('several MLLP-framed messages in one text', () => {
+  // A log can hold several messages, each in its own MLLP frame: a vertical
+  // tab (U+000B) before it, and U+001C plus CR after it. The frame
+  // characters between the messages are at the start or the end of a line.
+  const START = '\u000B';
+  const END = '\u001C';
+  const one = MSH + '\r' + PID + '\r';
+
+  it('reads each MSH as MSH, and rebuilds the exact text', () => {
+    for (const between of ['\r', '\n', '\r\n', '']) {
+      const text = START + one + END + between + START + one + END + '\r';
+      const m = parseMessage(text);
+      expect(serializeMessage(m), JSON.stringify(between)).toBe(text);
+      expect(m.segments.map((s) => s.name)).toEqual(['MSH', 'PID', 'MSH', 'PID']);
+      expect(m.segments.map((s) => s.raw)).toEqual([MSH, PID, MSH, PID]);
+      expect(m.segments[2]?.before).toBe(between === '' ? END + START : START);
+      expect(m.frame).toEqual({ before: START, after: END + '\r', bom: false, mllp: true });
+      expect(m.warnings.filter((w) => w === 'no-msh' || w === 'short-encoding')).toEqual([]);
+    }
+  });
+
+  it('skips the end character at the end of a line', () => {
+    const body = MSH + '\r' + PID;
+    const text = START + body + END + '\r' + START + body + END + '\r';
+    const m = parseMessage(text);
+    expect(serializeMessage(m)).toBe(text);
+    expect(m.segments.map((s) => s.raw)).toEqual([MSH, PID, MSH, PID]);
+    expect(m.segments[1]?.after).toBe(END + '\r');
+    expect(m.segments[2]?.before).toBe(START);
+    expect(m.segments[3]?.after).toBe('');
+  });
+
+  it('gives the same checks as the messages without the frames: the S7 note for the second MSH', () => {
+    const text = START + one + END + '\r' + START + one + END + '\r';
+    const r = checkMessage(parseMessage(text), '2.5.1');
+    expect(r).toEqual(checkMessage(parseMessage(one + one), '2.5.1'));
+    expect(r.findings.filter((f) => f.id === 'S7')).toEqual([
+      { id: 'S7', level: 'note', line: 3, position: { segment: 'MSH', segmentIndex: 2 }, facts: { count: 2 } },
+    ]);
+    expect(r.findings.filter((f) => f.id === 'S3a' || f.id === 'S3b' || f.id === 'S8')).toEqual([]);
+  });
+
+  it('sets mllp when the frame characters are only between the messages', () => {
+    const m = parseMessage(one + END + '\r' + START + one);
+    expect(m.frame).toEqual({ before: '', after: '', bom: false, mllp: true });
+    expect(m.segments.map((s) => s.name)).toEqual(['MSH', 'PID', 'MSH', 'PID']);
+  });
+
+  it('skips a BOM at the start of a line, when two files were put together', () => {
+    const BOM = '\uFEFF';
+    const text = BOM + one + BOM + one;
+    const m = parseMessage(text);
+    expect(serializeMessage(m)).toBe(text);
+    expect(m.segments.map((s) => s.name)).toEqual(['MSH', 'PID', 'MSH', 'PID']);
+    expect(m.segments[2]?.before).toBe(BOM);
+    // The BOM note is only about the start of the text.
+    expect(m.frame).toEqual({ before: BOM, after: '', bom: true, mllp: false });
+  });
+
+  it('masks every message and keeps the frames', () => {
+    const text = START + one + END + '\r' + START + one + END + '\r';
+    const { message, changes } = maskMessage(parseMessage(text));
+    expect(changes.map((c) => `${c.label}#${c.occurrence}`)).toEqual(['PID-3#1', 'PID-5#1', 'PID-7#1', 'PID-3#2', 'PID-5#2', 'PID-7#2']);
+    const out = serializeMessage(message);
+    expect(out.startsWith(START + 'MSH|')).toBe(true);
+    expect(out).toContain('\r' + END + '\r' + START + 'MSH|');
+    expect(out).not.toContain('DOE');
   });
 });
 
@@ -327,9 +480,10 @@ describe('buildSegmentRaw', () => {
 
 describe('mask edge cases', () => {
   it('masks with the delimiters of the message', () => {
+    // PID-4 and PID-6 hold only the escape character ($).
     const text = 'MSH#!@$%#DEMO\rPID#1##ID1!!!AUTH!MR@ID2#$#DOE!JANE#$#19800101\r';
     const out = serializeMessage(maskMessage(parseMessage(text)).message);
-    expect(out).toBe('MSH#!@$%#DEMO\rPID#1##MASK0001!!!AUTH!MR@MASK0002#$#MASKED!PATIENT#$#19000101\r');
+    expect(out).toBe('MSH#!@$%#DEMO\rPID#1##MASK0001!!!AUTH!MR@MASK0002#MASK0001#MASKED!PATIENT#MASKED!RELATIVE#19000101\r');
   });
 
   it('leaves empty repetitions empty', () => {
