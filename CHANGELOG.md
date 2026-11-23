@@ -2,7 +2,7 @@
 
 All notable changes to this project are listed here.
 
-## Unreleased
+## 0.9.2 - 2026-11-23
 
 - Mirth/OIE paths fixed. Checked in Mirth Connect 4.5.2 itself (its HL7 v2
   to XML converter and its JavaScript engine):
