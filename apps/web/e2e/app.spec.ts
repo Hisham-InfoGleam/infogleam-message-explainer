@@ -679,7 +679,8 @@ test.describe('mask and copy', () => {
     const obx2 = await page.locator('.mv-row').evaluateAll((rows) => rows.findIndex((r) => r.textContent?.startsWith('OBX|2|')));
     await page.locator(`.mv [data-k="${obx2}:5"]`).click();
     await page.locator('aside.explain .xp-copy').click();
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("msg['OBX'][1]['OBX.5']");
+    // A plain value: Mirth stores it as component 1 (checked in Mirth 4.5.2).
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("msg['OBX'][1]['OBX.5']['OBX.5.1']");
     await expect(page.locator('aside.explain .xp-copy')).toContainText(en.copied);
 
     await page.getByRole('button', { name: en.copyMirthFor.replace('{label}', 'PID-5') }).click();

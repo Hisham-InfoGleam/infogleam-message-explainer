@@ -52,6 +52,11 @@ export interface HL7Segment {
   index: number;
   /** 1-based count of this segment name so far (second OBX = 2). */
   occurrence: number;
+  /**
+   * How many segments with this name the whole message has (three OBX = 3).
+   * Set by parseMessage(); unknown for a segment parsed alone.
+   */
+  count?: number;
   /** Original segment text, without the terminator. */
   raw: string;
   /** Text that followed this segment: its terminator plus any blank lines. */

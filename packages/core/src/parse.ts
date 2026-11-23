@@ -187,6 +187,7 @@ export function parseMessage(raw: string): ParsedMessage {
     seg.occurrence = occurrence;
     segments.push(seg);
   }
+  for (const seg of segments) seg.count = counts.get(seg.name) ?? 1;
 
   return {
     segments,

@@ -43,7 +43,7 @@ test(`a message with ${SEGMENTS} segments loads in time and stays usable`, async
   await last.scrollIntoViewIfNeeded();
   await last.click();
   await expect(page.locator('aside.explain #xp-title')).toContainText('OBX-5');
-  await expect(page.locator('aside.explain .xp-path')).toHaveText(`msg['OBX'][${SEGMENTS - 4}]['OBX.5']`);
+  await expect(page.locator('aside.explain .xp-path')).toHaveText(`msg['OBX'][${SEGMENTS - 4}]['OBX.5']['OBX.5.1']`);
 
   // Search still works.
   await page.locator('#field-search').fill('OBX-5');

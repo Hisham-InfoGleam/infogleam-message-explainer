@@ -1,0 +1,1612 @@
+{
+ "about": "Made-up messages. Each path was run in Mirth Connect 4.5.2 (its own HL7 v2 to XML converter and its JavaScript engine, Rhino 1.7.13) on 2026-11-23. Every path of a single value returned exactly that value. Paths of a whole field or a whole component (one with parts) return XML in Mirth, as expected.",
+ "messages": {
+  "m1": "MSH|^~\\&|LAB_APP|DEMO LAB|EHR_APP|DEMO HOSPITAL|20261120101500||ORU^R01^ORU_R01|MSG20001|P|2.5.1\rPID|1||TEST1001^^^DEMOHOSP^MR||SAMPLE^ANNA^B||19750312|F|||22 TEST RD^^DEMO CITY^DS^11111^USA||555-0200^PRN^PH\rOBR|1|ORD5001^EHR_APP|FIL5001^LAB_APP|58410-2^CBC panel^LN|||20261120090000|||||||||DOC002^LABDOC^DEMO||||||20261120101000|||F\rOBX|1|NM|718-7^Hemoglobin^LN||13.2|g/dL^grams per deciliter^UCUM|12.0-16.0|N|||F\rOBX|2|NM|6690-2^Leukocytes^LN||11.8|10*3/uL|4.0-10.5|H|||F\rOBX|3|ST|8251-1^Service comment^LN||Sample slightly hemolyzed \\T\\ repeat advised||||||F\rNTE|1|L|Result reviewed by lab staff.~Second line of note.",
+  "m2": "MSH|^~\\&|REG_APP|DEMO CLINIC|ADT_RCV|DEMO CLINIC|20261121083000||ADT^A08|MSG30001|P|2.3\rEVN|A08|20261121083000\rPID|1|EXT77|TEST2001^^^DEMOCLINIC&1.2.3.4.5&ISO^MR||DOE^JOHN^Q^JR^^^L~DOE^JOHNNY^^^^^A||19900115|M||2106-3^White^HL70005|9 SAMPLE AVE^APT 2^DEMO TOWN^DS^22222^USA^H~PO BOX 5^^DEMO TOWN^DS^22223^USA^M||555-0300^PRN^PH~^NET^Internet^john.doe@example.com\rNK1|1|DOE^JANE|SPO^Spouse^HL70063||555-0301\rNK1|2|DOE^MARK|CHD^Child^HL70063\rPV1|1|O|CLINIC1^^^DEMO CLINIC||||DOC003^PHYSICIAN^DEMO\rDG1|1|I10|E11.9^Type 2 diabetes mellitus without complications^I10||20261121|A\rDG1|2|I10|I10^Essential hypertension^I10||20261121|A",
+  "m3": "MSH|$~\\@|ORDER_APP|DEMO HOSPITAL|LAB_APP|DEMO LAB|20261122120000||ORM$O01$ORM_O01|MSG40001|P|2.4\rPID|1||TEST3001$$$DEMOHOSP@DEMO HOSPITAL@L$MR~TEST3002$$$DEMOHOSP$PI||PATIENT$TEST$TWO||20000229|U\rPV1|1|E|ER1$$$DEMO HOSPITAL\rORC|NW|ORD6001$ORDER_APP||GRP01$ORDER_APP|||1$$$20261122120000$$R\rOBR|1|ORD6001$ORDER_APP||2345-7$Glucose$LN|||20261122115500\rORC|NW|ORD6002$ORDER_APP||GRP01$ORDER_APP\rOBR|2|ORD6002$ORDER_APP||2160-0$Creatinine$LN|||20261122115500\rNTE|1||Fasting sample."
+ },
+ "rows": [
+  {
+   "msg": "m1",
+   "label": "MSH-1",
+   "value": "|",
+   "path": "msg['MSH']['MSH.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-2",
+   "value": "^~\\&",
+   "path": "msg['MSH']['MSH.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-3",
+   "value": "LAB_APP",
+   "path": "msg['MSH']['MSH.3']['MSH.3.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-4",
+   "value": "DEMO LAB",
+   "path": "msg['MSH']['MSH.4']['MSH.4.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-5",
+   "value": "EHR_APP",
+   "path": "msg['MSH']['MSH.5']['MSH.5.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-6",
+   "value": "DEMO HOSPITAL",
+   "path": "msg['MSH']['MSH.6']['MSH.6.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-7",
+   "value": "20261120101500",
+   "path": "msg['MSH']['MSH.7']['MSH.7.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-9",
+   "value": "ORU^R01^ORU_R01",
+   "path": "msg['MSH']['MSH.9']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-9.1",
+   "value": "ORU",
+   "path": "msg['MSH']['MSH.9']['MSH.9.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-9.2",
+   "value": "R01",
+   "path": "msg['MSH']['MSH.9']['MSH.9.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-9.3",
+   "value": "ORU_R01",
+   "path": "msg['MSH']['MSH.9']['MSH.9.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-10",
+   "value": "MSG20001",
+   "path": "msg['MSH']['MSH.10']['MSH.10.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-11",
+   "value": "P",
+   "path": "msg['MSH']['MSH.11']['MSH.11.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "MSH-12",
+   "value": "2.5.1",
+   "path": "msg['MSH']['MSH.12']['MSH.12.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-1",
+   "value": "1",
+   "path": "msg['PID']['PID.1']['PID.1.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-3",
+   "value": "TEST1001^^^DEMOHOSP^MR",
+   "path": "msg['PID']['PID.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-3.1",
+   "value": "TEST1001",
+   "path": "msg['PID']['PID.3']['PID.3.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-3.4",
+   "value": "DEMOHOSP",
+   "path": "msg['PID']['PID.3']['PID.3.4']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-3.5",
+   "value": "MR",
+   "path": "msg['PID']['PID.3']['PID.3.5']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-5",
+   "value": "SAMPLE^ANNA^B",
+   "path": "msg['PID']['PID.5']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-5.1",
+   "value": "SAMPLE",
+   "path": "msg['PID']['PID.5']['PID.5.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-5.2",
+   "value": "ANNA",
+   "path": "msg['PID']['PID.5']['PID.5.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-5.3",
+   "value": "B",
+   "path": "msg['PID']['PID.5']['PID.5.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-7",
+   "value": "19750312",
+   "path": "msg['PID']['PID.7']['PID.7.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-8",
+   "value": "F",
+   "path": "msg['PID']['PID.8']['PID.8.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-11",
+   "value": "22 TEST RD^^DEMO CITY^DS^11111^USA",
+   "path": "msg['PID']['PID.11']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-11.1",
+   "value": "22 TEST RD",
+   "path": "msg['PID']['PID.11']['PID.11.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-11.3",
+   "value": "DEMO CITY",
+   "path": "msg['PID']['PID.11']['PID.11.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-11.4",
+   "value": "DS",
+   "path": "msg['PID']['PID.11']['PID.11.4']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-11.5",
+   "value": "11111",
+   "path": "msg['PID']['PID.11']['PID.11.5']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-11.6",
+   "value": "USA",
+   "path": "msg['PID']['PID.11']['PID.11.6']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-13",
+   "value": "555-0200^PRN^PH",
+   "path": "msg['PID']['PID.13']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-13.1",
+   "value": "555-0200",
+   "path": "msg['PID']['PID.13']['PID.13.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-13.2",
+   "value": "PRN",
+   "path": "msg['PID']['PID.13']['PID.13.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "PID-13.3",
+   "value": "PH",
+   "path": "msg['PID']['PID.13']['PID.13.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-1",
+   "value": "1",
+   "path": "msg['OBR']['OBR.1']['OBR.1.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-2",
+   "value": "ORD5001^EHR_APP",
+   "path": "msg['OBR']['OBR.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-2.1",
+   "value": "ORD5001",
+   "path": "msg['OBR']['OBR.2']['OBR.2.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-2.2",
+   "value": "EHR_APP",
+   "path": "msg['OBR']['OBR.2']['OBR.2.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-3",
+   "value": "FIL5001^LAB_APP",
+   "path": "msg['OBR']['OBR.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-3.1",
+   "value": "FIL5001",
+   "path": "msg['OBR']['OBR.3']['OBR.3.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-3.2",
+   "value": "LAB_APP",
+   "path": "msg['OBR']['OBR.3']['OBR.3.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-4",
+   "value": "58410-2^CBC panel^LN",
+   "path": "msg['OBR']['OBR.4']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-4.1",
+   "value": "58410-2",
+   "path": "msg['OBR']['OBR.4']['OBR.4.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-4.2",
+   "value": "CBC panel",
+   "path": "msg['OBR']['OBR.4']['OBR.4.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-4.3",
+   "value": "LN",
+   "path": "msg['OBR']['OBR.4']['OBR.4.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-7",
+   "value": "20261120090000",
+   "path": "msg['OBR']['OBR.7']['OBR.7.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-16",
+   "value": "DOC002^LABDOC^DEMO",
+   "path": "msg['OBR']['OBR.16']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-16.1",
+   "value": "DOC002",
+   "path": "msg['OBR']['OBR.16']['OBR.16.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-16.2",
+   "value": "LABDOC",
+   "path": "msg['OBR']['OBR.16']['OBR.16.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-16.3",
+   "value": "DEMO",
+   "path": "msg['OBR']['OBR.16']['OBR.16.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-22",
+   "value": "20261120101000",
+   "path": "msg['OBR']['OBR.22']['OBR.22.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBR-25",
+   "value": "F",
+   "path": "msg['OBR']['OBR.25']['OBR.25.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-1",
+   "value": "1",
+   "path": "msg['OBX'][0]['OBX.1']['OBX.1.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-2",
+   "value": "NM",
+   "path": "msg['OBX'][0]['OBX.2']['OBX.2.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3",
+   "value": "718-7^Hemoglobin^LN",
+   "path": "msg['OBX'][0]['OBX.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.1",
+   "value": "718-7",
+   "path": "msg['OBX'][0]['OBX.3']['OBX.3.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.2",
+   "value": "Hemoglobin",
+   "path": "msg['OBX'][0]['OBX.3']['OBX.3.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.3",
+   "value": "LN",
+   "path": "msg['OBX'][0]['OBX.3']['OBX.3.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-5",
+   "value": "13.2",
+   "path": "msg['OBX'][0]['OBX.5']['OBX.5.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-6",
+   "value": "g/dL^grams per deciliter^UCUM",
+   "path": "msg['OBX'][0]['OBX.6']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-6.1",
+   "value": "g/dL",
+   "path": "msg['OBX'][0]['OBX.6']['OBX.6.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-6.2",
+   "value": "grams per deciliter",
+   "path": "msg['OBX'][0]['OBX.6']['OBX.6.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-6.3",
+   "value": "UCUM",
+   "path": "msg['OBX'][0]['OBX.6']['OBX.6.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-7",
+   "value": "12.0-16.0",
+   "path": "msg['OBX'][0]['OBX.7']['OBX.7.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-8",
+   "value": "N",
+   "path": "msg['OBX'][0]['OBX.8']['OBX.8.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-11",
+   "value": "F",
+   "path": "msg['OBX'][0]['OBX.11']['OBX.11.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-1",
+   "value": "2",
+   "path": "msg['OBX'][1]['OBX.1']['OBX.1.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-2",
+   "value": "NM",
+   "path": "msg['OBX'][1]['OBX.2']['OBX.2.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3",
+   "value": "6690-2^Leukocytes^LN",
+   "path": "msg['OBX'][1]['OBX.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.1",
+   "value": "6690-2",
+   "path": "msg['OBX'][1]['OBX.3']['OBX.3.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.2",
+   "value": "Leukocytes",
+   "path": "msg['OBX'][1]['OBX.3']['OBX.3.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.3",
+   "value": "LN",
+   "path": "msg['OBX'][1]['OBX.3']['OBX.3.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-5",
+   "value": "11.8",
+   "path": "msg['OBX'][1]['OBX.5']['OBX.5.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-6",
+   "value": "10*3/uL",
+   "path": "msg['OBX'][1]['OBX.6']['OBX.6.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-7",
+   "value": "4.0-10.5",
+   "path": "msg['OBX'][1]['OBX.7']['OBX.7.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-8",
+   "value": "H",
+   "path": "msg['OBX'][1]['OBX.8']['OBX.8.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-11",
+   "value": "F",
+   "path": "msg['OBX'][1]['OBX.11']['OBX.11.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-1",
+   "value": "3",
+   "path": "msg['OBX'][2]['OBX.1']['OBX.1.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-2",
+   "value": "ST",
+   "path": "msg['OBX'][2]['OBX.2']['OBX.2.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3",
+   "value": "8251-1^Service comment^LN",
+   "path": "msg['OBX'][2]['OBX.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.1",
+   "value": "8251-1",
+   "path": "msg['OBX'][2]['OBX.3']['OBX.3.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.2",
+   "value": "Service comment",
+   "path": "msg['OBX'][2]['OBX.3']['OBX.3.2']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-3.3",
+   "value": "LN",
+   "path": "msg['OBX'][2]['OBX.3']['OBX.3.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-5",
+   "value": "Sample slightly hemolyzed \\T\\ repeat advised",
+   "path": "msg['OBX'][2]['OBX.5']['OBX.5.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "OBX-11",
+   "value": "F",
+   "path": "msg['OBX'][2]['OBX.11']['OBX.11.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "NTE-1",
+   "value": "1",
+   "path": "msg['NTE']['NTE.1']['NTE.1.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "NTE-2",
+   "value": "L",
+   "path": "msg['NTE']['NTE.2']['NTE.2.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "NTE-3",
+   "value": "Result reviewed by lab staff.~Second line of note.",
+   "path": "msg['NTE']['NTE.3']"
+  },
+  {
+   "msg": "m1",
+   "label": "NTE-3.1",
+   "value": "Result reviewed by lab staff.",
+   "path": "msg['NTE']['NTE.3'][0]['NTE.3.1']"
+  },
+  {
+   "msg": "m1",
+   "label": "NTE-3[2].1",
+   "value": "Second line of note.",
+   "path": "msg['NTE']['NTE.3'][1]['NTE.3.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-1",
+   "value": "|",
+   "path": "msg['MSH']['MSH.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-2",
+   "value": "^~\\&",
+   "path": "msg['MSH']['MSH.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-3",
+   "value": "REG_APP",
+   "path": "msg['MSH']['MSH.3']['MSH.3.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-4",
+   "value": "DEMO CLINIC",
+   "path": "msg['MSH']['MSH.4']['MSH.4.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-5",
+   "value": "ADT_RCV",
+   "path": "msg['MSH']['MSH.5']['MSH.5.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-6",
+   "value": "DEMO CLINIC",
+   "path": "msg['MSH']['MSH.6']['MSH.6.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-7",
+   "value": "20261121083000",
+   "path": "msg['MSH']['MSH.7']['MSH.7.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-9",
+   "value": "ADT^A08",
+   "path": "msg['MSH']['MSH.9']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-9.1",
+   "value": "ADT",
+   "path": "msg['MSH']['MSH.9']['MSH.9.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-9.2",
+   "value": "A08",
+   "path": "msg['MSH']['MSH.9']['MSH.9.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-10",
+   "value": "MSG30001",
+   "path": "msg['MSH']['MSH.10']['MSH.10.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-11",
+   "value": "P",
+   "path": "msg['MSH']['MSH.11']['MSH.11.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "MSH-12",
+   "value": "2.3",
+   "path": "msg['MSH']['MSH.12']['MSH.12.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "EVN-1",
+   "value": "A08",
+   "path": "msg['EVN']['EVN.1']['EVN.1.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "EVN-2",
+   "value": "20261121083000",
+   "path": "msg['EVN']['EVN.2']['EVN.2.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-1",
+   "value": "1",
+   "path": "msg['PID']['PID.1']['PID.1.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-2",
+   "value": "EXT77",
+   "path": "msg['PID']['PID.2']['PID.2.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-3",
+   "value": "TEST2001^^^DEMOCLINIC&1.2.3.4.5&ISO^MR",
+   "path": "msg['PID']['PID.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-3.1",
+   "value": "TEST2001",
+   "path": "msg['PID']['PID.3']['PID.3.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-3.4",
+   "value": "DEMOCLINIC&1.2.3.4.5&ISO",
+   "path": "msg['PID']['PID.3']['PID.3.4']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-3.4.1",
+   "value": "DEMOCLINIC",
+   "path": "msg['PID']['PID.3']['PID.3.4']['PID.3.4.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-3.4.2",
+   "value": "1.2.3.4.5",
+   "path": "msg['PID']['PID.3']['PID.3.4']['PID.3.4.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-3.4.3",
+   "value": "ISO",
+   "path": "msg['PID']['PID.3']['PID.3.4']['PID.3.4.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-3.5",
+   "value": "MR",
+   "path": "msg['PID']['PID.3']['PID.3.5']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5",
+   "value": "DOE^JOHN^Q^JR^^^L~DOE^JOHNNY^^^^^A",
+   "path": "msg['PID']['PID.5']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5.1",
+   "value": "DOE",
+   "path": "msg['PID']['PID.5'][0]['PID.5.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5.2",
+   "value": "JOHN",
+   "path": "msg['PID']['PID.5'][0]['PID.5.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5.3",
+   "value": "Q",
+   "path": "msg['PID']['PID.5'][0]['PID.5.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5.4",
+   "value": "JR",
+   "path": "msg['PID']['PID.5'][0]['PID.5.4']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5.7",
+   "value": "L",
+   "path": "msg['PID']['PID.5'][0]['PID.5.7']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5[2].1",
+   "value": "DOE",
+   "path": "msg['PID']['PID.5'][1]['PID.5.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5[2].2",
+   "value": "JOHNNY",
+   "path": "msg['PID']['PID.5'][1]['PID.5.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-5[2].7",
+   "value": "A",
+   "path": "msg['PID']['PID.5'][1]['PID.5.7']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-7",
+   "value": "19900115",
+   "path": "msg['PID']['PID.7']['PID.7.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-8",
+   "value": "M",
+   "path": "msg['PID']['PID.8']['PID.8.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-10",
+   "value": "2106-3^White^HL70005",
+   "path": "msg['PID']['PID.10']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-10.1",
+   "value": "2106-3",
+   "path": "msg['PID']['PID.10']['PID.10.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-10.2",
+   "value": "White",
+   "path": "msg['PID']['PID.10']['PID.10.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-10.3",
+   "value": "HL70005",
+   "path": "msg['PID']['PID.10']['PID.10.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11",
+   "value": "9 SAMPLE AVE^APT 2^DEMO TOWN^DS^22222^USA^H~PO BOX 5^^DEMO TOWN^DS^22223^USA^M",
+   "path": "msg['PID']['PID.11']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11.1",
+   "value": "9 SAMPLE AVE",
+   "path": "msg['PID']['PID.11'][0]['PID.11.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11.2",
+   "value": "APT 2",
+   "path": "msg['PID']['PID.11'][0]['PID.11.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11.3",
+   "value": "DEMO TOWN",
+   "path": "msg['PID']['PID.11'][0]['PID.11.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11.4",
+   "value": "DS",
+   "path": "msg['PID']['PID.11'][0]['PID.11.4']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11.5",
+   "value": "22222",
+   "path": "msg['PID']['PID.11'][0]['PID.11.5']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11.6",
+   "value": "USA",
+   "path": "msg['PID']['PID.11'][0]['PID.11.6']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11.7",
+   "value": "H",
+   "path": "msg['PID']['PID.11'][0]['PID.11.7']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11[2].1",
+   "value": "PO BOX 5",
+   "path": "msg['PID']['PID.11'][1]['PID.11.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11[2].3",
+   "value": "DEMO TOWN",
+   "path": "msg['PID']['PID.11'][1]['PID.11.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11[2].4",
+   "value": "DS",
+   "path": "msg['PID']['PID.11'][1]['PID.11.4']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11[2].5",
+   "value": "22223",
+   "path": "msg['PID']['PID.11'][1]['PID.11.5']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11[2].6",
+   "value": "USA",
+   "path": "msg['PID']['PID.11'][1]['PID.11.6']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-11[2].7",
+   "value": "M",
+   "path": "msg['PID']['PID.11'][1]['PID.11.7']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-13",
+   "value": "555-0300^PRN^PH~^NET^Internet^john.doe@example.com",
+   "path": "msg['PID']['PID.13']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-13.1",
+   "value": "555-0300",
+   "path": "msg['PID']['PID.13'][0]['PID.13.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-13.2",
+   "value": "PRN",
+   "path": "msg['PID']['PID.13'][0]['PID.13.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-13.3",
+   "value": "PH",
+   "path": "msg['PID']['PID.13'][0]['PID.13.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-13[2].2",
+   "value": "NET",
+   "path": "msg['PID']['PID.13'][1]['PID.13.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-13[2].3",
+   "value": "Internet",
+   "path": "msg['PID']['PID.13'][1]['PID.13.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PID-13[2].4",
+   "value": "john.doe@example.com",
+   "path": "msg['PID']['PID.13'][1]['PID.13.4']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-1",
+   "value": "1",
+   "path": "msg['NK1'][0]['NK1.1']['NK1.1.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-2",
+   "value": "DOE^JANE",
+   "path": "msg['NK1'][0]['NK1.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-2.1",
+   "value": "DOE",
+   "path": "msg['NK1'][0]['NK1.2']['NK1.2.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-2.2",
+   "value": "JANE",
+   "path": "msg['NK1'][0]['NK1.2']['NK1.2.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-3",
+   "value": "SPO^Spouse^HL70063",
+   "path": "msg['NK1'][0]['NK1.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-3.1",
+   "value": "SPO",
+   "path": "msg['NK1'][0]['NK1.3']['NK1.3.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-3.2",
+   "value": "Spouse",
+   "path": "msg['NK1'][0]['NK1.3']['NK1.3.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-3.3",
+   "value": "HL70063",
+   "path": "msg['NK1'][0]['NK1.3']['NK1.3.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-5",
+   "value": "555-0301",
+   "path": "msg['NK1'][0]['NK1.5']['NK1.5.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-1",
+   "value": "2",
+   "path": "msg['NK1'][1]['NK1.1']['NK1.1.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-2",
+   "value": "DOE^MARK",
+   "path": "msg['NK1'][1]['NK1.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-2.1",
+   "value": "DOE",
+   "path": "msg['NK1'][1]['NK1.2']['NK1.2.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-2.2",
+   "value": "MARK",
+   "path": "msg['NK1'][1]['NK1.2']['NK1.2.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-3",
+   "value": "CHD^Child^HL70063",
+   "path": "msg['NK1'][1]['NK1.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-3.1",
+   "value": "CHD",
+   "path": "msg['NK1'][1]['NK1.3']['NK1.3.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-3.2",
+   "value": "Child",
+   "path": "msg['NK1'][1]['NK1.3']['NK1.3.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "NK1-3.3",
+   "value": "HL70063",
+   "path": "msg['NK1'][1]['NK1.3']['NK1.3.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-1",
+   "value": "1",
+   "path": "msg['PV1']['PV1.1']['PV1.1.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-2",
+   "value": "O",
+   "path": "msg['PV1']['PV1.2']['PV1.2.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-3",
+   "value": "CLINIC1^^^DEMO CLINIC",
+   "path": "msg['PV1']['PV1.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-3.1",
+   "value": "CLINIC1",
+   "path": "msg['PV1']['PV1.3']['PV1.3.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-3.4",
+   "value": "DEMO CLINIC",
+   "path": "msg['PV1']['PV1.3']['PV1.3.4']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-7",
+   "value": "DOC003^PHYSICIAN^DEMO",
+   "path": "msg['PV1']['PV1.7']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-7.1",
+   "value": "DOC003",
+   "path": "msg['PV1']['PV1.7']['PV1.7.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-7.2",
+   "value": "PHYSICIAN",
+   "path": "msg['PV1']['PV1.7']['PV1.7.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "PV1-7.3",
+   "value": "DEMO",
+   "path": "msg['PV1']['PV1.7']['PV1.7.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-1",
+   "value": "1",
+   "path": "msg['DG1'][0]['DG1.1']['DG1.1.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-2",
+   "value": "I10",
+   "path": "msg['DG1'][0]['DG1.2']['DG1.2.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-3",
+   "value": "E11.9^Type 2 diabetes mellitus without complications^I10",
+   "path": "msg['DG1'][0]['DG1.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-3.1",
+   "value": "E11.9",
+   "path": "msg['DG1'][0]['DG1.3']['DG1.3.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-3.2",
+   "value": "Type 2 diabetes mellitus without complications",
+   "path": "msg['DG1'][0]['DG1.3']['DG1.3.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-3.3",
+   "value": "I10",
+   "path": "msg['DG1'][0]['DG1.3']['DG1.3.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-5",
+   "value": "20261121",
+   "path": "msg['DG1'][0]['DG1.5']['DG1.5.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-6",
+   "value": "A",
+   "path": "msg['DG1'][0]['DG1.6']['DG1.6.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-1",
+   "value": "2",
+   "path": "msg['DG1'][1]['DG1.1']['DG1.1.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-2",
+   "value": "I10",
+   "path": "msg['DG1'][1]['DG1.2']['DG1.2.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-3",
+   "value": "I10^Essential hypertension^I10",
+   "path": "msg['DG1'][1]['DG1.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-3.1",
+   "value": "I10",
+   "path": "msg['DG1'][1]['DG1.3']['DG1.3.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-3.2",
+   "value": "Essential hypertension",
+   "path": "msg['DG1'][1]['DG1.3']['DG1.3.2']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-3.3",
+   "value": "I10",
+   "path": "msg['DG1'][1]['DG1.3']['DG1.3.3']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-5",
+   "value": "20261121",
+   "path": "msg['DG1'][1]['DG1.5']['DG1.5.1']"
+  },
+  {
+   "msg": "m2",
+   "label": "DG1-6",
+   "value": "A",
+   "path": "msg['DG1'][1]['DG1.6']['DG1.6.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-1",
+   "value": "|",
+   "path": "msg['MSH']['MSH.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-2",
+   "value": "$~\\@",
+   "path": "msg['MSH']['MSH.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-3",
+   "value": "ORDER_APP",
+   "path": "msg['MSH']['MSH.3']['MSH.3.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-4",
+   "value": "DEMO HOSPITAL",
+   "path": "msg['MSH']['MSH.4']['MSH.4.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-5",
+   "value": "LAB_APP",
+   "path": "msg['MSH']['MSH.5']['MSH.5.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-6",
+   "value": "DEMO LAB",
+   "path": "msg['MSH']['MSH.6']['MSH.6.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-7",
+   "value": "20261122120000",
+   "path": "msg['MSH']['MSH.7']['MSH.7.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-9",
+   "value": "ORM$O01$ORM_O01",
+   "path": "msg['MSH']['MSH.9']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-9.1",
+   "value": "ORM",
+   "path": "msg['MSH']['MSH.9']['MSH.9.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-9.2",
+   "value": "O01",
+   "path": "msg['MSH']['MSH.9']['MSH.9.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-9.3",
+   "value": "ORM_O01",
+   "path": "msg['MSH']['MSH.9']['MSH.9.3']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-10",
+   "value": "MSG40001",
+   "path": "msg['MSH']['MSH.10']['MSH.10.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-11",
+   "value": "P",
+   "path": "msg['MSH']['MSH.11']['MSH.11.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "MSH-12",
+   "value": "2.4",
+   "path": "msg['MSH']['MSH.12']['MSH.12.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-1",
+   "value": "1",
+   "path": "msg['PID']['PID.1']['PID.1.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3",
+   "value": "TEST3001$$$DEMOHOSP@DEMO HOSPITAL@L$MR~TEST3002$$$DEMOHOSP$PI",
+   "path": "msg['PID']['PID.3']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3.1",
+   "value": "TEST3001",
+   "path": "msg['PID']['PID.3'][0]['PID.3.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3.4",
+   "value": "DEMOHOSP@DEMO HOSPITAL@L",
+   "path": "msg['PID']['PID.3'][0]['PID.3.4']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3.4.1",
+   "value": "DEMOHOSP",
+   "path": "msg['PID']['PID.3'][0]['PID.3.4']['PID.3.4.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3.4.2",
+   "value": "DEMO HOSPITAL",
+   "path": "msg['PID']['PID.3'][0]['PID.3.4']['PID.3.4.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3.4.3",
+   "value": "L",
+   "path": "msg['PID']['PID.3'][0]['PID.3.4']['PID.3.4.3']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3.5",
+   "value": "MR",
+   "path": "msg['PID']['PID.3'][0]['PID.3.5']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3[2].1",
+   "value": "TEST3002",
+   "path": "msg['PID']['PID.3'][1]['PID.3.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3[2].4",
+   "value": "DEMOHOSP",
+   "path": "msg['PID']['PID.3'][1]['PID.3.4']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-3[2].5",
+   "value": "PI",
+   "path": "msg['PID']['PID.3'][1]['PID.3.5']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-5",
+   "value": "PATIENT$TEST$TWO",
+   "path": "msg['PID']['PID.5']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-5.1",
+   "value": "PATIENT",
+   "path": "msg['PID']['PID.5']['PID.5.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-5.2",
+   "value": "TEST",
+   "path": "msg['PID']['PID.5']['PID.5.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-5.3",
+   "value": "TWO",
+   "path": "msg['PID']['PID.5']['PID.5.3']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-7",
+   "value": "20000229",
+   "path": "msg['PID']['PID.7']['PID.7.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PID-8",
+   "value": "U",
+   "path": "msg['PID']['PID.8']['PID.8.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PV1-1",
+   "value": "1",
+   "path": "msg['PV1']['PV1.1']['PV1.1.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PV1-2",
+   "value": "E",
+   "path": "msg['PV1']['PV1.2']['PV1.2.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PV1-3",
+   "value": "ER1$$$DEMO HOSPITAL",
+   "path": "msg['PV1']['PV1.3']"
+  },
+  {
+   "msg": "m3",
+   "label": "PV1-3.1",
+   "value": "ER1",
+   "path": "msg['PV1']['PV1.3']['PV1.3.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "PV1-3.4",
+   "value": "DEMO HOSPITAL",
+   "path": "msg['PV1']['PV1.3']['PV1.3.4']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-1",
+   "value": "NW",
+   "path": "msg['ORC'][0]['ORC.1']['ORC.1.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-2",
+   "value": "ORD6001$ORDER_APP",
+   "path": "msg['ORC'][0]['ORC.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-2.1",
+   "value": "ORD6001",
+   "path": "msg['ORC'][0]['ORC.2']['ORC.2.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-2.2",
+   "value": "ORDER_APP",
+   "path": "msg['ORC'][0]['ORC.2']['ORC.2.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-4",
+   "value": "GRP01$ORDER_APP",
+   "path": "msg['ORC'][0]['ORC.4']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-4.1",
+   "value": "GRP01",
+   "path": "msg['ORC'][0]['ORC.4']['ORC.4.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-4.2",
+   "value": "ORDER_APP",
+   "path": "msg['ORC'][0]['ORC.4']['ORC.4.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-7",
+   "value": "1$$$20261122120000$$R",
+   "path": "msg['ORC'][0]['ORC.7']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-7.1",
+   "value": "1",
+   "path": "msg['ORC'][0]['ORC.7']['ORC.7.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-7.4",
+   "value": "20261122120000",
+   "path": "msg['ORC'][0]['ORC.7']['ORC.7.4']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-7.6",
+   "value": "R",
+   "path": "msg['ORC'][0]['ORC.7']['ORC.7.6']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-1",
+   "value": "1",
+   "path": "msg['OBR'][0]['OBR.1']['OBR.1.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-2",
+   "value": "ORD6001$ORDER_APP",
+   "path": "msg['OBR'][0]['OBR.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-2.1",
+   "value": "ORD6001",
+   "path": "msg['OBR'][0]['OBR.2']['OBR.2.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-2.2",
+   "value": "ORDER_APP",
+   "path": "msg['OBR'][0]['OBR.2']['OBR.2.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-4",
+   "value": "2345-7$Glucose$LN",
+   "path": "msg['OBR'][0]['OBR.4']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-4.1",
+   "value": "2345-7",
+   "path": "msg['OBR'][0]['OBR.4']['OBR.4.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-4.2",
+   "value": "Glucose",
+   "path": "msg['OBR'][0]['OBR.4']['OBR.4.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-4.3",
+   "value": "LN",
+   "path": "msg['OBR'][0]['OBR.4']['OBR.4.3']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-7",
+   "value": "20261122115500",
+   "path": "msg['OBR'][0]['OBR.7']['OBR.7.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-1",
+   "value": "NW",
+   "path": "msg['ORC'][1]['ORC.1']['ORC.1.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-2",
+   "value": "ORD6002$ORDER_APP",
+   "path": "msg['ORC'][1]['ORC.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-2.1",
+   "value": "ORD6002",
+   "path": "msg['ORC'][1]['ORC.2']['ORC.2.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-2.2",
+   "value": "ORDER_APP",
+   "path": "msg['ORC'][1]['ORC.2']['ORC.2.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-4",
+   "value": "GRP01$ORDER_APP",
+   "path": "msg['ORC'][1]['ORC.4']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-4.1",
+   "value": "GRP01",
+   "path": "msg['ORC'][1]['ORC.4']['ORC.4.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "ORC-4.2",
+   "value": "ORDER_APP",
+   "path": "msg['ORC'][1]['ORC.4']['ORC.4.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-1",
+   "value": "2",
+   "path": "msg['OBR'][1]['OBR.1']['OBR.1.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-2",
+   "value": "ORD6002$ORDER_APP",
+   "path": "msg['OBR'][1]['OBR.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-2.1",
+   "value": "ORD6002",
+   "path": "msg['OBR'][1]['OBR.2']['OBR.2.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-2.2",
+   "value": "ORDER_APP",
+   "path": "msg['OBR'][1]['OBR.2']['OBR.2.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-4",
+   "value": "2160-0$Creatinine$LN",
+   "path": "msg['OBR'][1]['OBR.4']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-4.1",
+   "value": "2160-0",
+   "path": "msg['OBR'][1]['OBR.4']['OBR.4.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-4.2",
+   "value": "Creatinine",
+   "path": "msg['OBR'][1]['OBR.4']['OBR.4.2']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-4.3",
+   "value": "LN",
+   "path": "msg['OBR'][1]['OBR.4']['OBR.4.3']"
+  },
+  {
+   "msg": "m3",
+   "label": "OBR-7",
+   "value": "20261122115500",
+   "path": "msg['OBR'][1]['OBR.7']['OBR.7.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "NTE-1",
+   "value": "1",
+   "path": "msg['NTE']['NTE.1']['NTE.1.1']"
+  },
+  {
+   "msg": "m3",
+   "label": "NTE-3",
+   "value": "Fasting sample.",
+   "path": "msg['NTE']['NTE.3']['NTE.3.1']"
+  }
+ ]
+}

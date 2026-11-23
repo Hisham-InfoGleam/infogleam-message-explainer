@@ -109,7 +109,9 @@ export function maskMessage(message: ParsedMessage): MaskResult {
 
     if (!changed) return seg;
     const raw = buildSegmentRaw(seg.name, values, d);
-    return parseSegment(raw, d, seg.index, seg.occurrence, seg.after);
+    const masked = parseSegment(raw, d, seg.index, seg.occurrence, seg.after);
+    if (seg.count !== undefined) masked.count = seg.count;
+    return masked;
   });
 
   return { message: { ...message, segments, warnings: [...message.warnings] }, changes };

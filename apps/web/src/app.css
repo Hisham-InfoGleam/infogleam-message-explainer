@@ -1142,6 +1142,11 @@ td.path code {
   overflow-wrap: anywhere;
 }
 
+/* A position label stays on one line: "PID-3[2].4.1", never "PID-" and "3[2].4.1". */
+table.fields td.pos {
+  white-space: nowrap;
+}
+
 tr.level-1 td.pos {
   padding-inline-start: 24px;
 }

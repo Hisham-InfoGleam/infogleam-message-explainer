@@ -54,7 +54,18 @@ export function fieldKeyOf(s: Selection): string {
 /** Position label and Mirth path. Never throws, also for odd segment names. */
 export function safePath(segment: HL7Segment, field: number, rep?: number, comp?: number, sub?: number): FieldPath {
   try {
-    return fieldPath(segment.name, field, rep, comp, sub, { segmentOccurrence: segment.occurrence });
+    const reps = segment.fields.find((x) => x.position === field)?.repetitions ?? [];
+    const only = reps.length === 1 ? reps[0] : undefined;
+    return fieldPath(segment.name, field, rep, comp, sub, {
+      segmentOccurrence: segment.occurrence,
+      segmentCount: segment.count,
+      repetitionCount: Math.max(1, reps.length),
+      singleValue:
+        only !== undefined &&
+        only.value !== '' &&
+        only.components.length === 1 &&
+        (only.components[0]?.subComponents.length ?? 1) <= 1,
+    });
   } catch {
     let label = `${segment.name}-${field}`;
     if (rep !== undefined && rep > 1) label += `[${rep}]`;
