@@ -2,7 +2,7 @@
 
 All notable changes to this project are listed here.
 
-## Unreleased
+## 0.9.3 - 2026-11-23
 
 - Explanation panel: the fixed example at the end of a field explanation
   now says "Sample value (not from your message)". Before, it said only
