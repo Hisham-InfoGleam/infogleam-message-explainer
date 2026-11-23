@@ -2,6 +2,23 @@
 
 All notable changes to this project are listed here.
 
+## Unreleased
+
+- Mirth/OIE paths fixed. Checked in Mirth Connect 4.5.2 itself (its HL7 v2
+  to XML converter and its JavaScript engine):
+  - When a segment or a field appears more than once, the first one now
+    gets `[0]`, for example `msg['PID']['PID.3'][0]['PID.3.1']` and
+    `msg['OBX'][0]['OBX.5']['OBX.5.1']`. Without it, Mirth returns the
+    values of all of them together.
+  - A field with one plain value now ends with its component 1, for
+    example `msg['PID']['PID.8']['PID.8.1']`, because Mirth always stores
+    a field value as component 1.
+- New test with three made-up messages: every path in the field list must
+  match the path that was run in Mirth.
+- Position labels such as `PID-3[2].4.1` stay on one line.
+- Core: `fieldPath()` takes the new options `segmentCount`,
+  `repetitionCount` and `singleValue`. Parsed segments have `count`.
+
 ## 0.9.1 - 2026-11-12
 
 - Header: the InfoGleam symbol and a new "InfoGleam website" link next to
