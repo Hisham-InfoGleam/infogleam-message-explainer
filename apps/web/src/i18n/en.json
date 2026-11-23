@@ -162,7 +162,7 @@
   "versionNote": "Version note",
   "tip": "In real projects",
   "tipHint": "advice from practice, not part of the standard",
-  "example": "Example",
+  "example": "Sample value (not from your message)",
   "codes": "Common codes",
   "codesFrom": "Common codes from HL7 table {table}",
   "code": "Code",

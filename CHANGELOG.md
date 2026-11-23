@@ -2,6 +2,12 @@
 
 All notable changes to this project are listed here.
 
+## Unreleased
+
+- Explanation panel: the fixed example at the end of a field explanation
+  now says "Sample value (not from your message)". Before, it said only
+  "Example", and it was easy to take it for a value of the message.
+
 ## 0.9.2 - 2026-11-23
 
 - Mirth/OIE paths fixed. Checked in Mirth Connect 4.5.2 itself (its HL7 v2
